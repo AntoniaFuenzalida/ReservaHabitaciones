@@ -10,8 +10,8 @@
                 <input type="text" id="ingresar_Rut" name="ingresar_Rut" placeholder="Rut">
             </form>
             <form id="formulario_Medio">
-                <input type="text" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña">
-                <input type="text" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="Contraseña">
+                <input type="password" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña">
+                <input type="password" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="repetir_Contraseña">
             </form>
             <form id="formulario_Abajo">
                 <input type="text" id="ingreso_Correo_Crear" name="ingreso_Correo" placeholder="Correo electronico">
