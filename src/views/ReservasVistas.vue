@@ -15,7 +15,7 @@ export default {
 }
 </script>
 <script setup>
-import DropDown from './DropDown.vue';
+import DropDown from '../components/DropDown.vue';
 
 
 //const ReservaLista = "";
@@ -97,7 +97,7 @@ const UsuarioActual =
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid px-4 px-lg-5">
-        <a class="navbar-brand" href="#!">
+        <a class="navbar-brand" href="/">
             <img
             src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg"
             height="50"
@@ -116,15 +116,11 @@ const UsuarioActual =
               <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    menu
+                    Menú
                   </a>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li>
-                      <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li><a class="dropdown-item" href="#">Perfil</a></li>
+                    <li><a class="dropdown-item" href="./">Cerrar sesión</a></li>
                   </ul>
                 </li>
               </ul>
@@ -160,7 +156,7 @@ const UsuarioActual =
                         class="rounded-circle img-fluid" style="width: 150px;">
                     <h5 class="my-3">{{ UsuarioActual.Nombre }}</h5>
                     <div class="d-flex justify-content-center mb-2">
-                        <button type="button" class="btn btn-primary">Regresar</button>
+                        <button type="button" onclick="location.href='./menu_Usuario';" class="btn btn-primary">Regresar</button>
                         <button type="button" class="btn btn-outline-primary ms-1"  data-bs-toggle="modal" data-bs-target="#MenuAyuda">Ayuda</button>
                     </div>
                 </div>
@@ -221,7 +217,7 @@ const UsuarioActual =
                 <div class="card mb-6" style="margin-left: 12%;">
                         <div>
                             <ul class="list-goup mt-4">
-                                <li class="list-group-item mt-3" v-for="reserva in ArregloReservas">
+                                <li class="list-group-item mt-3" v-for="reserva in ArregloReservas" :key="reserva">
                                   <DropDown :fecha="reserva.fecha" :habitacion="reserva.habitacion"
                                         :estado="reserva.estado" />
                                 </li>

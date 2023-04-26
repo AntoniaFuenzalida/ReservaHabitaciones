@@ -12,7 +12,7 @@
   <!--Header-->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
-      <a class="navbar-brand" href="#!">
+      <a class="navbar-brand" href="/">
         <img src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg" height="50" alt="hotel logo"
           loading="lazy" style="margin-top: -1px;" /></a>
 
@@ -29,15 +29,15 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
-                menu
+                Menú
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="./Iniciar_sesion">Iniciar sesión</a></li>
+                <li><a class="dropdown-item" href="./Reservar_Vista">Reservar ahora</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <li><a class="dropdown-item" href="/algo">Something else here</a></li>
               </ul>
             </li>
           </ul>

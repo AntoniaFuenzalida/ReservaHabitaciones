@@ -1,7 +1,7 @@
 <template>
     <div class="bg-image" id="portada">
         <div id="caja_Adentro">
-            <img src="../assets/logohotel.png" id="imagen_Adentro">
+            <img src="../assets/logohotel.png" id="imagen_Adentro" onclick="location.href='./';" >
             <h3 id="texto_Crear">Creación de Cuenta</h3>
             <form id="formulario_Arriba">
 
@@ -18,7 +18,7 @@
                 <input type="text" id="numero_Telefono" name="numero_Telefono" placeholder="Número de Telefono">
             </form>
             <br>
-            <div onclick="location.href='./';" hre id="Registro"><button id="registro_boton"> Registrarse</button></div>
+            <div onclick="location.href='./Iniciar_sesion';" hre id="Registro"><button id="registro_boton"> Registrarse</button></div>
         </div>
 
     </div>
@@ -143,7 +143,7 @@
 }
 
 #registro_boton {
-    width: 20%;
+    width: 25%;
     height: 8%;
     background-color: #5E95E7;
     border-radius: 0%;

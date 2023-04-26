@@ -4,7 +4,7 @@
     
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container px-4 px-lg-5">
-      <a class="navbar-brand" href="#!">
+      <a class="navbar-brand" href="/">
           <img
           src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg"
           height="50"
@@ -24,11 +24,11 @@
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  menu
+                  Menú
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Perfil</a></li>
+                  <li><a class="dropdown-item" href="/">Cerrar sesión</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
@@ -95,7 +95,7 @@
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Has tu Reserva</a></div>
+                                    <div class="text-center" onclick="location.href='/Reservar_Vista';"><a class="btn btn-outline-dark mt-auto" href="#">Has tu Reserva</a></div>
                                 </div>
                             </div>
                         </div>
@@ -121,7 +121,7 @@
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Tus Reservas</a></div>
+                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="./Consulta_Vistas">Tus Reservas</a></div>
                                 </div>
                             </div>
                             </div>
