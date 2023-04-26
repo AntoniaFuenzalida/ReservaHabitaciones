@@ -29,10 +29,7 @@
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item" href="#">Perfil</a></li>
                   <li><a class="dropdown-item" href="/">Cerrar sesión</a></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  
                 </ul>
               </li>
             </ul>
