@@ -52,43 +52,44 @@ const Seleccionar = (reserva) => {
 <template>
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid px-4 px-lg-5">
-        <a class="navbar-brand" href="#!">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="/">
             <img
             src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg"
             height="50"
             alt="hotel logo"
             loading="lazy"
             style="margin-top: -1px;"
-          /></a>
+            /></a>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
-              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    menu
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Menú
+                    </a>
+                    <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Perfil</a></li>
+                    <li><a class="dropdown-item" href="/">Cerrar sesión</a></li>
                     <li>
-                      <hr class="dropdown-divider">
+                        <hr class="dropdown-divider">
                     </li>
                     <li><a class="dropdown-item" href="#">Something else here</a></li>
-                  </ul>
+                    </ul>
                 </li>
-              </ul>
+                </ul>
             </div>
-          </div>
+            </div>
         
         </div>
-  </nav>
+    </nav>
 <!---->
 
       <!-- Header-->
