@@ -11,7 +11,7 @@
             </form>
             <form id="formulario_Medio">
                 <input type="password" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña">
-                <input type="password" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="repetir_Contraseña">
+                <input type="password" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="Repetir Contraseña">
             </form>
             <form id="formulario_Abajo">
                 <input type="text" id="ingreso_Correo_Crear" name="ingreso_Correo" placeholder="Correo electronico">
