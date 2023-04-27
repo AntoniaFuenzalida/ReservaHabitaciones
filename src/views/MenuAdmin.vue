@@ -40,6 +40,7 @@ const ArregloReservas = [
 ];
 
 const CargarFecha = () => {
+    seleccionado.reserva = NaN
     console.log(seleccionado.fecha)
     console.log(seleccionado.reserva)
 }
@@ -63,12 +64,12 @@ const Seleccionar = (reserva) => {
             /></a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-header">
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <li class="nav-item dropdown">
@@ -76,19 +77,15 @@ const Seleccionar = (reserva) => {
                     Menú
                     </a>
                     <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Perfil</a></li>
+                    <li><a class="dropdown-item" href="./menu_Usuario">Perfil</a></li>
                     <li><a class="dropdown-item" href="/">Cerrar sesión</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </li>
                 </ul>
             </div>
-            </div>
-        
         </div>
+    </div>
+
     </nav>
 <!---->
 
@@ -163,8 +160,8 @@ const Seleccionar = (reserva) => {
             </div>
         </div>
     </div>
-    <div class="row" style="margin-top: 3%;" v-if="seleccionado.reserva">
-        <div class="card mb-4">
+    <div class="row" style="margin-top: 3%;">
+        <div class="card mb-4" v-if="seleccionado.reserva">
             <ul class="list-goup">
                 <li class="list-group-item mt-2">
                     Fecha: {{ seleccionado.reserva.fecha }}
@@ -177,42 +174,120 @@ const Seleccionar = (reserva) => {
                 </li>
             </ul>
         </div>
+        <div class="card mb-4" v-if="!seleccionado.reserva">
+            <ul class="list-goup">
+                <li class="list-group-item mt-2">
+                    Fecha: ------
+                </li>
+                <li class="list-group-item mt-2">
+                    habitacion: ------
+                </li>
+                <li class="list-group-item mt-2">
+                    Estado: ------
+                </li>
+            </ul>
+        </div>
     </div>
 
-<!--pop up-->
-
-<div class="modal fade" id="MenuAyuda" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-4" id="exampleModalLabel">Ayuda</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <ul class="list-group">
-                                    <li class="list-group-item"> <img src="/verde.ico">Reserva lista</li>
-                                    <li class="list-group-item"> <img src="/amarillo.ico">Reserva por confirmar
-                                    </li>
-                                    <li class="list-group-item"> <img src="/rojo.ico">Reserva cancelada</li>
-                                    <li class="list-group-item"> <img src="/azul.ico">Reserva utilizada</li>
-                                    <li class="list-group-item"> <img src="/trash.ico">Cancelar/Eliminar Reserva
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="row" style="margin-top: 1%; margin-left: 100px; margin-right: 100px; margin-bottom: 20px;">
+        <div class="col">
+            <div class="card mt-4" style="margin-left: 20px; margin-right: 20px;">
+                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#ResumenGeneral">Resumen General</button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mt-4" style="margin-left: 20px; margin-right: 20px;">
+                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#DatosContacto">Cambiar Datos de Contacto</button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mt-4" style="margin-left: 20px; margin-right: 20px;">
+                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#AgregarHabitacion">Agregar Habitacion</button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mt-4" style="margin-left: 20px; margin-right: 20px;">
+                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#ModificarHabitacion">Modificar Habitacion</button>
+            </div>
+        </div>
+    </div>
 
 
         <!-- Footer-->
         <footer class="py-5 bg-dark">
-          <div class="container"><p class="m-0 text-center text-white">Gralord.18 &copy; Prueba hotel</p></div>
+          <div class="container"><p class="m-0 text-center text-white">&copy; Hotel Cordillera, 2023</p></div>
       </footer>
 
 <!---->
+
+<!--pop ups-->
+<div class="modal fade" id="ResumenGeneral" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-4" id="exampleModalLabel">Resumen General</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="DatosContacto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-4" id="exampleModalLabel">Datos Contacto</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+            
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="AgregarHabitacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-4" id="exampleModalLabel">Agregar Habitacion</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModificarHabitacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-4" id="exampleModalLabel">Modificar Habitacion</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </template>
 
