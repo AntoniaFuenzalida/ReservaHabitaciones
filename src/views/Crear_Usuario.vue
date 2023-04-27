@@ -9,7 +9,7 @@
         <label for="Email"> </label>
         <input type="text" id="ingreso_Correo" name="ingreso_Correo" placeholder="Correo electronico">
         <label for="contraseña"> </label>
-        <input type="text" id="ingreso_Contraseña" name="ingreso_Contraseña" placeholder="Contraseña">
+        <input type="password" id="ingreso_Contraseña" name="ingreso_Contraseña" placeholder="Contraseña">
       </form>
       <br>
       <div id="div_Botón" onclick="location.href='./menu_Usuario';" ><button id="inicio_Sesión"> Iniciar sesión</button></div>
