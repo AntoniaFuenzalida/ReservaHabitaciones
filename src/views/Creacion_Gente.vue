@@ -18,7 +18,7 @@
                 <input type="text" id="numero_Telefono" name="numero_Telefono" placeholder="Número de Telefono">
             </form>
             <br>
-            <div onclick="location.href='./Iniciar_sesion';" hre id="Registro"><button id="registro_boton"> Registrarse</button></div>
+            <div hre id="Registro"><button id="registro_boton"  onclick="location.href='./Iniciar_sesion';"> Registrarse</button></div>
         </div>
 
     </div>
