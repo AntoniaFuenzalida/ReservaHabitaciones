@@ -10,15 +10,15 @@
                 <input type="text" id="ingresar_Rut" name="ingresar_Rut" placeholder="Rut">
             </form>
             <form id="formulario_Medio">
-                <input type="text" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña">
-                <input type="text" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="Contraseña">
+                <input type="password" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña">
+                <input type="password" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="Repetir Contraseña">
             </form>
             <form id="formulario_Abajo">
                 <input type="text" id="ingreso_Correo_Crear" name="ingreso_Correo" placeholder="Correo electronico">
                 <input type="text" id="numero_Telefono" name="numero_Telefono" placeholder="Número de Telefono">
             </form>
             <br>
-            <div onclick="location.href='./Iniciar_sesion';" hre id="Registro"><button id="registro_boton"> Registrarse</button></div>
+            <div hre id="Registro"><button id="registro_boton"  onclick="location.href='./Iniciar_sesion';"> Registrarse</button></div>
         </div>
 
     </div>

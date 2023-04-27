@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <template>
   <div class="bg-image" id="pagina">
     <div id="caja_Adentro">
@@ -9,10 +8,10 @@
         <label for="Email"> </label>
         <input type="text" id="ingreso_Correo" name="ingreso_Correo" placeholder="Correo electronico">
         <label for="contraseña"> </label>
-        <input type="text" id="ingreso_Contraseña" name="ingreso_Contraseña" placeholder="Contraseña">
+        <input type="password" id="ingreso_Contraseña" name="ingreso_Contraseña" placeholder="Contraseña">
       </form>
       <br>
-      <div id="div_Botón" onclick="location.href='./menu_Usuario';" ><button id="inicio_Sesión"> Iniciar sesión</button></div>
+      <div id="div_Botón"><button id="inicio_Sesión" onclick="location.href='./menu_Usuario';"> Iniciar sesión</button></div>
 
       <p id="olvidaste">¿Olvidaste tu contraseña?</p>
       <a id="crear" href="./Creacion_Gente"> Crear Cuenta </a>

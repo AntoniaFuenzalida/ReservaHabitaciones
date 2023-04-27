@@ -113,7 +113,7 @@ const range = reactive({
                                 </div>
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Has tu Reserva</a></div>
+                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Haz tu Reserva</a></div>
                                 </div>
                             </div>
                         </div>

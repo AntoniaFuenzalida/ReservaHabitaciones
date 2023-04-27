@@ -34,10 +34,6 @@
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="./Iniciar_sesion">Iniciar sesión</a></li>
                 <li><a class="dropdown-item" href="./Reservar_Vista">Reservar ahora</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="/algo">Something else here</a></li>
               </ul>
             </li>
           </ul>
