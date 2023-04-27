@@ -117,7 +117,10 @@
                 </div>
                 <!--Información-->
                 <p style="text-align: justify;">
-                  Contamos con variadas habitaciones, para que puede disfrutar su estadia solo o familia.
+                  Ofrecemos habitaciones diseñadas para satisfacer sus necesidades durante su estadía, ya sea que viaje solo o en familia.
+                  Desde habitaciones individuales hasta suites familiares, todas están equipadas con los mejores servicios para brindarle
+                  comodidad y privacidad. Nuestro personal está disponible las 24 horas para atender sus necesidades adicionales y asegurarse
+                  de que tenga una experiencia inolvidable. ¡Estamos ansiosos por darle la bienvenida y hacer de su estadía una experiencia satisfactoria!
                 </p>
 
               </div>
