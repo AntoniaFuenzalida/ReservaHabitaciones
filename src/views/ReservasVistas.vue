@@ -82,7 +82,11 @@ const ArregloReservas = [
 const UsuarioActual =
 {
     Rut: "25468597-6",
-    Nombre: "Rosa Melano"
+    Nombre: "Benito Camelo",
+    Telefono:"+569 9794 0689",
+    Correo:"benitocamelo@gmail.com",
+    Dirreccion: "Calle Falsa 123",
+
 }
 
 /*const Regresar = () => {
@@ -187,7 +191,7 @@ const UsuarioActual =
                             <p class="mb-0">Número Celular:</p>
                         </div>
                         <div class="col-sm-9">
-                            <p class="text-muted mb-0">(097) 234-5678</p>
+                            <p class="text-muted mb-0">{{ UsuarioActual.Telefono }}</p>
                         </div>
                     </div>
                     <hr>
@@ -196,7 +200,7 @@ const UsuarioActual =
                             <p class="mb-0">Correo Electronico</p>
                         </div>
                         <div class="col-sm-9">
-                            <p class="text-muted mb-0">rosamelano@gmail.com</p>
+                            <p class="text-muted mb-0">{{ UsuarioActual.Correo }}</p>
                         </div>
                     </div>
                     <hr>
@@ -205,7 +209,7 @@ const UsuarioActual =
                             <p class="mb-0">Dirección</p>
                         </div>
                         <div class="col-sm-9">
-                            <p class="text-muted mb-0">Avenida siempre viva 742, Maitencillo </p>
+                            <p class="text-muted mb-0">{{UsuarioActual.Dirreccion}} </p>
                         </div>
                     </div>
                 </div>
