@@ -27,7 +27,7 @@
                   Menú
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Perfil</a></li>
+                  <li><a class="dropdown-item" href="./menu_Usuario">Perfil</a></li>
                   <li><a class="dropdown-item" href="/">Cerrar sesión</a></li>
                   
                 </ul>
@@ -87,12 +87,12 @@
                     <div class="col mb-3">
                         <div class="card h-60">
                             <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                            <img class="card-img-top" style="height: 200px;width: 200px;margin-left: 10%;" src="iconsketchbook.png" alt="..." />
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <div class="text-center" onclick="location.href='/Reservar_Vista';"><a class="btn btn-outline-dark mt-auto" href="#">Has tu Reserva</a></div>
+                                    <div class="text-center"><a class="btn btn-dark mt-auto" onclick="location.href='/Reservar_Vista';">Has tu Reserva</a></div>
                                 </div>
                             </div>
                         </div>
@@ -100,12 +100,12 @@
                     <div class="col mb-3">
                         <div class="card h-60">
                             <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                            <img class="card-img-top" style="height: 200px;width: 200px;margin-left: 10%;" src="icondiscount.png" alt="..." />
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Promociones</a></div>
+                                    <div class="text-center"><a class="btn btn-dark mt-auto" href="#">Promociones</a></div>
                                 </div>
                             </div>
                         </div>
@@ -113,12 +113,12 @@
                     <div class="col mb-3">
                         <div class="card h-60">
                             <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                            <img class="card-img-top" style="height: 200px;width: 200px;margin-left: 10%;" src="iconverified-checkbox-symbol.png" alt="..."  />
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="./Consulta_Vistas">Tus Reservas</a></div>
+                                    <div class="text-center"><a class="btn btn-dark mt-auto" href="./Consulta_Vistas">Tus Reservas</a></div>
                                 </div>
                             </div>
                             </div>
@@ -128,7 +128,7 @@
         </section>
                 <!-- Footer-->
                 <footer class="py-5 bg-dark">
-          <div class="container"><p class="m-0 text-center text-white">Gralord.18 &copy; Prueba hotel</p></div>
+          <div class="container"><p class="m-0 text-center text-white">&copy; Hotel Cordillera, 2023</p></div>
       </footer>
 
 </template>
@@ -155,7 +155,8 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-a {
-  color: #42b983;
-}
+
+
+
+
 </style>

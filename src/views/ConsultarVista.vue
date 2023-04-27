@@ -35,7 +35,7 @@ const range = reactive({
                 Menú
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                <li><a class="dropdown-item" href="./menu_Usuario">Perfil</a></li>
                 <li><a class="dropdown-item" href="./">Cerrar sesión</a></li>
                 <li>
                   <hr class="dropdown-divider">
