@@ -8,8 +8,17 @@ import menu_Usuario from "@/views/menu_Usuario.vue"
 import ReservasVistas from "@/views/ReservasVistas.vue"
 import ConsultarVista from "@/views/ConsultarVista.vue"
 import servicioAdicional from "@/views/servicioAdicional.vue"
-import pagina_home from "@/views/pagina_home.vue"
+
+import MenuAdmin from "@/views/MenuAdmin.vue"
+
 const routes = [
+	{
+		path: "/MenuAdmin",
+		name: "MenuAdmin",
+		component: MenuAdmin,
+
+
+	},
 	{
 		path: "/",
 		name: "home_Inicio",
@@ -50,11 +59,7 @@ const routes = [
 		name: "Servicios_Adicionales",
 		component: servicioAdicional,
 	},
-	{
-		path: "/Algo",
-		name: "Pagina_home",
-		component: pagina_home,
-	}
+	
 ]
 const router = createRouter({
   history: createWebHistory(),

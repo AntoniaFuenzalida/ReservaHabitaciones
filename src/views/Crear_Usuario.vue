@@ -1,8 +1,7 @@
-<!DOCTYPE html>
 <template>
   <div class="bg-image" id="pagina">
     <div id="caja_Adentro">
-      <img src="../assets/logohotel.png"  id="imagen_Adentro" onclick="location.href='./';" >
+      <img src="../assets/logohotel.png"  id="imagen_Adentro">
       <br>
       <br>
       <form id="formulario">
@@ -12,10 +11,14 @@
         <input type="password" id="ingreso_Contraseña" name="ingreso_Contraseña" placeholder="Contraseña">
       </form>
       <br>
-      <div id="div_Botón" onclick="location.href='./menu_Usuario';" ><button id="inicio_Sesión"> Iniciar sesión</button></div>
+      <div id="div_Botón"><button id="inicio_Sesión" onclick="location.href='./menu_Usuario';"> Iniciar sesión</button></div>
+      <a id="olvidaste" href='./menuAdmin'>¿Olvidaste tu contraseña?</a>
+      <br>
+      <div id="div_Botón"><button id="inicio_Sesión" onclick="location.href='./Creacion_Gente';"> Crear cuenta</button></div>
+     
 
-      <p id="olvidaste">¿Olvidaste tu contraseña?</p>
-      <a id="crear" href="./Creacion_Gente"> Crear Cuenta </a>
+     
+      
 
 
     </div>

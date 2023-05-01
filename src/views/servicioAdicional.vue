@@ -22,7 +22,7 @@
                 Menú
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                <li><a class="dropdown-item" href="./menu_Usuario">Perfil</a></li>
                 <li><a class="dropdown-item" href="/">Cerrar sesión</a></li>
               </ul>
             </li>
@@ -157,8 +157,8 @@
                             <ul class="list-group">
                               <li class="list-group-item">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                                    <label class="form-check-label" for="flexSwitchCheckDefault">Agregar Servicio Lavanderia
+                                    <input class="form-check-input" type="checkbox" id="SwitchCheckDefault">
+                                    <label class="form-check-label" for="SwitchCheckDefault">Agregar Servicio Lavanderia
                                     </label>
                                   </div>
                               </li>
@@ -188,7 +188,7 @@
           </div>
 
           <div class="CONTINUAR" style="margin-top: 3%;">
-            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Continuar</a></div>
+            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="./Reservar_Vista">Continuar</a></div>
           </div>
 
 
@@ -202,7 +202,7 @@
   <!-- Footer-->
   <footer class="py-5 bg-dark" style="margin-top: 2%;">
     <div class="container">
-      <p class="m-0 text-center text-white">Gralord.18 &copy; Prueba hotel</p>
+      <p class="m-0 text-center text-white">&copy; Hotel Cordillera, 2023</p>
     </div>
   </footer>
 </template>

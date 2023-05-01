@@ -35,7 +35,7 @@ const range = reactive({
                 Menú
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                <li><a class="dropdown-item" href="./menu_Usuario">Perfil</a></li>
                 <li><a class="dropdown-item" href="./">Cerrar sesión</a></li>
                 <li>
                   <hr class="dropdown-divider">
@@ -60,14 +60,15 @@ const range = reactive({
 
                   <h1 class="display-4 fw-bolder text-center">Reserva con Nosotros</h1>
                   <p class="lead fw-normal text-white-50 mb-0">Elije tu fecha de llegada y salida</p>
+                  <br>
 
               <form>
                 <DatePicker v-model="range" mode="date" :columns="2" is-range>
     <template v-slot="{ inputValue, inputEvents }">
       <div class="group">
-        <label class="button groupItem" for="start">Start</label>
+        <label class="button groupItem" for="start">Fecha Ingreso</label>
         <input type="text" id="start" :value="inputValue.start" v-on="inputEvents.start" class="input groupItem">
-        <label class="button groupItem" for="end">End</label>
+        <label class="button groupItem" for="end">Fecha Salida</label>
         <input type="text" id="end" :value="inputValue.end" readonly class="input groupItem">
       </div>
     </template>
@@ -75,11 +76,13 @@ const range = reactive({
 
 
                   <div class="form-group w-25">
-                    <label for="inputsm">Adultos</label>
+                    <br>
+                    <label for="inputsm"> Cantidad Adultos</label>
                     <input class="form-control input-sm" id="inputsm" type="text">
                   </div>
+                  <br>
                    <div class="form-group w-25">
-                    <label for="inputdefault">Niños</label>
+                    <label for="inputdefault">Cantidad Niños</label>
                     <input class="form-control" id="inputdefault" type="text">
                   </div>
                 </form>
@@ -95,7 +98,7 @@ const range = reactive({
                     <div class="col mb-3">
                         <div class="card h-60">
                             <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                            <img class="card-img-top" src="https://i.imgur.com/lg0Vhr6.jpg" alt="..." />
                             <!-- Product details-->
                             <div class="card-body p-4">
                               <div class="text-center">
@@ -106,7 +109,7 @@ const range = reactive({
 
                                     </div>
                                     <!-- Product price-->
-                                    $18.00 p/noche
+                                    $18.500 p/noche
                                 </div>
                                 <div class="text-center">
                                     <!-- Product name-->
@@ -118,7 +121,7 @@ const range = reactive({
                     <div class="col mb-3">
                         <div class="card h-60">
                             <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                            <img class="card-img-top" src="https://i.imgur.com/rzn4n6m.jpg" alt="..." />
                             <!-- Product details-->
                             <div class="card-body p-4">
                               <div class="text-center">
@@ -129,7 +132,7 @@ const range = reactive({
 
                                     </div>
                                     <!-- Product price-->
-                                    $18.00 p/noche
+                                    $18.500 p/noche
                                 </div>
                                 <div class="text-center">
                                     <!-- Product name-->
@@ -141,7 +144,7 @@ const range = reactive({
                     <div class="col mb-3">
                         <div class="card h-60">
                             <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                            <img class="card-img-top" src="https://i.imgur.com/BxDJEAY.jpg" alt="..." />
                             <!-- Product details-->
                             <div class="card-body p-4">
                               <div class="text-center">
@@ -149,10 +152,9 @@ const range = reactive({
                                     <h5 class="fw-bolder">Habitacion 3 </h5>
                                     <!-- Product reviews-->
                                     <div class="d-flex justify-content-center small text-warning mb-2">
-
                                     </div>
                                     <!-- Product price-->
-                                    $18.00 p/noche
+                                    $18.500 p/noche
                                 </div>
                                 <div class="text-center">
                                     <!-- Product name-->
@@ -169,7 +171,7 @@ const range = reactive({
   <!-- Footer-->
   <footer class="py-5 bg-dark" style="margin-top: 2%;">
     <div class="container">
-      <p class="m-0 text-center text-white">Gralord.18 &copy; Prueba hotel</p>
+      <p class="m-0 text-center text-white">&copy; Hotel Cordillera, 2023</p>
     </div>
   </footer>
 </template>
