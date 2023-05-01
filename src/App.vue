@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <template>
  <router-view />
@@ -5,6 +6,14 @@
 
 
 <script>
+=======
+<template>
+   <router-view />
+</template>
+
+<script>
+
+>>>>>>> Neo-Interfaz-Conectadas
 </script>
 
 <style>

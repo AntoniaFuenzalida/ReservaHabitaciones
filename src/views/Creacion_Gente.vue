@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <template>
     <div class="bg-image" id="portada">
         <div id="caja_Adentro">
             <img src="../assets/logohotel.png" id="imagen_Adentro">
+=======
+<template>
+    <div class="bg-image" id="portada">
+        <div id="caja_Adentro">
+            <img src="../assets/logohotel.png" id="imagen_Adentro" onclick="location.href='./';" >
+>>>>>>> Neo-Interfaz-Conectadas
             <h3 id="texto_Crear">Creación de Cuenta</h3>
             <form id="formulario_Arriba">
 
@@ -11,15 +18,24 @@
                 <input type="text" id="ingresar_Rut" name="ingresar_Rut" placeholder="Rut">
             </form>
             <form id="formulario_Medio">
+<<<<<<< HEAD
                 <input type="text" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña">
                 <input type="text" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="Contraseña">
+=======
+                <input type="password" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña">
+                <input type="password" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="Repetir Contraseña">
+>>>>>>> Neo-Interfaz-Conectadas
             </form>
             <form id="formulario_Abajo">
                 <input type="text" id="ingreso_Correo_Crear" name="ingreso_Correo" placeholder="Correo electronico">
                 <input type="text" id="numero_Telefono" name="numero_Telefono" placeholder="Número de Telefono">
             </form>
             <br>
+<<<<<<< HEAD
             <div onclick="location.href='./';" hre id="Registro"><button id="registro_boton"> Registrarse</button></div>
+=======
+            <div hre id="Registro"><button id="registro_boton"  onclick="location.href='./Iniciar_sesion';"> Registrarse</button></div>
+>>>>>>> Neo-Interfaz-Conectadas
         </div>
 
     </div>
@@ -144,7 +160,11 @@
 }
 
 #registro_boton {
+<<<<<<< HEAD
     width: 20%;
+=======
+    width: 25%;
+>>>>>>> Neo-Interfaz-Conectadas
     height: 8%;
     background-color: #5E95E7;
     border-radius: 0%;

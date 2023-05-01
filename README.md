@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # my-app
+=======
+# reserva_app
+>>>>>>> Neo-Interfaz-Conectadas
 
 ## Project setup
 ```
