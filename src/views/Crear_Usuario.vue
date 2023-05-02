@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-<!DOCTYPE html>
-=======
->>>>>>> Neo-Interfaz-Conectadas
 <template>
   <div class="bg-image" id="pagina">
     <div id="caja_Adentro">
@@ -12,15 +8,6 @@
         <label for="Email"> </label>
         <input type="text" id="ingreso_Correo" name="ingreso_Correo" placeholder="Correo electronico">
         <label for="contraseña"> </label>
-<<<<<<< HEAD
-        <input type="text" id="ingreso_Contraseña" name="ingreso_Contraseña" placeholder="Contraseña">
-      </form>
-      <br>
-      <div id="div_Botón"><button id="inicio_Sesión"> Iniciar sesión</button></div>
-
-      <p id="olvidaste">¿Olvidaste tu contraseña?</p>
-      <a id="crear" href="./Creacion_Gente"> Crear Cuenta </a>
-=======
         <input type="password" id="ingreso_Contraseña" name="ingreso_Contraseña" placeholder="Contraseña">
       </form>
       <br>
@@ -32,7 +19,6 @@
 
      
       
->>>>>>> Neo-Interfaz-Conectadas
 
 
     </div>

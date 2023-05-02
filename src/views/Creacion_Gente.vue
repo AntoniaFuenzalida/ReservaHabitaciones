@@ -1,53 +1,101 @@
-<<<<<<< HEAD
-<!DOCTYPE html>
-<template>
-    <div class="bg-image" id="portada">
-        <div id="caja_Adentro">
-            <img src="../assets/logohotel.png" id="imagen_Adentro">
-=======
 <template>
     <div class="bg-image" id="portada">
         <div id="caja_Adentro">
             <img src="../assets/logohotel.png" id="imagen_Adentro" onclick="location.href='./';" >
->>>>>>> Neo-Interfaz-Conectadas
-            <h3 id="texto_Crear">Creación de Cuenta</h3>
-            <form id="formulario_Arriba">
+            <h7 id="texto_Crear">Creación de Cuenta</h7>
+            <form id="Todos" @submit.prevent="crear_Cuenta" >
+                <form id="formulario_Arriba">
 
-                <input type="text" id="nombre_Completo" name="nombre_Completo" placeholder="Nombre Completo">
-                
-                <input type="text" id="ingresar_Rut" name="ingresar_Rut" placeholder="Rut">
+                    <input type="text" id="nombre_Completo" name="nombre_Completo" placeholder="Nombre Completo" v-model="nombre_completo">
+                    
+                    <input type="text" id="ingresar_Rut" name="ingresar_Rut" placeholder="Rut" v-model="rut">
+                </form>
+                <form id="formulario_Medio">
+                    <input type="password" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña" v-model="contraseña">
+                    <input type="password" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="Repetir Contraseña">
+                </form>
+                <form id="formulario_Abajo">
+                    <input type="text" id="ingreso_Correo_Crear" name="ingreso_Correo" placeholder="Correo electronico" v-model="correo">
+                    <input type="text" id="numero_Telefono" name="numero_Telefono" placeholder="Número de Telefono" v-model="numero">
+                </form>
+                <br>
+                <div hre id="Registro"><button type="submit" id="registro_boton"> Registrarse</button></div>
             </form>
-            <form id="formulario_Medio">
-<<<<<<< HEAD
-                <input type="text" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña">
-                <input type="text" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="Contraseña">
-=======
-                <input type="password" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña">
-                <input type="password" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="Repetir Contraseña">
->>>>>>> Neo-Interfaz-Conectadas
-            </form>
-            <form id="formulario_Abajo">
-                <input type="text" id="ingreso_Correo_Crear" name="ingreso_Correo" placeholder="Correo electronico">
-                <input type="text" id="numero_Telefono" name="numero_Telefono" placeholder="Número de Telefono">
-            </form>
-            <br>
-<<<<<<< HEAD
-            <div onclick="location.href='./';" hre id="Registro"><button id="registro_boton"> Registrarse</button></div>
-=======
-            <div hre id="Registro"><button id="registro_boton"  onclick="location.href='./Iniciar_sesion';"> Registrarse</button></div>
->>>>>>> Neo-Interfaz-Conectadas
         </div>
 
+    </div>
+    <div class="row">
+        <thead>
+            <tr>
+                <th>Nombre </th>
+                <th>Rut </th>
+                <th>Contraseña</th>
+                <th>Correo</th>
+                <th>Numero</th>
+            </tr>
+        </thead>
+        <body>
+            <tbody>
+                <tr v-for="usuario in usuarios" v-bind:key="usuario">
+                    <td>{{usuario.nombre_completo}}</td>
+                    <td>{{usuario.rut}}</td>
+                    <td>{{usuario.contraseña}}</td>
+                    <td>{{usuario.correo}}</td>
+                    <td>{{usuario.numero}}</td>
+                    <td> <a href="#!"><i class="material-icons">create</i></a></td>
+                    <td> <a href="#!"><i class="material-icons">delete</i></a></td>
+                </tr>
+            </tbody>
+        </body>
     </div>
 </template>
 
 
 <script>
+import M from 'materialize-css'
+export default {
+    name: 'Creacion_Gente',
+    data() {
+        return {
+            nombre_completo: '',
+            rut: '',
+            contraseña: '',
+            correo: '',
+            numero: '',
+            usuarios:[],
+            select_instances: []
+        }
+    },
+    mounted()
+    {
+        var elems = document.querySelectorAll('select');
+        this.select_instances = M.FormSelect.init(elems, null);
+    },
+    methods: {
+        crear_Cuenta()
+        {
+            var data = {
+                nombre_completo: this.nombre_completo,
+                rut: this.rut,
+                contraseña: this.contraseña,
+                correo: this.correo,
+                numero: this.numero,
+
+            };
+            this.usuarios.push(data);
+            this.nombre_completo= '';
+            this.rut= '';
+            this.contraseña= '';
+            this.correo= '';
+            this.numero= '';
+        }
+    },
+};
 </script>
 
 <style>
 #portada {
-    background-image: url('../assets/Fondo.jpg');
+   background-image: url('../assets/Fondo.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
@@ -160,11 +208,7 @@
 }
 
 #registro_boton {
-<<<<<<< HEAD
-    width: 20%;
-=======
     width: 25%;
->>>>>>> Neo-Interfaz-Conectadas
     height: 8%;
     background-color: #5E95E7;
     border-radius: 0%;
