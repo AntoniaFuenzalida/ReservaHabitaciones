@@ -4,11 +4,14 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebas
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCm-WhBMeAv3PpK8HNICEgJuHvUs8YkGEY",
-  authDomain: "poetic-bulwark-372320.firebaseapp.com",
-  projectId: "poetic-bulwark-372320",
-  storageBucket: "poetic-bulwark-372320.appspot.com",
-  messagingSenderId: "425226220117",
-  appId: "1:425226220117:web:5f059571522bc649611adc"}
-  firebase.initializeApp(firebaseConfig);
-  
+  apiKey: "AIzaSyANUceU5lF2h99d4UnabyJ1x8NcT-eKFMg",
+  authDomain: "proyectoconstru-c7c2c.firebaseapp.com",
+  databaseURL: "https://proyectoconstru-c7c2c-default-rtdb.firebaseio.com/",
+  projectId: "proyectoconstru-c7c2c",
+  storageBucket: "proyectoconstru-c7c2c.appspot.com",
+  messagingSenderId: "316944078663",
+  appId: "1:316944078663:web:137ef9de03047f6abf5e62"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
