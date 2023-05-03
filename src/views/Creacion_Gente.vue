@@ -1,22 +1,22 @@
 <template>
-    <div class="bg-image" id="portada">
+    <div class="bg-image" id="Creacion_Gente">
         <div id="caja_Adentro">
             <img src="../assets/logohotel.png" id="imagen_Adentro" onclick="location.href='./';" >
             <h7 id="texto_Crear">Creación de Cuenta</h7>
-            <form id="Todos" @submit.prevent="crear_Cuenta" >
+            <form id="Todos" v-on:submit.prevent="crear_Cuenta">
                 <form id="formulario_Arriba">
 
-                    <input type="text" id="nombre_Completo" name="nombre_Completo" placeholder="Nombre Completo" v-model="nombre_completo">
+                    <input type="text" id="nombre_Completo" name="nombre_Completo" placeholder="Nombre Completo" v-model="NuevaCuenta.nombre_completo">
                     
-                    <input type="text" id="ingresar_Rut" name="ingresar_Rut" placeholder="Rut" v-model="rut">
+                    <input type="text" id="ingresar_Rut" name="ingresar_Rut" placeholder="Rut" v-model="NuevaCuenta.rut">
                 </form>
                 <form id="formulario_Medio">
-                    <input type="password" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña" v-model="contraseña">
+                    <input type="password" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña" v-model="NuevaCuenta.contraseña">
                     <input type="password" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="Repetir Contraseña">
                 </form>
                 <form id="formulario_Abajo">
-                    <input type="text" id="ingreso_Correo_Crear" name="ingreso_Correo" placeholder="Correo electronico" v-model="correo">
-                    <input type="text" id="numero_Telefono" name="numero_Telefono" placeholder="Número de Telefono" v-model="numero">
+                    <input type="text" id="ingreso_Correo_Crear" name="ingreso_Correo" placeholder="Correo electronico" v-model="NuevaCuenta.correo">
+                    <input type="text" id="numero_Telefono" name="numero_Telefono" placeholder="Número de Telefono" v-model="NuevaCuenta.numero">
                 </form>
                 <br>
                 <div hre id="Registro"><button type="submit" id="registro_boton"> Registrarse</button></div>
@@ -24,7 +24,7 @@
         </div>
 
     </div>
-    <div class="row">
+<!--     <div class="row">
         <thead>
             <tr>
                 <th>Nombre </th>
@@ -47,23 +47,30 @@
                 </tr>
             </tbody>
         </body>
-    </div>
+    </div> -->
 </template>
 
 
 <script>
+import firebase from "../utils/firebase";
 import M from 'materialize-css'
+let db = firebase.database();
+let cuentasRef = db.ref('Cuenta')
 export default {
+
     name: 'Creacion_Gente',
+    firebase: {
+        Cuenta: cuentasRef
+    },
     data() {
         return {
+            NuevaCuenta:{
             nombre_completo: '',
             rut: '',
             contraseña: '',
             correo: '',
             numero: '',
-            usuarios:[],
-            select_instances: []
+            }
         }
     },
     mounted()
@@ -75,14 +82,15 @@ export default {
         crear_Cuenta()
         {
             var data = {
-                nombre_completo: this.nombre_completo,
-                rut: this.rut,
                 contraseña: this.contraseña,
                 correo: this.correo,
+                nombre_completo: this.nombre_completo,
+                Rol: null,
+                rut: this.rut,
                 numero: this.numero,
 
             };
-            this.usuarios.push(data);
+            cuentasRef.push(this.data);
             this.nombre_completo= '';
             this.rut= '';
             this.contraseña= '';
@@ -94,7 +102,7 @@ export default {
 </script>
 
 <style>
-#portada {
+#Creacion_Gente {
    background-image: url('../assets/Fondo.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
