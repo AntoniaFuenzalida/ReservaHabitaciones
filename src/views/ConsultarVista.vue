@@ -2,14 +2,64 @@
 import { ref, reactive } from 'vue'
 import { DatePicker } from 'v-calendar'
 import 'v-calendar/dist/style.css'
+import Tarjetas from '../components/TarjetasReservas.vue';
 
 const date = ref(new Date())
 date.value.setDate(Number(date.value.getDate()) + 35)
 const range = reactive({
   start: new Date(),
   end: date.value
+
 })
+const x="habitacion";
+const ArregloHabitacion = [
+    {
+  
+        habitacion: x+"8",
+        precio: "500",
+        estado:true,
+    },
+    {
+        habitacion: x+"5",
+        precio: "500",
+        estado: false,
+    },
+    {
+        habitacion: x+"4",
+        precio: "600",
+        estado:true,
+    },
+    {
+        habitacion: x+"1",
+        precio: "1200",
+        estado:false
+    }
+];
+
+/*const UsuarioActual =
+{
+    Rut: "25468597-6",
+    Nombre: "Benito Camelo",
+    Telefono:"+569 9794 0689",
+    Correo:"benitocamelo@gmail.com",
+    Dirreccion: "Calle Falsa 123",
+
+}
+*/
+/*const Regresar = () => {
+    console.log("Regresando...")
+}
+*/
+
+
 </script>
+
+
+
+
+
+
+
 
 <template>
   <!-- -------------          header               ------------ -->
@@ -87,7 +137,7 @@ const range = reactive({
                   </div>
                 </form>
               </div>
-              <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Buscar</a></div>
+              <button @click="mostrarColeccionCompleta">buscar</button>
           </div>
       </header>
 
@@ -95,75 +145,12 @@ const range = reactive({
       <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    <div class="col mb-3">
-                        <div class="card h-60">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://i.imgur.com/lg0Vhr6.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                              <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">Habitacion 1</h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                    <div class="col mb-3" v-for="reserva in ArregloHabitacion" :key="reserva">
+                      <Tarjetas :habitacion="reserva.habitacion"
+                                        :precio="reserva.precio"/>
 
-                                    </div>
-                                    <!-- Product price-->
-                                    $18.500 p/noche
-                                </div>
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Haz tu Reserva</a></div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                    <div class="col mb-3">
-                        <div class="card h-60">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://i.imgur.com/rzn4n6m.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                              <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">Habitacion 2</h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-
-                                    </div>
-                                    <!-- Product price-->
-                                    $18.500 p/noche
-                                </div>
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Haz tu Reserva</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-3">
-                        <div class="card h-60">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://i.imgur.com/BxDJEAY.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                              <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">Habitacion 3 </h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                    </div>
-                                    <!-- Product price-->
-                                    $18.500 p/noche
-                                </div>
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Haz tu Reserva</a></div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
+                </div>
                 </div>
         </section> 
 
@@ -175,14 +162,21 @@ const range = reactive({
     </div>
   </footer>
 </template>
-
 <script>
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from "../main.js";
+
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
+  methods: {
+    async mostrarColeccionCompleta() {
+      const querySnapshot = await getDocs(collection(db, "Reservas"));
+querySnapshot.forEach((doc) => {
+  // doc.data() is never undefined for query doc snapshots
+  console.log(doc.id, " => ", doc.data());
+});
   }
-}
+}}
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
