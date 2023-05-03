@@ -60,6 +60,7 @@ const ArregloHabitacion = [
 
 
 
+
 <template>
   <!-- -------------          header               ------------ -->
 
@@ -136,7 +137,7 @@ const ArregloHabitacion = [
                   </div>
                 </form>
               </div>
-              <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Buscar</a></div>
+              <button @click="mostrarColeccionCompleta">buscar</button>
           </div>
       </header>
 
@@ -161,14 +162,21 @@ const ArregloHabitacion = [
     </div>
   </footer>
 </template>
-
 <script>
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from "../main.js";
+
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
+  methods: {
+    async mostrarColeccionCompleta() {
+      const querySnapshot = await getDocs(collection(db, "Reservas"));
+querySnapshot.forEach((doc) => {
+  // doc.data() is never undefined for query doc snapshots
+  console.log(doc.id, " => ", doc.data());
+});
   }
-}
+}}
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
