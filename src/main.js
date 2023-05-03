@@ -4,6 +4,7 @@ import router from './router'
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,7 +22,32 @@ const firebaseConfig = {
 // Initialize Firebase
 const db = initializeApp(firebaseConfig);
 
-export default db
 
+
+
+// Lee los datos de la base de datos
+db.ref('Cuenta').on('value', (snapshot) => {
+  const data = snapshot.val()
+  console.log(data)
+})
+
+db.ref('Reservas').on('value', (snapshot) => {
+  const data = snapshot.val()
+  console.log(data)
+})
+
+db.ref('Servicios Adicionales').on('value', (snapshot) => {
+  const data = snapshot.val()
+  console.log(data)
+})
+
+// Escribe datos en la base de datos
+db.ref('Cuenta').push({
+  Correo: 'Producto 1',
+  Nombre_Apellido: 10
+})
+
+
+export default db
 
 createApp(App).use(router).mount('#app')
