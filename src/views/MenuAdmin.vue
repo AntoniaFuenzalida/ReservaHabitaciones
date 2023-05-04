@@ -2,6 +2,73 @@
 import { DatePicker } from 'v-calendar'
 import 'v-calendar/dist/style.css'
 
+/*
+import { db }  from "../main.js";
+let habitaciones = db.ref('Habitaciones');
+ 
+export default {
+ name: 'App',
+ 
+ firebase: {
+    habitaciones: habitaciones
+ },
+ 
+ data(){
+    return {
+       Habitacion_nueva: {
+          numero: NaN,
+          cantidadDeCamas: NaN,
+          descripcion: NaN,
+          precio: NaN
+       }
+    }
+ },
+ methods:{
+    agregar: function() {
+       habitaciones.push(this.habitacion_nueva, function(error){
+          if (error){
+             toastr.error('Error al intentar agregar el registro.', 'Aviso');
+          }else{ 
+             toastr.success('Registro agregado correctamente.', 'Aviso');
+          }
+       });
+       this.Habitacion_nueva.numero = '';
+       this.Habitacion_nueva.cantidadDeCamas = ''; 
+       this.Habitacion_nueva.descripcion = ''; 
+       this.Habitacion_nueva.precio = ''; 
+
+    },
+    modificar: function(p_compra){ 
+       compras.child(p_compra['.key']).set({
+          nombre: p_compra.nombre,
+          cantidad: p_compra.cantidad
+       }, function(error){
+          if (error){
+             toastr.error('Error al intentar modificar el registro.', 'Aviso');
+          }else{ 
+             toastr.success('Registro modificado correctamente.', 'Aviso');
+          }
+       }); 
+    },
+    eliminar: function(p_compra){
+       compras.child(p_compra['.key']).remove(function(error){
+          if (error){
+             toastr.error('Error al intentar eliminar el registro.', 'Aviso');
+          }else{ 
+             toastr.success('Registro eliminado correctamente.', 'Aviso');
+          }
+       }); 
+    },
+    validarCompra: function(p_compra){
+       return (
+          p_compra.nombre.split(' ').join('') != '' &&
+          !isNaN(parseInt(p_compra.cantidad, 10))
+       );
+    }
+    }
+}
+ */
+
 </script>
 <script setup>
 
@@ -246,7 +313,7 @@ const Seleccionar = (reserva) => {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-            
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
@@ -264,9 +331,52 @@ const Seleccionar = (reserva) => {
                 </div>
                 <div class="modal-body">
                     
+                <!--  -->
+                    <div class="container">
+                        <div class="row">
+                        
+                            <select class="form-control">
+                             <option>habitacion</option>
+                            </select>
+                            
+                        </div>
+                        
+                        <div class="row">
+                            
+                            <div class="col" style="width:20%; ">
+                                <p>hola</p>
+                            </div>
+
+                            <div class="col" style=" margin:0 auto">
+                                
+                                <button type="button" class="btn btn-dark">Guardar</button>
+                            </div>
+                            
+                        </div>
+
+                        <div class="row">
+                            <button type="button" class="btn btn-dark">Guardar</button>
+                        </div>
+
+                        <div class="row">
+                            <button type="button" class="btn btn-dark">Guardar</button>
+                        </div>
+
+                        <div class="row">
+                            <button type="button" class="btn btn-dark">Guardar</button>
+                        </div>
+
+                    </div>
+
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                    
+                   <!--  v-for="habitacion in habitaciones" :key="habitacion" -->
+
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-dark">Guardar</button>
+                
                 </div>
             </div>
         </div>
@@ -280,7 +390,15 @@ const Seleccionar = (reserva) => {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    
+                
+            <!-- botones -->
+                <div>
+                        <button type="button" class="btn btn-dark">Cancelar</button>
+                        <button type="button" class="btn btn-dark">Guardar</button>
+                </div>
+
+
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
@@ -290,5 +408,7 @@ const Seleccionar = (reserva) => {
     </div>
 
 </template>
+
+
 
 <style></style>
