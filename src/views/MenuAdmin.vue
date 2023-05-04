@@ -3,7 +3,7 @@
     import 'v-calendar/dist/style.css'
    
     import app from '../main'
-    import { doc, getFirestore, setDoc } from "firebase/firestore";
+    import { doc, getFirestore, setDoc, getDocs, collection } from "firebase/firestore";
 
     export default {
     
@@ -17,25 +17,22 @@
         }
     },
 
-  
-
 
     methods: {
         async guardarDatos() {
-            console.log("hola estoy guardando")
-            console.log("numero"+this.numero)
-            console.log("precio"+this.precio)
-            console.log("camas"+this.cantidadCamas)
-            
+            console.log("guardando")
             const db = getFirestore(app);
-            await setDoc(doc(db, "Habitaciones", this.numero), {
+            if (await this.sinRepetir()===1){
+                await setDoc(doc(db, "Habitaciones", this.numero), {
                 cantidadCamas: this.cantidadCamas,
                 descripcion: this.descripcion,
                 numero: this.numero,
                 precio: this.precio,
-            })
-            
-            console.log("hola est321oy guardando")
+                })
+                console.log("termine de guardar")
+            }else{
+                console.log("Repetido")
+            }         
         },
         async modificarDatos(numero) {
             const db = getFirestore(app);
@@ -45,6 +42,18 @@
                 numero: this.numero,
                 precio: this.precio,
             })
+        },
+        async sinRepetir() {
+            const db = getFirestore(app);
+            const querySnapshot = await getDocs(collection(db, "Habitaciones"));
+            var rep = 1
+            querySnapshot.forEach((doc) => {
+                if (doc.data().numero == this.numero){
+                    rep = 0
+                }
+                },
+            );
+            return rep;
         },
     }
 }
