@@ -1,22 +1,32 @@
 <script>
-import { DatePicker } from 'v-calendar'
-import 'v-calendar/dist/style.css'
+    import { DatePicker } from 'v-calendar'
+    import 'v-calendar/dist/style.css'
+   
+    import app from '../main'
+    import { doc, getFirestore, setDoc } from "firebase/firestore";
 
-import app from '../main'
-import { collection, doc, getDocs, getFirestore, setDoc } from "firebase/firestore";
+    export default {
+    
 
-export default {
     data() {
         return {
-            cantidadCamas: NaN,
-            descripcion: NaN,
-            numero: NaN,
-            precio: NaN,
+            cantidadCamas: '',
+            descripcion: '',
+            numero: '',
+            precio: '',
         }
     },
 
+  
+
+
     methods: {
         async guardarDatos() {
+            console.log("hola estoy guardando")
+            console.log("numero"+this.numero)
+            console.log("precio"+this.precio)
+            console.log("camas"+this.cantidadCamas)
+            
             const db = getFirestore(app);
             await setDoc(doc(db, "Habitaciones", this.numero), {
                 cantidadCamas: this.cantidadCamas,
@@ -24,6 +34,8 @@ export default {
                 numero: this.numero,
                 precio: this.precio,
             })
+            
+            console.log("hola est321oy guardando")
         },
         async modificarDatos(numero) {
             const db = getFirestore(app);
@@ -38,9 +50,12 @@ export default {
 }
 
 </script>
-<script setup>
 
+
+<script setup>
 import { reactive, ref } from 'vue';
+
+
 const seleccionado = reactive({
     fecha: NaN,
     reserva: NaN
@@ -306,50 +321,51 @@ cargarLasReservas()
 
                     <!--  -->
                     <div class="container">
-                        <div class="row">
-
-                            <select class="form-control">
-                                <option>habitacion</option>
-                            </select>
-
+                       
+                        
+                        <div class="row" style="margin-top: 5%;">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                     <span class="input-group-text" >numero</span>
+                                 </div>
+                                    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="numero" v-model="numero">
+                            </div>                            
                         </div>
 
-                        <div class="row">
-
-                            <div class="col" style="width:20%; ">
-                                <p>hola</p>
-                            </div>
-
-                            <div class="col" style=" margin:0 auto">
-
-                                <button type="button" class="btn btn-dark">Guardar</button>
-                            </div>
-
+                        <div class="row" style="margin-top: 2%;">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                     <span class="input-group-text" >Cantidad Camas</span>
+                                 </div>
+                                    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="cantidadCamas" v-model="cantidadCamas">
+                            </div>                            
                         </div>
 
-                        <div class="row">
-                            <button type="button" class="btn btn-dark">Guardar</button>
+                        <div class="row" style="margin-top: 2%;">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                     <span class="input-group-text">Precio</span>
+                                 </div>
+                                    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="precio" v-model="precio">
+                            </div>                            
                         </div>
 
-                        <div class="row">
-                            <button type="button" class="btn btn-dark">Guardar</button>
+                        <div class="input-group">
+                                <textarea class="form-control" aria-label="With textarea" rows="3" name="descripcion" v-model="descripcion" ></textarea>
                         </div>
 
-                        <div class="row">
-                            <button type="button" class="btn btn-dark">Guardar</button>
-                        </div>
+                       
 
                     </div>
 
 
                 </div>
                 <div class="modal-footer">
-
-                    <!--  v-for="habitacion in habitaciones" :key="habitacion" -->
-
+                    
+                   <!--  v-for="habitacion in habitaciones" :key="habitacion" -->
                     <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-dark">Guardar</button>
-
+                    <button type="button" class="btn btn-dark" @click="guardarDatos()" >Guardar</button>
+                
                 </div>
             </div>
         </div>
@@ -363,18 +379,65 @@ cargarLasReservas()
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    
+                    <!--  -->
+                        <div class="container">
+                            <div class="row">
+                            
+                                <select class="form-control">
+                                 <option>habitacion</option>
+                                </select>
+                                
+                            </div>
+                            
+                            <div class="row" style="margin-top: 5%;">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                         <span class="input-group-text" id="numero">numero</span>
+                                     </div>
+                                        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                </div>                            
+                            </div>
+    
+                            <div class="row" style="margin-top: 2%;">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                         <span class="input-group-text" id="cantidadCamas">Cantidad Camas</span>
+                                     </div>
+                                        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                </div>                            
+                            </div>
+    
+                            <div class="row" style="margin-top: 2%;">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                         <span class="input-group-text" id="precio">Precio</span>
+                                     </div>
+                                        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                </div>                            
+                            </div>
+    
+                            <div class="input-group">
+                                    <textarea class="form-control" aria-label="With textarea" rows="3"></textarea>
+                            </div>
+    
+                           
+    
+                        </div>
+                
+            <!-- botones -->
+                <div>
+                        
 
-                    <!-- botones -->
-                    <div>
-                        <button type="button" class="btn btn-dark">Cancelar</button>
-                        <button type="button" class="btn btn-dark">Guardar</button>
-                    </div>
+
+                </div>
 
 
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-dark">Guardar</button>
                 </div>
             </div>
         </div>
