@@ -6,7 +6,7 @@
         <div id="caja_Adentro">
             <img src="../assets/logohotel.png" id="imagen_Adentro" onclick="location.href='./';" >
             <h3 id="texto_Crear">Creación de Cuenta</h3>
-            <form id ="Todos" @submit.prevent="agregarDatos">
+            <form id ="Todos" @submit.prevent="guardarDatos">
                 <form id="formulario_Arriba">  
                 <input type="text" id="nombre_Completo" name="nombre_Completo" placeholder="Nombre Completo" v-model="Nombre_Apellido">
                     
@@ -21,7 +21,7 @@
                     <input type="text" id="numero_Telefono" name="numero_Telefono" placeholder="Número de Telefono" v-model="Telefono">
                 </form>
                 <br>
-                <div hre id="Registro"><button type="submit" id="registro_boton"  onclick="location.href='./Iniciar_sesion';"> Registrarse</button></div>
+                <div  hre id="Registro"><button type="submit" id="registro_boton" @click="guardarDatos" onclick="location.href='./Iniciar_sesion';"> Registrarse</button></div>
             </form>
             
         </div>
@@ -30,52 +30,80 @@
 
 
 <script>
-    import db from '../main'
+    import app from '../main'
+    import { doc, getFirestore, setDoc } from "firebase/firestore";
+
 
     export default {
+    name: 'guardarDatos',
+
     data() {
         return {
-        Correo_Electronico: '',
-        Nombre_Apellido: '',
-        Rol:'',
-        Rut:'',
-        Telefono:'',
-        Contraseña:''
+            Correo_Electronico: '',
+            Nombre_Apellido: '',
+            Rol:'',
+            Rut:'',
+            Telefono:'',
+            Contraseña:''
+        }
+    },
+
+    methods: {
+        async guardarDatos() {
+            const db = getFirestore(app);
+            await setDoc(doc(db, "Cuentas", "Usuario"), {
+            Nombre_Apellido: this.Nombre_Apellido,
+            Correo_Electronico: this.Correo_Electronico,
+            Contraseña: this.Contraseña,
+            Telefono: this.Telefono,
+            Rol: 'Predeterminado',
+            Rut:this.Rut
+            //await db.collection("cuentas").add({
+            
+        })
+        console.log("ME ESTOY EJECUTANDO AAAAAAAAAA")
+        //console.log('Added city with ID:', res.id)
+        }
     }
-  },
-  methods: {
-    agregarDatos() {
-      // Agrega los datos a la base de datos
-      db.ref('Cuenta').push({
-        Correo_Electronico: this.Correo_Electronico,
-        Nombre_Apellido: this.Nombre_Apellido,
-        Rol:this.rol,
-        Rut:this.rut,
-        Telefono:this.Telefono,
-        Contraseña:this.Contraseña
-      })
-      
-      /*
-      
-      db.ref('Reservas').push({
-        titulo: this.titulo,
-        descripcion: this.descripcion
-      })
-
-      db.ref('Servicios Adicionales').push({
-        titulo: this.titulo,
-        descripcion: this.descripcion
-      })
-
-      
-
-      // Limpia los campos del formulario
-      this.titulo = ''
-      this.descripcion = ''
-      */
-    }
-  }
 }
+  
+    
+    /*export default {
+        data() {
+            return {
+                Correo_Electronico: '',
+                Nombre_Apellido: '',
+                Rol:'',
+                Rut:'',
+                Telefono:'',
+                Contraseña:''
+            }
+        },
+    methods: {
+    async guardarDatos() {
+            await await db.collection('Cuentas').add {
+            Nombre_Apellido: this.Nombre_Apellido,
+            Correo_Electronico: this.Correo_Electronico,
+            Contraseña: this.Contraseña,
+            Telefono: this.Telefono,
+            Rol: 'Predeterminado',
+            Rut:this.Rut
+        });
+
+
+    
+
+    
+    db.ref('Cuenta').push(usuario)
+    this.Nombre_Apellido = '',
+    this.Correo_Electronico = '',
+    this.Contraseña = '',
+    this.Telefono = '',
+    this.Rol = '',
+    this.Rut = ''
+}
+}
+}*/
 </script>
 
 <style>
