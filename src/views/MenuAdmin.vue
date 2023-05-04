@@ -35,6 +35,7 @@
             }         
         },
         async modificarDatos(numero) {
+            console.log(numero.numero)
             const db = getFirestore(app);
             await setDoc(doc(db, "Habitaciones", numero), {
                 cantidadCamas: this.cantidadCamas,
@@ -55,6 +56,7 @@
             );
             return rep;
         },
+
     }
 }
 
@@ -67,15 +69,18 @@ import { reactive, ref } from 'vue';
 
 const seleccionado = reactive({
     fecha: NaN,
-    reserva: NaN
+    reserva: NaN,
+    numero: NaN
 
 });
 const masks = ref({
     modelValue: 'DD-MM-YYYY',
 });
 
-// ArregloReservas es un placeholder habra que cambiarlo cuando se realize la version definitiva
+
 var ArregloReservas = {}
+var numHabitacion = {}
+
 
 const CargarFecha = () => {
     seleccionado.reserva = NaN
@@ -102,8 +107,23 @@ const cargarLasReservas = async() =>{
         },
     );
 }
-cargarLasReservas()
 
+const cargarHabitacion = async() =>{
+    
+    const db = getFirestore(app);
+    const querySnapshot = await getDocs(collection(db, "Habitaciones"));
+    querySnapshot.forEach((doc) => {
+        numHabitacion[doc.data().numero] = {
+            numero: doc.data().numero
+        }
+        }
+
+        );
+    }
+
+cargarLasReservas()
+cargarHabitacion()
+console.log(numHabitacion)
 </script>
 
 <template>
@@ -393,21 +413,19 @@ cargarLasReservas()
                         <div class="container">
                             <div class="row">
                             
-                                <select class="form-control">
-                                 <option>habitacion</option>
+                                <select v-model="seleccionado.numero"  class="form-control" id="habitacionesSelector">
+                                    <option> seleccionar habitacion</option>
+                                    <option v-for="numero in numHabitacion" :key="numero">
+                                        {{numero}}
+                                    </option>
                                 </select>
                                 
+                                
+
+
                             </div>
                             
-                            <div class="row" style="margin-top: 5%;">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                         <span class="input-group-text" id="numero">numero</span>
-                                     </div>
-                                        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-                                </div>                            
-                            </div>
-    
+                            
                             <div class="row" style="margin-top: 2%;">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
@@ -446,7 +464,7 @@ cargarLasReservas()
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-dark">Guardar</button>
+                    <button type="button" class="btn btn-dark" @click="modificarDatos(seleccionado.numero)" >Guardar</button>
                 </div>
             </div>
         </div>
