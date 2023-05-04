@@ -1,3 +1,20 @@
+<script setup>
+
+  let datosContacto =
+{
+    telefono: "+569 4962 0996",
+    correo: "contacto@hotelcordillera.cl",
+    calle: "Chillán 1169, San Fernando",
+    nombre: "Hotel Cordillera, Chile"
+}
+
+
+
+</script>
+
+
+
+
 <template>
 <head>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -6,6 +23,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
 </head>
+
+
 
 <body>
 
@@ -214,9 +233,10 @@
           <div class="card-body p-4">
             <div class="text-center">
               <!--Información-->
-              <br>Hotel Cordillera, Chile
-              <br>Chillán 1169, San Fernando
-              <br>contacto@hotelcordillera.com
+              <br>{{ datosContacto.nombre }}
+              <br>{{ datosContacto.calle }}
+              <br>{{ datosContacto.correo }}
+              <br>{{ datosContacto.telefono }}
             </div>
           </div>
         </div>
