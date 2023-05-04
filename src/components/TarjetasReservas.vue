@@ -1,9 +1,7 @@
 <script>
 export default {
     props: {
-        habitacion: String,
-        precio: String,
-        estado: Boolean,
+        reserva: Object
     },
     data: () => ({
         Mostrar: false
@@ -18,13 +16,13 @@ export default {
         <div class="card-body p-4">
             <div class="text-center">
                 <!-- Product name-->
-                <h5 class="fw-bolder">{{ habitacion }} </h5>
+                <h5 class="fw-bolder">{{ reserva.habitacion }} </h5>
                 <!-- Product reviews-->
                 <div class="d-flex justify-content-center small text-warning mb-2">
 
                 </div>
                 <!-- Product price-->
-                {{ precio }} p/noche
+                {{ reserva.precio }} p/noche
             </div>
             <div class="text-center">
                 <!-- Product name-->

@@ -1,6 +1,4 @@
-<script setup>
 
-</script>
 <template>
     <!-- -------------          header               ------------ -->
 
@@ -56,16 +54,15 @@
 
                   <input type="date" id="start"           min="2018-01-01" v-model ="fecha_inicio">
                   <input type="date" id="fin"            min="2018-01-01" v-model="fecha_fin">
-                  {{ fecha_inicio}}{{ fecha_fin }}  
                   <div class="form-group w-25">
                       <br>
                       <label for="inputsm"> Cantidad Adultos</label>
-                      <input class="form-control input-sm" id="inputsm" type="text">
+                      <input class="form-control input-sm" id="inputsm" type="text" v-model="adultos">
                     </div>
                     <br>
                     <div class="form-group w-25">
                       <label for="inputdefault">Cantidad Niños</label>
-                      <input class="form-control" id="inputdefault" type="text">
+                      <input class="form-control" id="inputdefault" type="text" v-model="kid">
                     </div>
                   </form>
                 </div>
@@ -78,8 +75,8 @@
               <div class="container px-4 px-lg-5 mt-5">
                   <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                       <div class="col mb-3" v-for="reserva in ArregloHabitacion" :key="reserva">
-                        <Tarjetas :habitacion="reserva.habitacion"
-                                          :precio="reserva.precio"/>
+                         <Tarjetas :reserva="reserva"/> 
+                                        
 
                       </div>
                   </div>
@@ -99,36 +96,50 @@
   import { db } from "../main.js";
 import Tarjetas from '../components/TarjetasReservas.vue';
   
-  const ArregloHabitacion = [];
-
-  
-
   export default {
     data() {
     return {
+      ArregloHabitacion:[
+      {
+      habitacion:"test",
+      precio: "1000",
+      adultos :null,
+      kids:null,
+    }
+
+      ],
       fecha_fin:null,
       fecha_inicio:null,
       startDate: null,
       endDate: null
     }
+
+  
+  },
+  components:
+  {
+    Tarjetas
   },
   /* /*watch: {
-    startDate: function(newVal, oldVal) {
-      if (newVal && this.endDate) {
-        console.log(`Selected date range: ${this.startDate} - ${this.endDate}`)
-      }
-    },
-    endDate: function(newVal, oldVal) {
-      if (newVal && this.startDate) {
-        console.log(`Selected date range: ${this.startDate} - ${this.endDate}`)
-      }
-    }
+
+    
   },*/
     methods: {
       async  mostrarColeccionCompleta() {
-        const querySnapshot = await getDocs(collection(db, "Reservas"));
+        this.ArregloHabitacion=[];
+        const querySnapshot = await getDocs(collection(db, "Habitaciones"));
   querySnapshot.forEach((doc) => {
-    console.log(doc.id, " => ", doc.data());
+
+      ///preguntar si el rango de fechas de actual no esta en algun rango de reserva
+
+
+    console.log(doc.data().numero);
+    const reserva={
+      habitacion:doc.data().numero,
+      precio: "1000"
+    }
+    this.ArregloHabitacion.push(reserva);
+  
   });
     //console.log(inicio);
     //console.log(fin);
