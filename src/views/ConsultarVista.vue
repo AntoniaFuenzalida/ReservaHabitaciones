@@ -1,54 +1,7 @@
-  <script setup>
-  import { ref, reactive } from 'vue'
-  import { DatePicker } from 'v-calendar'
-  import 'v-calendar/dist/style.css'
-  import Tarjetas from '../components/TarjetasReservas.vue';
+<script setup>
 
-  const date = ref(new Date())
-  date.value.setDate(Number(date.value.getDate()) + 35)
-  const range = reactive({
-    start: new Date(),
-    end: date.value
-
-  })
-
-  const ArregloHabitacion = [];
-  async function mostrarColeccionCompleta() {
-    const inicio=range.start;
-    const fin=range.end;
-        const querySnapshot = await getDocs(collection(db, "Reservas"));
-  querySnapshot.forEach((doc) => {
-    console.log(doc.id, " => ", doc.data());
-  });
-    console.log(inicio);
-    console.log(fin);
-    }
-  /*const UsuarioActual =
-  {
-      Rut: "25468597-6",
-      Nombre: "Benito Camelo",
-      Telefono:"+569 9794 0689",
-      Correo:"benitocamelo@gmail.com",
-      Dirreccion: "Calle Falsa 123",
-
-  }
-  */
-  /*const Regresar = () => {
-      console.log("Regresando...")
-  }
-  */
-
-
-  </script>
-
-
-
-
-
-
-
-
-  <template>
+</script>
+<template>
     <!-- -------------          header               ------------ -->
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -100,19 +53,11 @@
                     <br>
 
                 <form>
-                  <DatePicker v-model="range" mode="date" :columns="2" is-range>
-      <template v-slot="{ inputValue, inputEvents }">
-        <div class="group">
-          <label class="button groupItem" for="start">Fecha Ingreso</label>
-          <input type="text" id="start" :value="inputValue.start" v-on="inputEvents.start" class="input groupItem">
-          <label class="button groupItem" for="end">Fecha Salida</label>
-          <input type="text" id="end" :value="inputValue.end" readonly class="input groupItem">
-        </div>
-      </template>
-    </DatePicker>
 
-
-                    <div class="form-group w-25">
+                  <input type="date" id="start"           min="2018-01-01" v-model ="fecha_inicio">
+                  <input type="date" id="fin"            min="2018-01-01" v-model="fecha_fin">
+                  {{ fecha_inicio}}{{ fecha_fin }}  
+                  <div class="form-group w-25">
                       <br>
                       <label for="inputsm"> Cantidad Adultos</label>
                       <input class="form-control input-sm" id="inputsm" type="text">
@@ -152,11 +97,44 @@
   <script>
   import { collection, getDocs } from 'firebase/firestore';
   import { db } from "../main.js";
+import Tarjetas from '../components/TarjetasReservas.vue';
+  
+  const ArregloHabitacion = [];
+
+  
 
   export default {
+    data() {
+    return {
+      fecha_fin:null,
+      fecha_inicio:null,
+      startDate: null,
+      endDate: null
+    }
+  },
+  /* /*watch: {
+    startDate: function(newVal, oldVal) {
+      if (newVal && this.endDate) {
+        console.log(`Selected date range: ${this.startDate} - ${this.endDate}`)
+      }
+    },
+    endDate: function(newVal, oldVal) {
+      if (newVal && this.startDate) {
+        console.log(`Selected date range: ${this.startDate} - ${this.endDate}`)
+      }
+    }
+  },*/
     methods: {
+      async  mostrarColeccionCompleta() {
+        const querySnapshot = await getDocs(collection(db, "Reservas"));
+  querySnapshot.forEach((doc) => {
+    console.log(doc.id, " => ", doc.data());
+  });
+    //console.log(inicio);
+    //console.log(fin);
+    }
 
-  }}
+  }} 
 
   </script>
 
