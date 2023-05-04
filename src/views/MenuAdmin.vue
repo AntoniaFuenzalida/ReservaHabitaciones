@@ -35,7 +35,7 @@
             }         
         },
         async modificarDatos(numero) {
-            console.log(numero.numero)
+            console.log(numero)
             const db = getFirestore(app);
             await setDoc(doc(db, "Habitaciones", numero), {
                 cantidadCamas: this.cantidadCamas,
@@ -114,7 +114,7 @@ const cargarHabitacion = async() =>{
     const querySnapshot = await getDocs(collection(db, "Habitaciones"));
     querySnapshot.forEach((doc) => {
         numHabitacion[doc.data().numero] = {
-            numero: doc.data().numero
+            numero: doc.data().numero,
         }
         }
 
@@ -431,7 +431,7 @@ console.log(numHabitacion)
                                     <div class="input-group-prepend">
                                          <span class="input-group-text" id="cantidadCamas">Cantidad Camas</span>
                                      </div>
-                                        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                        <input type="text" class="form-control" aria-label="Default" v-model="cantidadCamas" aria-describedby="inputGroup-sizing-default">
                                 </div>                            
                             </div>
     
@@ -440,12 +440,12 @@ console.log(numHabitacion)
                                     <div class="input-group-prepend">
                                          <span class="input-group-text" id="precio">Precio</span>
                                      </div>
-                                        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                        <input type="text" class="form-control" aria-label="Default" v-model="precio" aria-describedby="inputGroup-sizing-default">
                                 </div>                            
                             </div>
     
                             <div class="input-group">
-                                    <textarea class="form-control" aria-label="With textarea" rows="3"></textarea>
+                                    <textarea class="form-control" aria-label="With textarea" rows="3" v-model="descripcion"></textarea>
                             </div>
     
                            
