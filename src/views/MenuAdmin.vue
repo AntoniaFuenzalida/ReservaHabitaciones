@@ -307,38 +307,40 @@ const Seleccionar = (reserva) => {
                     
                 <!--  -->
                     <div class="container">
-                        <div class="row">
+                       
                         
-                            <select class="form-control">
-                             <option>habitacion</option>
-                            </select>
-                            
-                        </div>
-                        
-                        <div class="row">
-                            
-                            <div class="col" style="width:20%; ">
-                                <p>hola</p>
-                            </div>
-
-                            <div class="col" style=" margin:0 auto">
-                                
-                                <button type="button" class="btn btn-dark">Guardar</button>
-                            </div>
-                            
+                        <div class="row" style="margin-top: 5%;">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                     <span class="input-group-text" id="numero">numero</span>
+                                 </div>
+                                    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                            </div>                            
                         </div>
 
-                        <div class="row">
-                            <button type="button" class="btn btn-dark">Guardar</button>
+                        <div class="row" style="margin-top: 2%;">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                     <span class="input-group-text" id="cantidadCamas">Cantidad Camas</span>
+                                 </div>
+                                    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                            </div>                            
                         </div>
 
-                        <div class="row">
-                            <button type="button" class="btn btn-dark">Guardar</button>
+                        <div class="row" style="margin-top: 2%;">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                     <span class="input-group-text" id="precio">Precio</span>
+                                 </div>
+                                    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                            </div>                            
                         </div>
 
-                        <div class="row">
-                            <button type="button" class="btn btn-dark">Guardar</button>
+                        <div class="input-group">
+                                <textarea class="form-control" aria-label="With textarea" rows="3"></textarea>
                         </div>
+
+                       
 
                     </div>
 
@@ -347,7 +349,6 @@ const Seleccionar = (reserva) => {
                 <div class="modal-footer">
                     
                    <!--  v-for="habitacion in habitaciones" :key="habitacion" -->
-
                     <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-dark">Guardar</button>
                 
@@ -364,18 +365,65 @@ const Seleccionar = (reserva) => {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    
+                    <!--  -->
+                        <div class="container">
+                            <div class="row">
+                            
+                                <select class="form-control">
+                                 <option>habitacion</option>
+                                </select>
+                                
+                            </div>
+                            
+                            <div class="row" style="margin-top: 5%;">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                         <span class="input-group-text" id="numero">numero</span>
+                                     </div>
+                                        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                </div>                            
+                            </div>
+    
+                            <div class="row" style="margin-top: 2%;">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                         <span class="input-group-text" id="cantidadCamas">Cantidad Camas</span>
+                                     </div>
+                                        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                </div>                            
+                            </div>
+    
+                            <div class="row" style="margin-top: 2%;">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                         <span class="input-group-text" id="precio">Precio</span>
+                                     </div>
+                                        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                </div>                            
+                            </div>
+    
+                            <div class="input-group">
+                                    <textarea class="form-control" aria-label="With textarea" rows="3"></textarea>
+                            </div>
+    
+                           
+    
+                        </div>
                 
             <!-- botones -->
                 <div>
-                        <button type="button" class="btn btn-dark">Cancelar</button>
-                        <button type="button" class="btn btn-dark">Guardar</button>
+                        
+
+
                 </div>
 
 
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-dark">Guardar</button>
                 </div>
             </div>
         </div>
