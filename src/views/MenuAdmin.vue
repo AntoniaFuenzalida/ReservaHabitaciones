@@ -1,73 +1,47 @@
 <script>
-import { DatePicker } from 'v-calendar'
-import 'v-calendar/dist/style.css'
+    import { DatePicker } from 'v-calendar'
+    import 'v-calendar/dist/style.css'
 
-/*
-import { db }  from "../main.js";
-let habitaciones = db.ref('Habitaciones');
- 
-export default {
- name: 'App',
- 
- firebase: {
-    habitaciones: habitaciones
- },
- 
- data(){
-    return {
-       Habitacion_nueva: {
-          numero: NaN,
-          cantidadDeCamas: NaN,
-          descripcion: NaN,
-          precio: NaN
-       }
-    }
- },
- methods:{
-    agregar: function() {
-       habitaciones.push(this.habitacion_nueva, function(error){
-          if (error){
-             toastr.error('Error al intentar agregar el registro.', 'Aviso');
-          }else{ 
-             toastr.success('Registro agregado correctamente.', 'Aviso');
-          }
-       });
-       this.Habitacion_nueva.numero = '';
-       this.Habitacion_nueva.cantidadDeCamas = ''; 
-       this.Habitacion_nueva.descripcion = ''; 
-       this.Habitacion_nueva.precio = ''; 
+    import app from '../main'
+    import { doc, getFirestore, setDoc } from "firebase/firestore";
 
+    export default {
+    name: 'guardarDatos',
+
+    data() {
+        return {
+            cantidadCamas: NaN,
+            descripcion: NaN,
+            numero: NaN,
+            precio: NaN,
+        }
     },
-    modificar: function(p_compra){ 
-       compras.child(p_compra['.key']).set({
-          nombre: p_compra.nombre,
-          cantidad: p_compra.cantidad
-       }, function(error){
-          if (error){
-             toastr.error('Error al intentar modificar el registro.', 'Aviso');
-          }else{ 
-             toastr.success('Registro modificado correctamente.', 'Aviso');
-          }
-       }); 
-    },
-    eliminar: function(p_compra){
-       compras.child(p_compra['.key']).remove(function(error){
-          if (error){
-             toastr.error('Error al intentar eliminar el registro.', 'Aviso');
-          }else{ 
-             toastr.success('Registro eliminado correctamente.', 'Aviso');
-          }
-       }); 
-    },
-    validarCompra: function(p_compra){
-       return (
-          p_compra.nombre.split(' ').join('') != '' &&
-          !isNaN(parseInt(p_compra.cantidad, 10))
-       );
-    }
+
+    methods: {
+        async guardarDatos() {
+            const db = getFirestore(app);
+            await setDoc(doc(db, "Habitaciones", this.numero), {
+                cantidadCamas: this.cantidadCamas,
+                descripcion: this.descripcion,
+                numero: this.numero,
+                precio: this.precio,     
+            })
+        },
+        async modificarDatos(numero) {
+            const db = getFirestore(app);
+            await setDoc(doc(db, "Habitaciones", numero), {
+                cantidadCamas: this.cantidadCamas,
+                descripcion: this.descripcion,
+                numero: this.numero,
+                precio: this.precio,
+            })
+        }
     }
 }
- */
+  
+    
+  
+
 
 </script>
 <script setup>

@@ -1,7 +1,6 @@
 
 
 <template>
-    
     <div class="bg-image" id="portada">
         <div id="caja_Adentro">
             <img src="../assets/logohotel.png" id="imagen_Adentro" onclick="location.href='./';" >
@@ -23,7 +22,6 @@
                 <br>
                 <div  hre id="Registro"><button type="submit" id="registro_boton" @click="guardarDatos" > Registrarse</button></div>
             </form>
-            
         </div>
     </div>
 </template>
@@ -32,7 +30,6 @@
 <script>
     import app from '../main'
     import { doc, getFirestore, setDoc } from "firebase/firestore";
-    //onclick="location.href='./Iniciar_sesion';"
 
     export default {
     name: 'guardarDatos',
@@ -58,8 +55,8 @@
             Telefono: this.Telefono,
             Rol: 'Predeterminado',
             Rut:this.Rut
-            
         })
+        location.href='./Iniciar_sesion';
         }
     }
 }
