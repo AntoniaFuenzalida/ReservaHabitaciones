@@ -6,9 +6,9 @@
       <br>
       <form id="formulario">
         <label for="Email"> </label>
-        <input type="text" id="ingreso_Correo" name="ingreso_Correo" placeholder="Correo electronico">
+        <input type="text" id="ingreso_Correo" name="ingreso_Correo" placeholder="Correo electronico" v-model="ingreso_Correo">
         <label for="contraseña"> </label>
-        <input type="password" id="ingreso_Contraseña" name="ingreso_Contraseña" placeholder="Contraseña">
+        <input type="password" id="ingreso_Contraseña" name="ingreso_Contraseña" placeholder="Contraseña" v-model="ingreso_Contraseña">
       </form>
       <br>
       <div id="div_Botón"><button id="inicio_Sesión" onclick="location.href='./menu_Usuario';"> Iniciar sesión</button></div>
@@ -28,8 +28,31 @@
 
 
 <script>
-</script>
+  import app from '../main'
+  import { doc, getFirestore, setDoc } from "firebase/firestore";
+  export default {
+  name: 'Consultar_Datos',
+  data() {
+    return {
+      ingreso_Correo: '',
+      ingreso_Contraseña: '',
+    }
+  },
+  methods: {
+    async validar_Datos() {
+        const db = getFirestore(app);
+        const cuentasRef = db.collection("Cuentas");
+        const ConsultaRef = await cuentasRef.where('Correo_Electronico', '==', 'this.ingreso_Correo').get();
+        if (ConsultaRef.empty) {
+            console.log('No se encontro esta cuenta');
+            return;
+          }
+        }
+      },
+    },
 
+</script>
+  
 <style>
 #pagina {
   background-image:url('../assets/Fondo.jpg');

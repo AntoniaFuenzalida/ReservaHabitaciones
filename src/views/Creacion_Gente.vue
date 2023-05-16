@@ -1,247 +1,3 @@
-<<<<<<< HEAD
-<template>
-    <div class="bg-image" id="Creacion_Gente">
-        <div id="caja_Adentro">
-            <img src="../assets/logohotel.png" id="imagen_Adentro" onclick="location.href='./';" >
-            <h7 id="texto_Crear">Creación de Cuenta</h7>
-            <form id="Todos" v-on:submit.prevent="crear_Cuenta">
-                <form id="formulario_Arriba">
-
-                    <input type="text" id="nombre_Completo" name="nombre_Completo" placeholder="Nombre Completo" v-model="NuevaCuenta.nombre_completo">
-                    
-                    <input type="text" id="ingresar_Rut" name="ingresar_Rut" placeholder="Rut" v-model="NuevaCuenta.rut">
-                </form>
-                <form id="formulario_Medio">
-                    <input type="password" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña" v-model="NuevaCuenta.contraseña">
-                    <input type="password" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="Repetir Contraseña">
-                </form>
-                <form id="formulario_Abajo">
-                    <input type="text" id="ingreso_Correo_Crear" name="ingreso_Correo" placeholder="Correo electronico" v-model="NuevaCuenta.correo">
-                    <input type="text" id="numero_Telefono" name="numero_Telefono" placeholder="Número de Telefono" v-model="NuevaCuenta.numero">
-                </form>
-                <br>
-                <div hre id="Registro"><button type="submit" id="registro_boton"> Registrarse</button></div>
-            </form>
-        </div>
-
-    </div>
-<!--     <div class="row">
-        <thead>
-            <tr>
-                <th>Nombre </th>
-                <th>Rut </th>
-                <th>Contraseña</th>
-                <th>Correo</th>
-                <th>Numero</th>
-            </tr>
-        </thead>
-        <body>
-            <tbody>
-                <tr v-for="usuario in usuarios" v-bind:key="usuario">
-                    <td>{{usuario.nombre_completo}}</td>
-                    <td>{{usuario.rut}}</td>
-                    <td>{{usuario.contraseña}}</td>
-                    <td>{{usuario.correo}}</td>
-                    <td>{{usuario.numero}}</td>
-                    <td> <a href="#!"><i class="material-icons">create</i></a></td>
-                    <td> <a href="#!"><i class="material-icons">delete</i></a></td>
-                </tr>
-            </tbody>
-        </body>
-    </div> -->
-</template>
-
-
-<script>
-import firebase from "../utils/firebase";
-import M from 'materialize-css'
-let db = firebase.database();
-let cuentasRef = db.ref('Cuenta')
-export default {
-
-    name: 'Creacion_Gente',
-    firebase: {
-        Cuenta: cuentasRef
-    },
-    data() {
-        return {
-            NuevaCuenta:{
-            nombre_completo: '',
-            rut: '',
-            contraseña: '',
-            correo: '',
-            numero: '',
-            }
-        }
-    },
-    mounted()
-    {
-        var elems = document.querySelectorAll('select');
-        this.select_instances = M.FormSelect.init(elems, null);
-    },
-    methods: {
-        crear_Cuenta()
-        {
-            var data = {
-                contraseña: this.contraseña,
-                correo: this.correo,
-                nombre_completo: this.nombre_completo,
-                Rol: null,
-                rut: this.rut,
-                numero: this.numero,
-
-            };
-            cuentasRef.push(this.data);
-            this.nombre_completo= '';
-            this.rut= '';
-            this.contraseña= '';
-            this.correo= '';
-            this.numero= '';
-        }
-    },
-};
-</script>
-
-<style>
-#Creacion_Gente {
-   background-image: url('../assets/Fondo.jpg');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    background-size: cover;
-    max-width: 100%;
-    height: 100vh;
-    opacity: 0.9;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-}
-
-#caja_Adentro {
-    height: 60%;
-    width: 25%;
-    background-color: white;
-    opacity: 75%;
-}
-
-#imagen_Adentro {
-
-    display: block;
-    margin: 0%auto;
-}
-
-#ingreso_Correo_Crear {
-    border: 1px solid #000000;
-    border-radius: 0%;
-    -moz-border-radius: 7px;
-    -webkit-border-radius: 7px;
-    width: 35%;
-    background-color: white;
-    color: rgb(0, 0, 0);
-}
-
-#repetir_Contraseña {
-    border: 1px solid #000000;
-    border-radius: 0%;
-    -moz-border-radius: 7px;
-    -webkit-border-radius: 7px;
-    width: 35%;
-    background-color: white;
-    color: rgb(0, 0, 0);
-}
-#ingresar_Contraseña {
-    border: 1px solid #000000;
-    border-radius: 0%;
-    -moz-border-radius: 7px;
-    -webkit-border-radius: 7px;
-    width: 35%;
-    background-color: white;
-    color: rgb(0, 0, 0);
-}
-#nombre_Completo{
-    border: 1px solid #000000;
-    border-radius: 0%;
-    -moz-border-radius: 7px;
-    -webkit-border-radius: 7px;
-    width: 35%;
-    background-color: white;
-    color: rgb(0, 0, 0);
-}
-#ingresar_Rut{
-    border: 1px solid #000000;
-    border-radius: 0%;
-    -moz-border-radius: 7px;
-    -webkit-border-radius: 7px;
-    width: 35%;
-    background-color: white;
-    color: rgb(0, 0, 0);
-    
-}
-#numero_Telefono{
-    border: 1px solid #000000;
-    border-radius: 0%;
-    -moz-border-radius: 7px;
-    -webkit-border-radius: 7px;
-    width: 35%;
-    background-color: white;
-    color: rgb(0, 0, 0);
-}
-
-#formulario_Arriba {
-    width: 100%;
-    max-width: 100% auto;
-    margin: 2% auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    column-gap: 2%;
-}
-#formulario_Medio {
-    width: 100%;
-    max-width: 100% auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    column-gap: 2%;
-}
-#formulario_Abajo {
-    width: 100%;
-    max-width: 100% auto;
-    display: flex;
-    margin: 2% auto;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    column-gap: 2%;
-}
-
-#registro_boton {
-    width: 25%;
-    height: 8%;
-    background-color: #5E95E7;
-    border-radius: 0%;
-    border: 1px solid #000000;
-    color: black;
-    text-align: center;
-    font-size: 16px;
-    margin: 0 auto;
-    cursor: pointer;
-}
-
-#Registro {
-    display: flex;
-    justify-content: center;
-}
-
-#texto_Crear {
-    display: flex;
-    justify-content: center;
-    text-decoration: underline black;
-}
-
-=======
-
 
 <template>
     <div class="bg-image" id="portada">
@@ -256,7 +12,7 @@ export default {
                 </form>
                 <form id="formulario_Medio">
                     <input type="password" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña" v-model="Contraseña">
-                    <input type="password" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="Repetir Contraseña" >
+                    <input type="password" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="Repetir Contraseña" v-model="Rep_Contra">
                 </form>
                 <form id="formulario_Abajo">
                     <input type="text" id="ingreso_Correo_Crear" name="ingreso_Correo" placeholder="Correo electronico" v-model="Correo_Electronico">
@@ -284,21 +40,32 @@ export default {
             Rol:'',
             Rut:'',
             Telefono:'',
-            Contraseña:''
+            Contraseña: '',
+            Rep_Contra: ''
         }
     },
 
     methods: {
+        checkForm: function (e) {
+            if (this.Contraseña == this.Rep_Contra) {
+                return true;
+            }
+            
+        },
         async guardarDatos() {
             const db = getFirestore(app);
             await setDoc(doc(db, "Cuentas", this.Rut), {
-            Nombre_Apellido: this.Nombre_Apellido,
-            Correo_Electronico: this.Correo_Electronico,
-            Contraseña: this.Contraseña,
-            Telefono: this.Telefono,
-            Rol: 'Predeterminado',
-            Rut:this.Rut
-        })
+                if(checkForm) {
+                    Nombre_Apellido: this.Nombre_Apellido;
+                    Correo_Electronico: this.Correo_Electronico;
+                    Contraseña: this.Contraseña;
+                    Telefono: this.Telefono;
+                    Rol: 'Predeterminado';
+                    Rut: this.Rut;
+                }
+
+                
+            })
         location.href='./Iniciar_sesion';
         }
     }
@@ -444,7 +211,20 @@ export default {
     display: flex;
     justify-content: center;
     text-decoration: underline black;
+    font-size: 16px;
+    margin: 0 auto;
+    cursor: pointer;
 }
 
->>>>>>> pruebaBD
+#Registro {
+    display: flex;
+    justify-content: center;
+}
+
+#texto_Crear {
+    display: flex;
+    justify-content: center;
+    text-decoration: underline black;
+}
+
 </style>
