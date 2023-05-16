@@ -1,15 +1,3 @@
-<script setup>
-import { ref, reactive } from 'vue'
-import { DatePicker } from 'v-calendar'
-import 'v-calendar/dist/style.css'
-
-const date = ref(new Date())
-date.value.setDate(Number(date.value.getDate()) + 35)
-const range = reactive({
-  start: new Date(),
-  end: date.value
-})
-</script>
 
 <template>
   <!-- -------------          header               ------------ -->
@@ -55,119 +43,47 @@ const range = reactive({
 
 
   <header class="bg-dark py-5">
-          <div class="container px-4 px-lg-5 my-5">
-              <div class= "text-white">
+    <div class="container px-4 px-lg-5 my-5">
+      <div class="text-white">
 
-                  <h1 class="display-4 fw-bolder text-center">Reserva con Nosotros</h1>
-                  <p class="lead fw-normal text-white-50 mb-0">Elije tu fecha de llegada y salida</p>
-                  <br>
+        <h1 class="display-4 fw-bolder text-center">Reserva con Nosotros</h1>
+        <p class="lead fw-normal text-white-50 mb-0">Elije tu fecha de llegada y salida</p>
+        <br>
 
-              <form>
-                <DatePicker v-model="range" mode="date" :columns="2" is-range>
-    <template v-slot="{ inputValue, inputEvents }">
-      <div class="group">
-        <label class="button groupItem" for="start">Fecha Ingreso</label>
-        <input type="text" id="start" :value="inputValue.start" v-on="inputEvents.start" class="input groupItem">
-        <label class="button groupItem" for="end">Fecha Salida</label>
-        <input type="text" id="end" :value="inputValue.end" readonly class="input groupItem">
-      </div>
-    </template>
-  </DatePicker>
+        <form>
 
-
-                  <div class="form-group w-25">
-                    <br>
-                    <label for="inputsm"> Cantidad Adultos</label>
-                    <input class="form-control input-sm" id="inputsm" type="text">
-                  </div>
-                  <br>
-                   <div class="form-group w-25">
-                    <label for="inputdefault">Cantidad Niños</label>
-                    <input class="form-control" id="inputdefault" type="text">
-                  </div>
-                </form>
-              </div>
-              <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Buscar</a></div>
+          <input type="date" id="start" min="2018-01-01" v-model="fecha_inicio">
+          <input type="date" id="fin" min="2018-01-01" v-model="fecha_fin">
+          <div class="form-group w-25">
+            <br>
+            <label for="inputsm"> Cantidad Adultos</label>
+            <input class="form-control input-sm" id="inputsm" type="text" v-model="adultos">
           </div>
-      </header>
+          <br>
+          <div class="form-group w-25">
+            <label for="inputdefault">Cantidad Niños</label>
+            <input class="form-control" id="inputdefault" type="text" v-model="kid">
+          </div>
+        </form>
+      </div>
+      <button @click="reservaFiltradas()">buscar</button>
+    </div>
+  </header>
 
 
-      <section class="py-5">
-            <div class="container px-4 px-lg-5 mt-5">
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    <div class="col mb-3">
-                        <div class="card h-60">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://i.imgur.com/lg0Vhr6.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                              <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">Habitacion 1</h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
+  <section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+      <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        <div class="col mb-3" v-for="reserva in Habitaciones" :key="reserva">
+          <Tarjetas :reserva="reserva" />
 
-                                    </div>
-                                    <!-- Product price-->
-                                    $18.500 p/noche
-                                </div>
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Haz tu Reserva</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-3">
-                        <div class="card h-60">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://i.imgur.com/rzn4n6m.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                              <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">Habitacion 2</h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
 
-                                    </div>
-                                    <!-- Product price-->
-                                    $18.500 p/noche
-                                </div>
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Haz tu Reserva</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-3">
-                        <div class="card h-60">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://i.imgur.com/BxDJEAY.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                              <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">Habitacion 3 </h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                    </div>
-                                    <!-- Product price-->
-                                    $18.500 p/noche
-                                </div>
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Haz tu Reserva</a></div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        </section> 
+        </div>
+      </div>
+    </div>
+  </section>
 
-             
+
   <!-- Footer-->
   <footer class="py-5 bg-dark" style="margin-top: 2%;">
     <div class="container">
@@ -175,17 +91,103 @@ const range = reactive({
     </div>
   </footer>
 </template>
-
 <script>
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from "../main.js";
+import Tarjetas from '../components/TarjetasReservas.vue';
+
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
+  data() {
+    return {
+      ArregloHabitacion: [
+        {
+          habitacion: "test",
+          precio: "1000",
+          adultos: null,
+          kids: null,
+        }
+
+      ],
+      fecha_fin: null,
+      fecha_inicio: null,
+      startDate: null,
+      endDate: null,
+      Habitaciones: [],
+      reservas: [],
+    }
+
+
+  },
+  components:
+  {
+    Tarjetas
+  },
+  /* /*watch: {
+
+    
+  },*/
+  // computed: {
+  //   reservasDisponibles() {
+  //     return this.reservaFiltradas();
+  //   }
+  // },
+  created() {
+    ///this.mostrarColeccionCompleta()
+    this.obtenerHabitaciones()
+    this.obternerReservas()
+  },
+
+  methods: {
+    reservaFiltradas() {
+      if (!this.fecha_inicio || !this.fecha_fin) {
+        ///console.log(this.Habitaciones)
+        return this.Habitaciones
+      }
+
+      const fechaInicio = new Date(this.fecha_inicio)
+      const fechaFin = new Date(this.fecha_fin)
+      fechaInicio.setMinutes(fechaInicio.getMinutes() + fechaInicio.getTimezoneOffset())
+      fechaFin.setMinutes(fechaFin.getMinutes() + fechaFin.getTimezoneOffset())
+
+      let reservasFiltradas = this.reservas.filter(reserva => {
+
+        let fechaCortada = reserva.fechaIngreso.split("-")
+        let fechaCortada2 = reserva.fechaSalida.split("-")
+        const fechaIn = new Date(fechaCortada[2], fechaCortada[1] - 1, fechaCortada[0])
+        const fechaSa = new Date(fechaCortada2[2], fechaCortada2[1] - 1, fechaCortada2[0])
+        return fechaIn >= fechaInicio && fechaSa <= fechaFin
+
+      });
+      let habitacionesDisp = this.Habitaciones.filter((element) => !reservasFiltradas.some((other) => other.numeroHabitacion === element.numero))
+      console.log(reservasFiltradas)
+      this.Habitaciones = habitacionesDisp
+    },
+
+    async obtenerHabitaciones() {
+      const result = await getDocs(collection(db, "Habitaciones"));
+      ///console.log(result)
+      result.forEach((doc) => {
+        this.Habitaciones.push(doc.data());
+      });
+      console.log(this.Habitaciones)
+    },
+
+    async obternerReservas() {
+
+      const querySnapshot = await getDocs(collection(db, "Reservas"));
+      querySnapshot.forEach((doc) => {
+        this.reservas.push(doc.data());
+
+      });
+      //console.log(inicio);
+      //console.log(fin);
+    }
   }
 }
+
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+  <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
   margin: 40px 0 0;
@@ -203,4 +205,5 @@ li {
 
 a {
   color: #42b983;
-}</style>
+}
+</style>
