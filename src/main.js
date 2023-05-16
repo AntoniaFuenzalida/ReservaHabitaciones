@@ -21,6 +21,7 @@ import router from './router';
   // Get a Firestore instance using the full version of Firestore
   const db = getFirestore(app);
   export {app}
+  
   export { db };
 
 createApp(App).use(router).mount('#app');
