@@ -4,14 +4,14 @@
       <img src="../assets/logohotel.png"  id="imagen_Adentro">
       <br>
       <br>
-      <form id="formulario">
+      <form id="formulario" @submit.prevent="validar_Datos">
         <label for="Email"> </label>
         <input type="text" id="ingreso_Correo" name="ingreso_Correo" placeholder="Correo electronico" v-model="ingreso_Correo">
         <label for="contraseña"> </label>
         <input type="password" id="ingreso_Contraseña" name="ingreso_Contraseña" placeholder="Contraseña" v-model="ingreso_Contraseña">
       </form>
       <br>
-      <div id="div_Botón"><button id="inicio_Sesión" onclick="location.href='./menu_Usuario';"> Iniciar sesión</button></div>
+      <div id="div_Botón"><button id="inicio_Sesión" @click="validar_Datos" type="submit"> Iniciar sesión</button></div>
       <a id="olvidaste" href='./menuAdmin'>¿Olvidaste tu contraseña?</a>
       <br>
       <div id="div_Botón"><button id="inicio_Sesión" onclick="location.href='./Creacion_Gente';"> Crear cuenta</button></div>
@@ -29,7 +29,7 @@
 
 <script>
   import app from '../main'
-  import { doc, getFirestore, setDoc } from "firebase/firestore";
+  import { getFirestore, } from "firebase/firestore";
   export default {
   name: 'Consultar_Datos',
   data() {
@@ -47,9 +47,9 @@
             console.log('No se encontro esta cuenta');
             return;
           }
-        }
-      },
-    },
+        },
+      }
+    }
 
 </script>
   

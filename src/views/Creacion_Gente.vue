@@ -46,23 +46,23 @@
     },
 
     methods: {
-        checkForm: function (e) {
-            if (this.Contraseña == this.Rep_Contra) {
-                return true;
-            }
+        //checkForm: function (e) {
+            //if (this.Contraseña == this.Rep_Contra) {
+                //return true;
+            //}
             
-        },
+        //},
         async guardarDatos() {
             const db = getFirestore(app);
             await setDoc(doc(db, "Cuentas", this.Rut), {
-                if(checkForm) {
-                    Nombre_Apellido: this.Nombre_Apellido;
-                    Correo_Electronico: this.Correo_Electronico;
-                    Contraseña: this.Contraseña;
-                    Telefono: this.Telefono;
-                    Rol: 'Predeterminado';
-                    Rut: this.Rut;
-                }
+                //if(checkForm) {
+                Nombre_Apellido: this.Nombre_Apellido,
+                Correo_Electronico: this.Correo_Electronico,
+                Contraseña: this.Contraseña,
+                Telefono: this.Telefono,
+                Rol: 'Predeterminado',
+                Rut: this.Rut,
+                //}
 
                 
             })
