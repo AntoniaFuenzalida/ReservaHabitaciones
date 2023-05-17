@@ -1,31 +1,68 @@
+
+
 <template>
     <div class="bg-image" id="portada">
         <div id="caja_Adentro">
             <img src="../assets/logohotel.png" id="imagen_Adentro" onclick="location.href='./';" >
             <h3 id="texto_Crear">Creación de Cuenta</h3>
-            <form id="formulario_Arriba">
-
-                <input type="text" id="nombre_Completo" name="nombre_Completo" placeholder="Nombre Completo">
-                
-                <input type="text" id="ingresar_Rut" name="ingresar_Rut" placeholder="Rut">
+            <form id ="Todos" @submit.prevent="guardarDatos">
+                <form id="formulario_Arriba">  
+                <input type="text" id="nombre_Completo" name="nombre_Completo" placeholder="Nombre Completo" v-model="Nombre_Apellido">
+                    
+               <input type="text" id="ingresar_Rut" name="ingresar_Rut" placeholder="Rut" v-model="Rut">
+                </form>
+                <form id="formulario_Medio">
+                    <input type="password" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña" v-model="Contraseña">
+                    <input type="password" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="Repetir Contraseña" >
+                </form>
+                <form id="formulario_Abajo">
+                    <input type="text" id="ingreso_Correo_Crear" name="ingreso_Correo" placeholder="Correo electronico" v-model="Correo_Electronico">
+                    <input type="text" id="numero_Telefono" name="numero_Telefono" placeholder="Número de Telefono" v-model="Telefono">
+                </form>
+                <br>
+                <div  hre id="Registro"><button type="submit" id="registro_boton" @click="guardarDatos" > Registrarse</button></div>
             </form>
-            <form id="formulario_Medio">
-                <input type="password" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña">
-                <input type="password" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="Repetir Contraseña">
-            </form>
-            <form id="formulario_Abajo">
-                <input type="text" id="ingreso_Correo_Crear" name="ingreso_Correo" placeholder="Correo electronico">
-                <input type="text" id="numero_Telefono" name="numero_Telefono" placeholder="Número de Telefono">
-            </form>
-            <br>
-            <div hre id="Registro"><button id="registro_boton"  onclick="location.href='./Iniciar_sesion';"> Registrarse</button></div>
         </div>
-
     </div>
 </template>
 
 
 <script>
+    import app from '../main'
+    import { doc, getFirestore, setDoc } from "firebase/firestore";
+
+    export default {
+    name: 'guardarDatos',
+
+    data() {
+        return {
+            Correo_Electronico: '',
+            Nombre_Apellido: '',
+            Rol:'',
+            Rut:'',
+            Telefono:'',
+            Contraseña:''
+        }
+    },
+
+    methods: {
+        async guardarDatos() {
+            const db = getFirestore(app);
+            await setDoc(doc(db, "Cuentas", this.Rut), {
+            Nombre_Apellido: this.Nombre_Apellido,
+            Correo_Electronico: this.Correo_Electronico,
+            Contraseña: this.Contraseña,
+            Telefono: this.Telefono,
+            Rol: 'Predeterminado',
+            Rut:this.Rut
+        })
+        location.href='./Iniciar_sesion';
+        }
+    }
+}
+  
+    
+  
 </script>
 
 <style>
