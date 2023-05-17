@@ -40,7 +40,7 @@
             await setDoc(doc(db, "Habitaciones", numero), {
                 cantidadCamas: this.cantidadCamas,
                 descripcion: this.descripcion,
-                numero: this.numero,
+                numero: numero,
                 precio: this.precio,
             })
         },
@@ -416,7 +416,7 @@ console.log(numHabitacion)
                                 <select v-model="seleccionado.numero"  class="form-control" id="habitacionesSelector">
                                     <option> seleccionar habitacion</option>
                                     <option v-for="numero in numHabitacion" :key="numero">
-                                        {{numero}}
+                                        {{numero.numero}}
                                     </option>
                                 </select>
                                 
