@@ -11,10 +11,11 @@
         <input type="password" id="ingreso_Contraseña" name="ingreso_Contraseña" placeholder="Contraseña" v-model="ingreso_Contraseña">
       </form>
       <br>
-      <div id="div_Botón"><button id="inicio_Sesión" @click="validar_Datos" type="submit"> Iniciar sesión</button></div>
+      <div id="div_Botón" ><button id="inicio_Sesión" @click="validar_Datos" type="submit" class="btn btn-dark mt-auto"> Iniciar sesión</button></div>
+      <br>
       <a id="olvidaste" href='./menuAdmin'>¿Olvidaste tu contraseña?</a>
       <br>
-      <div id="div_Botón"><button id="inicio_Sesión" onclick="location.href='./Creacion_Gente';"> Crear cuenta</button></div>
+      <div id="div_Botón"><button id="inicio_Sesión" onclick="location.href='./Creacion_Gente';" class="btn btn-dark mt-auto"> Crear cuenta</button></div>
      
 
      
@@ -29,9 +30,9 @@
 
 <script>
   import app from '../main'
-  import { getFirestore, } from "firebase/firestore";
+  import {getFirestore, collection, where,query, getDocs, doc} from "firebase/firestore";
   export default {
-  name: 'Consultar_Datos',
+  name: 'validar_Datos',
   data() {
     return {
       ingreso_Correo: '',
@@ -40,16 +41,36 @@
   },
   methods: {
     async validar_Datos() {
-        const db = getFirestore(app);
-        const cuentasRef = db.collection("Cuentas");
-        const ConsultaRef = await cuentasRef.where('Correo_Electronico', '==', 'this.ingreso_Correo').get();
-        if (ConsultaRef.empty) {
-            console.log('No se encontro esta cuenta');
-            return;
+      const db = getFirestore(app);
+      const cuentasRef = collection(db, 'Cuentas');
+
+      console.log("Correo=" + this.ingreso_Correo);
+      console.log("Contraseña=" + this.ingreso_Contraseña);
+      const q = query(cuentasRef, where("Correo_Electronico", "==", this.ingreso_Correo), where("Contraseña", "==", this.ingreso_Contraseña));
+
+      const querySnapshot = await getDocs(q);
+      if (querySnapshot.empty) {
+        console.log("No iniciaste sesión");
+      } else {
+        querySnapshot.forEach((doc) => {
+          console.log("Docs=" + doc)
+          if (doc.exists) {
+            console.log(doc.id, "=>", doc.data());
+            console.log("Iniciaste sesión");
+            location.href = './menu_Usuario';
           }
-        },
+        });
       }
-    }
+      
+      }
+        //if (ConsultaRef.empty) {
+            //console.log('No se encontro esta cuenta');
+            //return;
+          //}
+        },
+  }
+    
+    
 
 </script>
   
@@ -73,6 +94,9 @@
   width: 20%;
   background-color: white;
   opacity: 75%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 
 #imagen_Adentro {
@@ -119,18 +143,7 @@
   align-items: center;
 }
 
-#inicio_Sesión {
-  width: 45%;
-  height: 8%;
-  background-color: #5E95E7;
-  border-radius: 0%;
-  border: 1px solid #000000;
-  color: black;
-  text-align: center;
-  font-size: 16px;
-  margin: 0 auto;
-  cursor: pointer;
-}
+
 
 #div_Botón {
   display: flex;
