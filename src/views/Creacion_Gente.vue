@@ -13,7 +13,7 @@
                 </form>
                 <form id="formulario_Medio">
                     <input type="password" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña" v-model="Contraseña">
-                    <input type="password" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="Repetir Contraseña" >
+                    <input type="password" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="Repetir Contraseña" v-model="repetir_Contra">
                 </form>
                 <form id="formulario_Abajo">
                     <input type="text" id="ingreso_Correo_Crear" name="ingreso_Correo" placeholder="Correo electronico" v-model="Correo_Electronico">
@@ -41,29 +41,44 @@
             Rol:'',
             Rut:'',
             Telefono:'',
-            Contraseña:''
+            Contraseña:'',
+            repetir_Contra:''
         }
     },
 
     methods: {
         async guardarDatos() {
             const db = getFirestore(app);
-            await setDoc(doc(db, "Cuentas", this.Rut), {
-            Nombre_Apellido: this.Nombre_Apellido,
-            Correo_Electronico: this.Correo_Electronico,
-            Contraseña: this.Contraseña,
-            Telefono: this.Telefono,
-            Rol: 'Predeterminado',
-            Rut:this.Rut
-        })
-        location.href='./Iniciar_sesion';
+
+            if(this.Correo_Electronico.includes('@') && this.Contraseña === this.repetir_Contra && this.validateEmail(this.Correo_Electronico)
+            && this.Rut.trim() != '' && this.Nombre_Apellido.trim() != '' && this.Contraseña.trim() != '' && this.Telefono.trim() != ''
+            && this.repetir_Contra.trim() != '' && this.Nombre_Apellido.trim() != ''){
+                await setDoc(doc(db, "Cuentas", this.Rut), {
+                    Nombre_Apellido: this.Nombre_Apellido,
+                    Correo_Electronico: this.Correo_Electronico,
+                    Contraseña: this.Contraseña,
+                    Telefono: this.Telefono,
+                    Rol: 'Predeterminado',
+                    Rut:this.Rut
+                })
+                location.href='./Iniciar_sesion';
+            }else{
+                console.log('Datos no validos')
+            }
+        },
+
+        async validateEmail(email) {
+            const res = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+            return res.test(String(email).toLowerCase());
         }
-    }
+    },
 }
   
     
   
 </script>
+
+
 
 <style>
 #portada {
