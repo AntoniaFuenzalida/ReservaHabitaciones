@@ -94,9 +94,6 @@
   width: 20%;
   background-color: white;
   opacity: 75%;
-  justify-content: center;
-  align-items: center;
-  display: flex;
 }
 
 #imagen_Adentro {
