@@ -74,7 +74,7 @@
   <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
       <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-        <div class="col mb-3" v-for="reserva in Habitaciones" :key="reserva">
+        <div class="col mb-3" v-for="reserva in final" :key="reserva">
          <Tarjetas :reserva="reserva" :fecha-fin="fecha_fin" :fecha-inicio="fecha_inicio" />
 
 
@@ -115,6 +115,7 @@ export default {
       endDate: null,
       Habitaciones: [],
       reservas: [],
+      final:[]
     }
 
 
@@ -136,9 +137,56 @@ export default {
     ///this.mostrarColeccionCompleta()
     this.obtenerHabitaciones()
     this.obternerReservas()
+    this.final=this.Habitaciones
   },
 
   methods: {
+     filtrarHabitacionesDisponibles(habitaciones, reservas, fechaInicio, fechaFin) {
+      if (!Array.isArray(habitaciones) || !Array.isArray(reservas)) {
+    throw new Error("Las variables 'habitaciones' y 'reservas' deben ser arrays.");
+  }
+  let habitacionesDisponibles = [];
+
+  habitaciones.forEach(habitacion => {
+    let reservaEncontrada = false;
+
+    reservas.forEach(reserva => {
+      let fechaCortada = reserva.fechaIngreso.split("-");
+      let fechaCortada2 = reserva.fechaSalida.split("-");
+      const fechaIn = new Date(fechaCortada[0], fechaCortada[1] - 1, fechaCortada[2]);
+      const fechaSa = new Date(fechaCortada2[0], fechaCortada2[1] - 1, fechaCortada2[2]);
+      
+      //console.log("reserva:"+reserva.numeroHabitacion)
+      //console.log("habitacion"+habitacion.numero)
+      if (reserva.numeroHabitacion == habitacion.numero)
+        {
+      //console.log("hay una reserva en esta habitacion")   
+      //console.log("llegada en bd"+fechaIn)
+      //console.log("Salida en bd"+fechaSa)
+        if(
+          (fechaIn >= fechaInicio && fechaIn <= fechaFin) ||
+          (fechaSa >= fechaInicio && fechaSa <= fechaFin) ||
+          (fechaIn <= fechaInicio && fechaSa >= fechaFin)
+        ){ 
+          //console.log("hay una reserva en esta habitacion interfirirendo con el rango de fechas") 
+          reservaEncontrada = true;
+        return; // Equivalente a un "break" para salir del bucle forEach interno
+
+      } 
+       
+      }
+    });
+
+    if (!reservaEncontrada) {
+      //console.log(habitacion)
+      //agregar if para ver si la habitacion tiene camas suficientes para los adultos+niños
+      habitacionesDisponibles.push(habitacion);
+    }
+  });
+
+  return habitacionesDisponibles;
+}
+,
     async reservaFiltradas() {
       if (!this.fecha_inicio || !this.fecha_fin) {
         ///console.log(this.Habitaciones)
@@ -150,21 +198,17 @@ export default {
       fechaInicio.setMinutes(fechaInicio.getMinutes() + fechaInicio.getTimezoneOffset())
       fechaFin.setMinutes(fechaFin.getMinutes() + fechaFin.getTimezoneOffset())
 
-      let reservasFiltradas = this.reservas.filter(reserva => {
+      console.log("las fechas son:"+fechaInicio)
+      console.log("y:"+fechaFin)
+      var test =  this.filtrarHabitacionesDisponibles(this.Habitaciones, this.reservas, fechaInicio, fechaFin)
+      console.log(test) 
+      this.final=test    
 
-        let fechaCortada = reserva.fechaIngreso.split("-")
-        let fechaCortada2 = reserva.fechaSalida.split("-")
-        const fechaIn = new Date(fechaCortada[2], fechaCortada[1] - 1, fechaCortada[0])
-        const fechaSa = new Date(fechaCortada2[2], fechaCortada2[1] - 1, fechaCortada2[0])
-        return fechaIn >= fechaInicio && fechaSa <= fechaFin
-
-      });
-      let habitacionesDisp = this.Habitaciones.filter((element) => !reservasFiltradas.some((other) => other.numeroHabitacion === element.numero))
-      console.log(reservasFiltradas)
-      this.Habitaciones = habitacionesDisp
     },
+ 
 
     async obtenerHabitaciones() {
+      this.Habitaciones=[]
       const result = await getDocs(collection(db, "Habitaciones"));
       ///console.log(result)
       result.forEach((doc) => {
@@ -174,7 +218,7 @@ export default {
     },
 
     async obternerReservas() {
-
+      this.reservas=[]
       const querySnapshot = await getDocs(collection(db, "Reservas"));
       querySnapshot.forEach((doc) => {
         this.reservas.push(doc.data());

@@ -55,7 +55,7 @@ import app from '../main'
     import { doc, getFirestore, setDoc,getDocs,collection} from "firebase/firestore";
 
 
-export default {
+export default{
   props: {
     reserva: Object,
     fechaFin: {
