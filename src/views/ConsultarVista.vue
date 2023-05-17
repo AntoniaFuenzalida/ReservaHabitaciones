@@ -75,7 +75,8 @@
     <div class="container px-4 px-lg-5 mt-5">
       <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
         <div class="col mb-3" v-for="reserva in Habitaciones" :key="reserva">
-          <Tarjetas :reserva="reserva" />
+         <Tarjetas :reserva="reserva" :fecha-fin="fecha_fin" :fecha-inicio="fecha_inicio" />
+
 
 
         </div>
@@ -138,7 +139,7 @@ export default {
   },
 
   methods: {
-    reservaFiltradas() {
+    async reservaFiltradas() {
       if (!this.fecha_inicio || !this.fecha_fin) {
         ///console.log(this.Habitaciones)
         return this.Habitaciones
@@ -179,11 +180,15 @@ export default {
         this.reservas.push(doc.data());
 
       });
+    
+
+
       //console.log(inicio);
       //console.log(fin);
     }
-  }
-}
+
+}}
+
 
 </script>
 
