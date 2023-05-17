@@ -36,7 +36,7 @@
                 </div>
                 <div class="modal-footer">
                   <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                  <button @click="guardarReserva(this.selectedRoom )" type="button" class="btn btn-primary">Ir a Servicios
+                  <button @click="guardarReserva(this.selectedRoom )" type="button" class="btn btn-primary" data-bs-dismiss="modal">Ir a Servicios
                     Adicionales</button>
 
                 </div>
