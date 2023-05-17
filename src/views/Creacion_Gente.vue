@@ -9,7 +9,7 @@
                 <form id="formulario_Arriba">  
                 <input type="text" id="nombre_Completo" name="nombre_Completo" placeholder="Nombre Completo" v-model="Nombre_Apellido">
                     
-               <input type="text" id="ingresar_Rut" name="ingresar_Rut" placeholder="Rut" v-model="Rut">
+               <input type="text" id="ingresar_Rut" name="ingresar_Rut" placeholder="Rut (Sin Verificador)" v-model="Rut">
                 </form>
                 <form id="formulario_Medio">
                     <input type="password" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña" v-model="Contraseña">
@@ -49,17 +49,18 @@
     methods: {
         async guardarDatos() {
             const db = getFirestore(app);
-
-            if(this.Correo_Electronico.includes('@') && this.Contraseña === this.repetir_Contra && this.validateEmail(this.Correo_Electronico)
+            console.log(Number(this.Rut))
+            console.log(Number(this.Telefono))
+            if(this.Contraseña === this.repetir_Contra && this.validateEmail(this.Correo_Electronico)
             && this.Rut.trim() != '' && this.Nombre_Apellido.trim() != '' && this.Contraseña.trim() != '' && this.Telefono.trim() != ''
-            && this.repetir_Contra.trim() != '' && this.Nombre_Apellido.trim() != ''){
+            && this.repetir_Contra.trim() != '' && this.Nombre_Apellido.trim() != '' && this.Rut.length <= 8 && this.Telefono.length === 8 && Number(this.Rut) && Number(this.Telefono)){
                 await setDoc(doc(db, "Cuentas", this.Rut), {
                     Nombre_Apellido: this.Nombre_Apellido,
                     Correo_Electronico: this.Correo_Electronico,
                     Contraseña: this.Contraseña,
-                    Telefono: this.Telefono,
                     Rol: 'Predeterminado',
-                    Rut:this.Rut
+                    Rut: Number(this.Rut),
+                    Telefono: Number(this.Telefono),
                 })
                 location.href='./Iniciar_sesion';
             }else{
@@ -97,7 +98,7 @@
 
 #caja_Adentro {
     height: 60%;
-    width: 25%;
+    width: 40%;
     background-color: white;
     opacity: 75%;
 }
@@ -113,7 +114,7 @@
     border-radius: 0%;
     -moz-border-radius: 7px;
     -webkit-border-radius: 7px;
-    width: 35%;
+    width: 45%;
     background-color: white;
     color: rgb(0, 0, 0);
 }
@@ -123,7 +124,7 @@
     border-radius: 0%;
     -moz-border-radius: 7px;
     -webkit-border-radius: 7px;
-    width: 35%;
+    width: 45%;
     background-color: white;
     color: rgb(0, 0, 0);
 }
@@ -132,7 +133,7 @@
     border-radius: 0%;
     -moz-border-radius: 7px;
     -webkit-border-radius: 7px;
-    width: 35%;
+    width: 45%;
     background-color: white;
     color: rgb(0, 0, 0);
 }
@@ -141,7 +142,7 @@
     border-radius: 0%;
     -moz-border-radius: 7px;
     -webkit-border-radius: 7px;
-    width: 35%;
+    width: 45%;
     background-color: white;
     color: rgb(0, 0, 0);
 }
@@ -150,7 +151,7 @@
     border-radius: 0%;
     -moz-border-radius: 7px;
     -webkit-border-radius: 7px;
-    width: 35%;
+    width: 45%;
     background-color: white;
     color: rgb(0, 0, 0);
     
@@ -160,7 +161,7 @@
     border-radius: 0%;
     -moz-border-radius: 7px;
     -webkit-border-radius: 7px;
-    width: 35%;
+    width: 45%;
     background-color: white;
     color: rgb(0, 0, 0);
 }

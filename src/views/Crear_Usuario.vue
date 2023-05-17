@@ -11,7 +11,7 @@
         <input type="password" id="ingreso_Contraseña" name="ingreso_Contraseña" placeholder="Contraseña" v-model="Contraseña">
       </form>
       <br>
-      <div id="div_Botón"><button id="inicio_Sesión" @click="consultarBD" > Iniciar sesión</button></div>
+      <div id="div_Botón"><button id="inicio_Sesión" onclick="location.href='./menu_Usuario';"> Iniciar sesión</button></div>
       <a id="olvidaste" href='./menuAdmin'>¿Olvidaste tu contraseña?</a>
       <br>
       <div id="div_Botón"><button id="inicio_Sesión"  onclick = "location.href='./Creacion_Gente';"> Crear cuenta</button></div>
