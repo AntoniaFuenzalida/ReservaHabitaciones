@@ -104,7 +104,7 @@
                                 </li>
                                 <li class="list-group-item">
                                   <div class="input-group">
-                                    <textarea class="form-control" aria-label="With textarea"></textarea>
+                                    <textarea class="form-control" aria-label="With textarea" v-model="comida"></textarea>
                                   </div>
                                 </li>
                               </ul>
@@ -157,17 +157,18 @@
                             <ul class="list-group">
                               <li class="list-group-item">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="SwitchCheckDefault">
-                                    <label class="form-check-label" for="SwitchCheckDefault">Agregar Servicio Lavanderia
-                                    </label>
-                                  </div>
+                                  <input class="form-check-input" type="checkbox" id="SwitchCheckDefault">
+                                  <label class="form-check-label" for="SwitchCheckDefault">Agregar Servicio Lavanderia
+                                  </label>
+                                </div>
                               </li>
-                              <li class="list-group-item"> 
+                              <li class="list-group-item">
                                 <p>comentarios o requerimiento especial</p>
                               </li>
                               <li class="list-group-item">
                                 <div class="input-group">
-                                  <textarea class="form-control" aria-label="With textarea"></textarea>
+                                  <textarea class="form-control" aria-label="With textarea"
+                                    v-model="lavanderia"></textarea>
                                 </div>
                               </li>
                             </ul>
@@ -188,7 +189,7 @@
           </div>
 
           <div class="CONTINUAR" style="margin-top: 3%;">
-            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="./Reservar_Vista">Continuar</a></div>
+            <div class="text-center"><a class="btn btn-outline-dark mt-auto" @click="Guardar()">Continuar</a></div>
           </div>
 
 
@@ -202,17 +203,43 @@
   <!-- Footer-->
   <footer class="py-5 bg-dark" style="margin-top: 2%;">
     <div class="container">
-      <p class="m-0 text-center text-white">&copy; Hotel Cordillera, 2023</p>
+      <p class="m-0 text-center text-white">&copy; Hotel Cordillera, 2023 {{ variable }}</p>
     </div>
   </footer>
 </template>
 
 <script>
+import app from '../main'
+import { doc, getFirestore, setDoc } from "firebase/firestore";
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
+  name: 'servicioAdicional',
+  data() {
+    return {
+      variable: '',
+      comida: null,
+      lavanderia: null
+
+    }
+  },
+  mounted() {
+    this.variable = this.$route.query.variable
+  },
+  methods: {
+    async Guardar() {
+      const db = getFirestore(app);
+      const Servicio = {
+      Lavanderia: this.lavanderia,
+      Comida: this.comida,
+      idReserva: this.variable
+    };
+    // Guardar reserva en Firebase
+    await setDoc(doc(db, "Servicios_Adicionales",this.variable), Servicio);
+   // console.log("se registro:" + reser)
+
+    }
+
   }
+
 }
 </script>
 
@@ -234,4 +261,5 @@ li {
 
 a {
   color: #42b983;
-}</style>
+}
+</style>

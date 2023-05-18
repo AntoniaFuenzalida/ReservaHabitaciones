@@ -6,15 +6,15 @@
       <br>
       <form id="formulario">
         <label for="Email"> </label>
-        <input type="text" id="ingreso_Correo" name="ingreso_Correo" placeholder="Correo electronico">
+        <input type="text" id="ingreso_Correo" name="ingreso_Correo" placeholder="Correo electronico" v-model="Correo">
         <label for="contraseña"> </label>
-        <input type="password" id="ingreso_Contraseña" name="ingreso_Contraseña" placeholder="Contraseña">
+        <input type="password" id="ingreso_Contraseña" name="ingreso_Contraseña" placeholder="Contraseña" v-model="Contraseña">
       </form>
       <br>
-      <div id="div_Botón"><button id="inicio_Sesión" onclick="location.href='./menu_Usuario';"> Iniciar sesión</button></div>
+      <div id="div_Botón"><button id="inicio_Sesión" onclick="location.href='./menu_Usuario'" > Iniciar sesión</button></div>
       <a id="olvidaste" href='./menuAdmin'>¿Olvidaste tu contraseña?</a>
       <br>
-      <div id="div_Botón"><button id="inicio_Sesión" onclick="location.href='./Creacion_Gente';"> Crear cuenta</button></div>
+      <div id="div_Botón"><button id="inicio_Sesión"  onclick = "location.href='./Creacion_Gente';"> Crear cuenta</button></div>
      
 
      
@@ -28,6 +28,42 @@
 
 
 <script>
+    import app from '../main'
+    import { getFirestore } from "firebase/firestore";
+
+    export default {
+    name: 'consultarBD',
+    data() {
+            return {
+                Correo: '',
+                Contraseña:''
+            }
+        },
+
+    methods: {
+        async consultarBD() {
+          //console.log('UWUWWUW')
+            const db = getFirestore(app).ref('Cuentas');
+            db.orderByChild('Correo').equalTo(this.Correo).once('Value',(snapshot) => {
+              snapshot.forEach((childSnapshot) => {
+                const user = childSnapshot.val();
+                if(user.Contraseña === this.Contraseña){
+                  location.href='./menu_Usuario';
+                }else{
+                  console.log('Cuenta Incorrecta');
+                }
+              }) 
+              
+            })
+            /*await getDoc(doc(db, "Cuentas", this.Rut), {
+            
+        })*/
+        
+        }
+    }
+
+    
+}
 </script>
 
 <style>
