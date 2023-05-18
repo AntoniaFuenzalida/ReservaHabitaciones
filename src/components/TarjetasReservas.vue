@@ -48,9 +48,9 @@
 </template>
 
 <script>
-    import router from '@/router';
+import router from '@/router';
 import app from '../main'
-    import { doc, getFirestore, setDoc,getDocs,collection} from "firebase/firestore";
+import { doc, getFirestore, setDoc, getDocs, collection } from "firebase/firestore";
 
 
 export default{
