@@ -40,6 +40,7 @@
     }
   },
   methods: {
+  },
     async validar_Datos() {
       const db = getFirestore(app); //Se crea la instancia de FireBase
       const cuentasRef = collection(db, 'Cuentas'); //Se accede a la colección de Cuentas con la instancia de la base de datos y se crea una instancia de eso
@@ -47,8 +48,8 @@
       console.log("Correo=" + this.ingreso_Correo);//Para Debugear
       console.log("Contraseña=" + this.ingreso_Contraseña);//Same 
       if (this.validateEmail(this.ingreso_Correo)) {
-        console.log("DEBUGGG");
         const q = query(cuentasRef, where("Correo_Electronico", "==", this.ingreso_Correo), where("Contraseña", "==", this.ingreso_Contraseña)); //Se crea la petición a la base de datos
+        console.log("DEBUGGG");
         //Y se busca dentro de toda la información una persona que tenga el correo ingresado y la contraseña
         const querySnapshot = await getDocs(q); //La petición se solicita y se crea una "petición general"
         if (querySnapshot.empty) { //Se verifica que la petición retorne algo o no, si la petición esta vacia, significa que no se encontró un login valido 
@@ -74,11 +75,9 @@
     },
 
 
-        },
+        
+    
   }
-    
-    
-
 </script>
   
 <style>

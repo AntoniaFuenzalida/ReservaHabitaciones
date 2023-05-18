@@ -44,90 +44,34 @@ export default {
             errors: [],
             Correo_Electronico: '',
             Nombre_Apellido: '',
-            Rol: '',
-            Rut: '',
-            Telefono: '',
-            Contraseña: '',
-            repetir_Contra: ''
+            Rol:'',
+            Rut:'',
+            Telefono:'',
+            Contraseña:''
         }
     },
 
     methods: {
         async guardarDatos(e) {
             const db = getFirestore(app);
-            console.log(Number(this.Rut))
-            console.log(Number(this.Telefono))
-            if (this.checkForm(e)) {
-                await setDoc(doc(db, "Cuentas", this.Rut), {
-                    Nombre_Apellido: this.Nombre_Apellido,
-                    Correo_Electronico: this.Correo_Electronico,
-                    Contraseña: this.Contraseña,
-                    Rol: 'Predeterminado',
-                    Rut: Number(this.Rut),
-                    Telefono: Number(this.Telefono),
-                })
-                location.href = './Iniciar_sesion';
-            } else {
-                console.log('Datos no validos')
-            }
-        },
-
-        async validateEmail(email) {
-            const res = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
-            return res.test(String(email).toLowerCase());
-        },
-
-        checkForm: function (e) {
-            console.log("ENTRO GENTE");
-            if (this.Contraseña === this.repetir_Contra && this.validateEmail(this.Correo_Electronico)
-                && this.Rut.trim() != '' && this.Nombre_Apellido.trim() != '' && this.Contraseña.trim() != '' && this.Telefono.trim() != ''
-                && this.repetir_Contra.trim() != '' && this.Nombre_Apellido.trim() != '' && this.Rut.length <= 8 && this.Telefono.length === 8 && Number(this.Rut) && Number(this.Telefono)) { 
-                return true;
-            }
-
-            this.errors = [];
-            if (this.Rut.trim() == '') {
-                this.errors.push('El Rut es obligatorio ');
-            }
-            if (this.Nombre_Apellido.trim() == '') {
-                this.errors.push('Nombre y Apellido es obligatorio ');
-            }
-            if (this.Contraseña.trim() == '') {
-                this.errors.push('La Contraseña es obligatoria ');
-            }
-            if (this.Telefono.trim() == '') {
-                this.errors.push('El número de telefono es obligatorio ');
-            }
-            if (this.repetir_Contra.trim() == '') {
-                this.errors.push('Repetir contraseña es obligatorio ');
-            }
-            /*if (this.Nombre_Apellido.trim() != '') {
-                this.errors.push('El Rut es obligatorio');
-            }*/
-            if (this.Rut.length >= 9) {
-                this.errors.push('El Rut tiene que ser 8 o menos ');
-            }
-            if (this.Telefono.length != 8) {
-                this.errors.push('El número de telefono tiene que ser de 8 digitos ');
-            }
-            if (!Number(this.Rut)) {
-                this.errors.push('El Rut tiene que ser un número ');
-            }
-            if (!Number(this.Telefono)) {
-                this.errors.push('El telefono tiene que ser un número ');
-            }
-            e.preventDefault();
-            console.log("Errores: "+ this.errors)
-            return false;
-
+            await setDoc(doc(db, "Cuentas", this.Rut), {
+            Nombre_Apellido: this.Nombre_Apellido,
+            Correo_Electronico: this.Correo_Electronico,
+            Contraseña: this.Contraseña,
+            Telefono: this.Telefono,
+            Rol: 'Predeterminado',
+            Rut:this.Rut
+        })
+        location.href='./Iniciar_sesion';
         }
-
-    },
+    }
 }
 
 
 
 </script>
+
+
 
 <style>
 #portada {
@@ -144,9 +88,9 @@ export default {
     display: flex;
 }
 
-#caja_Adentro_Crea {
-    height: 70%;
-    width: 40%;
+#caja_Adentro {
+    height: 60%;
+    width: 25%;
     background-color: white;
     opacity: 75%;
 }
@@ -162,7 +106,7 @@ export default {
     border-radius: 0%;
     -moz-border-radius: 7px;
     -webkit-border-radius: 7px;
-    width: 35%;
+    width: 45%;
     background-color: white;
     color: rgb(0, 0, 0);
 }
@@ -172,7 +116,7 @@ export default {
     border-radius: 0%;
     -moz-border-radius: 7px;
     -webkit-border-radius: 7px;
-    width: 35%;
+    width: 45%;
     background-color: white;
     color: rgb(0, 0, 0);
 }
@@ -181,7 +125,7 @@ export default {
     border-radius: 0%;
     -moz-border-radius: 7px;
     -webkit-border-radius: 7px;
-    width: 35%;
+    width: 45%;
     background-color: white;
     color: rgb(0, 0, 0);
 }
@@ -190,7 +134,7 @@ export default {
     border-radius: 0%;
     -moz-border-radius: 7px;
     -webkit-border-radius: 7px;
-    width: 35%;
+    width: 45%;
     background-color: white;
     color: rgb(0, 0, 0);
 }
@@ -199,7 +143,7 @@ export default {
     border-radius: 0%;
     -moz-border-radius: 7px;
     -webkit-border-radius: 7px;
-    width: 35%;
+    width: 45%;
     background-color: white;
     color: rgb(0, 0, 0);
     
@@ -209,7 +153,7 @@ export default {
     border-radius: 0%;
     -moz-border-radius: 7px;
     -webkit-border-radius: 7px;
-    width: 35%;
+    width: 45%;
     background-color: white;
     color: rgb(0, 0, 0);
 }
