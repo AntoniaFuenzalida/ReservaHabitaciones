@@ -1,15 +1,20 @@
 
-
 <template>
     <div class="bg-image" id="portada">
-        <div id="caja_Adentro">
+        <div id="caja_Adentro_Crea">
             <img src="../assets/logohotel.png" id="imagen_Adentro" onclick="location.href='./';" >
             <h3 id="texto_Crear">Creación de Cuenta</h3>
+            <p v-if="errors.length">
+            <b>Por favor, corrija el(los) siguiente(s) error(es):</b>
+            <ul>
+            <li v-for="error in errors" v-bind:key="error.id" >{{ error }}</li>
+            </ul>
+            </p>
             <form id ="Todos" @submit.prevent="guardarDatos">
                 <form id="formulario_Arriba">  
                 <input type="text" id="nombre_Completo" name="nombre_Completo" placeholder="Nombre Completo" v-model="Nombre_Apellido">
                     
-               <input type="text" id="ingresar_Rut" name="ingresar_Rut" placeholder="Rut (Sin Verificador)" v-model="Rut">
+               <input type="text" id="ingresar_Rut" name="ingresar_Rut" placeholder="Rut (Sin digito verificador)" v-model="Rut">
                 </form>
                 <form id="formulario_Medio">
                     <input type="password" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña" v-model="Contraseña">
@@ -20,7 +25,7 @@
                     <input type="text" id="numero_Telefono" name="numero_Telefono" placeholder="Número de Telefono" v-model="Telefono">
                 </form>
                 <br>
-                <div  hre id="Registro"><button type="submit" id="registro_boton" @click="guardarDatos" > Registrarse</button></div>
+                <div  hre id="Registro"><button type="submit" id="registro_boton"  class="btn btn-dark mt-auto" @click="guardarDatos" > Registrarse</button></div>
             </form>
         </div>
     </div>
@@ -28,55 +33,42 @@
 
 
 <script>
-    import app from '../main'
-    import { doc, getFirestore, setDoc } from "firebase/firestore";
+import app from '../main'
+import { doc, getFirestore, setDoc } from "firebase/firestore";
 
-    export default {
+export default {
     name: 'guardarDatos',
 
     data() {
         return {
+            errors: [],
             Correo_Electronico: '',
             Nombre_Apellido: '',
             Rol:'',
             Rut:'',
             Telefono:'',
-            Contraseña:'',
-            repetir_Contra:''
+            Contraseña:''
         }
     },
 
     methods: {
-        async guardarDatos() {
+        async guardarDatos(e) {
             const db = getFirestore(app);
-            console.log(Number(this.Rut))
-            console.log(Number(this.Telefono))
-            if(this.Contraseña === this.repetir_Contra && this.validateEmail(this.Correo_Electronico)
-            && this.Rut.trim() != '' && this.Nombre_Apellido.trim() != '' && this.Contraseña.trim() != '' && this.Telefono.trim() != ''
-            && this.repetir_Contra.trim() != '' && this.Nombre_Apellido.trim() != '' && this.Rut.length <= 8 && this.Telefono.length === 8 && Number(this.Rut) && Number(this.Telefono)){
-                await setDoc(doc(db, "Cuentas", this.Rut), {
-                    Nombre_Apellido: this.Nombre_Apellido,
-                    Correo_Electronico: this.Correo_Electronico,
-                    Contraseña: this.Contraseña,
-                    Rol: 'Predeterminado',
-                    Rut: Number(this.Rut),
-                    Telefono: Number(this.Telefono),
-                })
-                location.href='./Iniciar_sesion';
-            }else{
-                console.log('Datos no validos')
-            }
-        },
-
-        async validateEmail(email) {
-            const res = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
-            return res.test(String(email).toLowerCase());
+            await setDoc(doc(db, "Cuentas", this.Rut), {
+            Nombre_Apellido: this.Nombre_Apellido,
+            Correo_Electronico: this.Correo_Electronico,
+            Contraseña: this.Contraseña,
+            Telefono: this.Telefono,
+            Rol: 'Predeterminado',
+            Rut:this.Rut
+        })
+        location.href='./Iniciar_sesion';
         }
-    },
+    }
 }
-  
-    
-  
+
+
+
 </script>
 
 
@@ -98,7 +90,7 @@
 
 #caja_Adentro {
     height: 60%;
-    width: 40%;
+    width: 25%;
     background-color: white;
     opacity: 75%;
 }
@@ -195,17 +187,19 @@
     column-gap: 2%;
 }
 
-#registro_boton {
-    width: 25%;
-    height: 8%;
-    background-color: #5E95E7;
-    border-radius: 0%;
-    border: 1px solid #000000;
-    color: black;
-    text-align: center;
+
+
+#Registro {
+    display: flex;
+    justify-content: center;
+}
+
+#texto_Crear {
+    display: flex;
+    justify-content: center;
+    text-decoration: underline black;
     font-size: 16px;
     margin: 0 auto;
-    cursor: pointer;
 }
 
 #Registro {
