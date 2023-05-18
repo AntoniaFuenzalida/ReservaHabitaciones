@@ -1,4 +1,8 @@
 <script>
+import app from '../main'
+import {getFirestore, collection, where,query, getDocs, doc} from "firebase/firestore";
+
+
 export default{
     props:{
         fecha: String,
@@ -12,9 +16,13 @@ export default{
         Desplegar(){
             this.Mostrar = !this.Mostrar;
         },
-        Borrar(){
-            console.log("Eliminar");
-        }
+
+        async buscarReserva() {
+            const db = getFirestore(app); 
+            const cuentasRef = collection(db, 'Reservas'); 
+            const q = query(cuentasRef, where("idReservas", "==", algo)); 
+            console.log("DEBUGGG");
+        },
     }
 }
 </script>
