@@ -4,17 +4,18 @@
       <img src="../assets/logohotel.png"  id="imagen_Adentro">
       <br>
       <br>
-      <form id="formulario">
+      <form id="formulario" @submit.prevent="validar_Datos">
         <label for="Email"> </label>
-        <input type="text" id="ingreso_Correo" name="ingreso_Correo" placeholder="Correo electronico" v-model="Correo">
+        <input type="text" id="ingreso_Correo" name="ingreso_Correo" placeholder="Correo electronico" v-model="ingreso_Correo">
         <label for="contraseña"> </label>
-        <input type="password" id="ingreso_Contraseña" name="ingreso_Contraseña" placeholder="Contraseña" v-model="Contraseña">
+        <input type="password" id="ingreso_Contraseña" name="ingreso_Contraseña" placeholder="Contraseña" v-model="ingreso_Contraseña">
       </form>
       <br>
-      <div id="div_Botón"><button id="inicio_Sesión" onclick="location.href='./menu_Usuario'" > Iniciar sesión</button></div>
+      <div id="div_Botón" ><button id="inicio_Sesión" @click="validar_Datos" type="submit" class="btn btn-dark mt-auto"> Iniciar sesión</button></div>
+      <br>
       <a id="olvidaste" href='./menuAdmin'>¿Olvidaste tu contraseña?</a>
       <br>
-      <div id="div_Botón"><button id="inicio_Sesión"  onclick = "location.href='./Creacion_Gente';"> Crear cuenta</button></div>
+      <div id="div_Botón"><button id="inicio_Sesión" onclick="location.href='./Creacion_Gente';" class="btn btn-dark mt-auto"> Crear cuenta</button></div>
      
 
      
@@ -28,44 +29,58 @@
 
 
 <script>
-    import app from '../main'
-    import { getFirestore } from "firebase/firestore";
-
-    export default {
-    name: 'consultarBD',
-    data() {
-            return {
-                Correo: '',
-                Contraseña:''
-            }
-        },
-
-    methods: {
-        async consultarBD() {
-          //console.log('UWUWWUW')
-            const db = getFirestore(app).ref('Cuentas');
-            db.orderByChild('Correo').equalTo(this.Correo).once('Value',(snapshot) => {
-              snapshot.forEach((childSnapshot) => {
-                const user = childSnapshot.val();
-                if(user.Contraseña === this.Contraseña){
-                  location.href='./menu_Usuario';
-                }else{
-                  console.log('Cuenta Incorrecta');
-                }
-              }) 
-              
-            })
-            /*await getDoc(doc(db, "Cuentas", this.Rut), {
-            
-        })*/
-        
-        }
+  import app from '../main'
+  import {getFirestore, collection, where,query, getDocs, doc} from "firebase/firestore";
+  export default {
+  name: 'validar_Datos',
+  data() {
+    return {
+      ingreso_Correo: '',
+      ingreso_Contraseña: '',
     }
+  },
+  methods: {
+    async validar_Datos() {
+      const db = getFirestore(app); //Se crea la instancia de FireBase
+      const cuentasRef = collection(db, 'Cuentas'); //Se accede a la colección de Cuentas con la instancia de la base de datos y se crea una instancia de eso
 
+      console.log("Correo=" + this.ingreso_Correo);//Para Debugear
+      console.log("Contraseña=" + this.ingreso_Contraseña);//Same 
+      if (this.validateEmail(this.ingreso_Correo)) {
+        console.log("DEBUGGG");
+        const q = query(cuentasRef, where("Correo_Electronico", "==", this.ingreso_Correo), where("Contraseña", "==", this.ingreso_Contraseña)); //Se crea la petición a la base de datos
+        //Y se busca dentro de toda la información una persona que tenga el correo ingresado y la contraseña
+        const querySnapshot = await getDocs(q); //La petición se solicita y se crea una "petición general"
+        if (querySnapshot.empty) { //Se verifica que la petición retorne algo o no, si la petición esta vacia, significa que no se encontró un login valido 
+          console.log("No iniciaste sesión");
+        } else { //Si no está vacia se ve la base de datos y solicita toda la información del usuario
+          querySnapshot.forEach((doc) => {
+            console.log("Docs=" + doc)//Debug
+            if (doc.exists) {
+              console.log(doc.id, "=>", doc.data());//Debug
+              console.log("Iniciaste sesión");
+              location.href = './menu_Usuario'; //Se lleva al menú usuario 
+              //AUN NO SE IMPLEMENTA QUE EL INICIO DE SESIÓN PERDURE ENTRE CAMBIOS DE PAGINA
+            }
+          });
+        }
+      }
+
+      
+    },
+       async validateEmail(email) {
+      const res = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+      return res.test(String(email).toLowerCase());
+    },
+
+
+        },
+  }
     
-}
-</script>
+    
 
+</script>
+  
 <style>
 #pagina {
   background-image:url('../assets/Fondo.jpg');
@@ -132,18 +147,7 @@
   align-items: center;
 }
 
-#inicio_Sesión {
-  width: 45%;
-  height: 8%;
-  background-color: #5E95E7;
-  border-radius: 0%;
-  border: 1px solid #000000;
-  color: black;
-  text-align: center;
-  font-size: 16px;
-  margin: 0 auto;
-  cursor: pointer;
-}
+
 
 #div_Botón {
   display: flex;
