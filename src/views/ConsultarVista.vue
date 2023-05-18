@@ -211,10 +211,11 @@ export default {
                 let fechaInicioReserva;
                 let fechaFinReserva;
 
+                // buscar en las reservas las habitaciones que ya estan ocupadas en esas fechas
                 let HabitacionesOcupadas;
-
                 HabitacionesOcupadas = [];
                 resultreservas.forEach((reserva) => {
+                    console.log(reserva.data());
                     fechaInicioReserva = Number(
                         reserva.data().fechaIngreso.replaceAll("-", "")
                     );
@@ -249,19 +250,37 @@ export default {
                         );
                     }
                 });
-                console.log();
 
                 ///console.log(result)
                 this.final = [];
 
-                console.log(HabitacionesOcupadas);
+                if (!Number(this.adultos) && this.adultos != "0") {
+                    this.fecha_fin = NaN;
+                    this.fecha_inicio = NaN;
+                    console.log(
+                        "El numero de adultos debe ser un numero positivo"
+                    );
+                }
+                if (!Number(this.kid) && this.kid != "0") {
+                    this.fecha_fin = NaN;
+                    this.fecha_inicio = NaN;
+                    console.log(
+                        "El numero de niños debe ser un numero positivo"
+                    );
+                }
 
+                let tamanno = Number(this.adultos) + Number(this.kid) / 2;
                 result.forEach((doc) => {
-                    console.log(doc.data().numero);
                     if (HabitacionesOcupadas.includes(doc.data().numero)) {
-                        console.log("esta ocupada");
-                    } else {
+                        console.log();
+                    } else if (
+                        Number(doc.data().cantidadCamas) >= tamanno &&
+                        Number(doc.data().cantidadCamas) <= tamanno + 2
+                    ) {
                         this.final.push(doc.data());
+                    } else {
+                        console.log(Number(doc.data().cantidadCamas));
+                        console.log(tamanno);
                     }
                 });
             }
