@@ -15,7 +15,7 @@
         <div class="offcanvas-header">
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-
+        <a> {{ nombre }} </a>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item dropdown">
@@ -60,12 +60,10 @@
                     </button>
                   </div>
                 </v-card>
-
               </div>
             </div>
           </div>
         </form>
-
       </div>
     </div>
   </header>
@@ -79,13 +77,8 @@
 </template>
 
 <script setup>
-console.log(getCookie('usuarioRegistrado')
-)
-</script>
-
-<script>
-//import { collection, getDocs } from 'firebase/firestore';
-//import { db } from "../main.js";
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from "../main.js";
 
 function getCookie(nombre) {
   var cookies = document.cookie.split(';');
@@ -97,11 +90,19 @@ function getCookie(nombre) {
   }
   return null;
 }
+let nombre = getCookie('usuarioRegistrado')
+
 </script>
 
+<script>
+let nombreActivo
 
-
-
+export default {
+  methods: {
+    
+  },
+}
+</script>
 
 
 <style scoped>
