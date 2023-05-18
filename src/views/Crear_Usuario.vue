@@ -38,6 +38,7 @@
       ingreso_Correo: '',
       ingreso_Contraseña: '',
     }
+  },
   methods: {
   },
     async validar_Datos() {
@@ -74,11 +75,9 @@
     },
 
 
-        },
+        
     
   }
-    
-
 </script>
   
 <style>
