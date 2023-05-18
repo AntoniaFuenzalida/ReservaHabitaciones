@@ -87,6 +87,8 @@ export default{
     let nombreActivo = ""
     let rutActivo = ""
 
+    
+
     usuarios.forEach(  (usuario) => {
       if(usuario.data().Correo_Electronico == getCookie('usuarioRegistrado') ){
         nombreActivo = usuario.data().Nombre_Apellido
@@ -112,8 +114,8 @@ export default{
     const reser = {
       cantidadCamas: this.reserva.cantidadCamas,
       
-      cantidadninos: "xd",
-      cantidadAdultos: "xd",
+      cantidadninos: getCookie('ninos'),
+      cantidadAdultos: getCookie('adultos'),
       estadoReserva: "pendiente",
       fechaIngreso: String(this.fechaInicio),
       fechaSalida: String(this.fechaFin),

@@ -268,6 +268,8 @@ export default {
                         "El numero de niños debe ser un numero positivo"
                     );
                 }
+                setCookie('ninos',this.kid,1)
+                setCookie('adultos',this.adultos,1)
 
                 let tamanno = Number(this.adultos) + Number(this.kid) / 2;
                 result.forEach((doc) => {
@@ -287,6 +289,15 @@ export default {
         },
     },
 };
+
+function setCookie(nombre, valor, expiracion) {
+      var fechaExpiracion = new Date();
+      fechaExpiracion.setTime(fechaExpiracion.getTime() + expiracion * 24 * 60 * 60 * 1000);
+      var cookie = nombre + '=' + encodeURIComponent(valor) + '; expires=' + fechaExpiracion.toUTCString() + '; path=/';
+     document.cookie = cookie;
+    }
+
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
