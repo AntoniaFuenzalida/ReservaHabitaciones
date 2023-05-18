@@ -1,25 +1,31 @@
 
 <template>
     <div class="bg-image" id="portada">
-        <div id="caja_Adentro">
+        <div id="caja_Adentro_Crea">
             <img src="../assets/logohotel.png" id="imagen_Adentro" onclick="location.href='./';" >
             <h3 id="texto_Crear">Creación de Cuenta</h3>
+            <p v-if="errors.length">
+            <b>Por favor, corrija el(los) siguiente(s) error(es):</b>
+            <ul>
+            <li v-for="error in errors" v-bind:key="error.id" >{{ error }}</li>
+            </ul>
+            </p>
             <form id ="Todos" @submit.prevent="guardarDatos">
                 <form id="formulario_Arriba">  
                 <input type="text" id="nombre_Completo" name="nombre_Completo" placeholder="Nombre Completo" v-model="Nombre_Apellido">
                     
-               <input type="text" id="ingresar_Rut" name="ingresar_Rut" placeholder="Rut" v-model="Rut">
+               <input type="text" id="ingresar_Rut" name="ingresar_Rut" placeholder="Rut (Sin digito verificador)" v-model="Rut">
                 </form>
                 <form id="formulario_Medio">
                     <input type="password" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña" v-model="Contraseña">
-                    <input type="password" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="Repetir Contraseña" v-model="Rep_Contra">
+                    <input type="password" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="Repetir Contraseña" v-model="repetir_Contra">
                 </form>
                 <form id="formulario_Abajo">
                     <input type="text" id="ingreso_Correo_Crear" name="ingreso_Correo" placeholder="Correo electronico" v-model="Correo_Electronico">
                     <input type="text" id="numero_Telefono" name="numero_Telefono" placeholder="Número de Telefono" v-model="Telefono">
                 </form>
                 <br>
-                <div  hre id="Registro"><button type="submit" id="registro_boton" @click="guardarDatos" > Registrarse</button></div>
+                <div  hre id="Registro"><button type="submit" id="registro_boton"  class="btn btn-dark mt-auto" @click="guardarDatos" > Registrarse</button></div>
             </form>
         </div>
     </div>
@@ -27,52 +33,100 @@
 
 
 <script>
-    import app from '../main'
-    import { doc, getFirestore, setDoc } from "firebase/firestore";
+import app from '../main'
+import { doc, getFirestore, setDoc } from "firebase/firestore";
 
-    export default {
+export default {
     name: 'guardarDatos',
 
     data() {
         return {
+            errors: [],
             Correo_Electronico: '',
             Nombre_Apellido: '',
-            Rol:'',
-            Rut:'',
-            Telefono:'',
+            Rol: '',
+            Rut: '',
+            Telefono: '',
             Contraseña: '',
-            Rep_Contra: ''
+            repetir_Contra: ''
         }
     },
 
     methods: {
-        //checkForm: function (e) {
-            //if (this.Contraseña == this.Rep_Contra) {
-                //return true;
-            //}
-            
-        //},
-        async guardarDatos() {
+        async guardarDatos(e) {
             const db = getFirestore(app);
-            await setDoc(doc(db, "Cuentas", this.Rut), {
-                //if(checkForm) {
-                Nombre_Apellido: this.Nombre_Apellido,
-                Correo_Electronico: this.Correo_Electronico,
-                Contraseña: this.Contraseña,
-                Telefono: this.Telefono,
-                Rol: 'Predeterminado',
-                Rut: this.Rut,
-                //}
+            console.log(Number(this.Rut))
+            console.log(Number(this.Telefono))
+            if (this.checkForm(e)) {
+                await setDoc(doc(db, "Cuentas", this.Rut), {
+                    Nombre_Apellido: this.Nombre_Apellido,
+                    Correo_Electronico: this.Correo_Electronico,
+                    Contraseña: this.Contraseña,
+                    Rol: 'Predeterminado',
+                    Rut: Number(this.Rut),
+                    Telefono: Number(this.Telefono),
+                })
+                location.href = './Iniciar_sesion';
+            } else {
+                console.log('Datos no validos')
+            }
+        },
 
-                
-            })
-        location.href='./Iniciar_sesion';
+        async validateEmail(email) {
+            const res = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+            return res.test(String(email).toLowerCase());
+        },
+
+        checkForm: function (e) {
+            console.log("ENTRO GENTE");
+            if (this.Contraseña === this.repetir_Contra && this.validateEmail(this.Correo_Electronico)
+                && this.Rut.trim() != '' && this.Nombre_Apellido.trim() != '' && this.Contraseña.trim() != '' && this.Telefono.trim() != ''
+                && this.repetir_Contra.trim() != '' && this.Nombre_Apellido.trim() != '' && this.Rut.length <= 8 && this.Telefono.length === 8 && Number(this.Rut) && Number(this.Telefono)) { 
+                return true;
+            }
+
+            this.errors = [];
+            if (this.Rut.trim() == '') {
+                this.errors.push('El Rut es obligatorio ');
+            }
+            if (this.Nombre_Apellido.trim() == '') {
+                this.errors.push('Nombre y Apellido es obligatorio ');
+            }
+            if (this.Contraseña.trim() == '') {
+                this.errors.push('La Contraseña es obligatoria ');
+            }
+            if (this.Telefono.trim() == '') {
+                this.errors.push('El número de telefono es obligatorio ');
+            }
+            if (this.repetir_Contra.trim() == '') {
+                this.errors.push('Repetir contraseña es obligatorio ');
+            }
+            /*if (this.Nombre_Apellido.trim() != '') {
+                this.errors.push('El Rut es obligatorio');
+            }*/
+            if (this.Rut.length >= 9) {
+                this.errors.push('El Rut tiene que ser 8 o menos ');
+            }
+            if (this.Telefono.length != 8) {
+                this.errors.push('El número de telefono tiene que ser de 8 digitos ');
+            }
+            if (!Number(this.Rut)) {
+                this.errors.push('El Rut tiene que ser un número ');
+            }
+            if (!Number(this.Telefono)) {
+                this.errors.push('El telefono tiene que ser un número ');
+            }
+            e.preventDefault();
+            console.log("Errores: "+ this.errors)
+            return false;
+
         }
-    }
+
+    },
 }
-  
-    
-  
+
+
+
 </script>
 
 <style>
@@ -90,9 +144,9 @@
     display: flex;
 }
 
-#caja_Adentro {
-    height: 60%;
-    width: 25%;
+#caja_Adentro_Crea {
+    height: 70%;
+    width: 40%;
     background-color: white;
     opacity: 75%;
 }
@@ -189,18 +243,7 @@
     column-gap: 2%;
 }
 
-#registro_boton {
-    width: 25%;
-    height: 8%;
-    background-color: #5E95E7;
-    border-radius: 0%;
-    border: 1px solid #000000;
-    color: black;
-    text-align: center;
-    font-size: 16px;
-    margin: 0 auto;
-    cursor: pointer;
-}
+
 
 #Registro {
     display: flex;
@@ -213,7 +256,6 @@
     text-decoration: underline black;
     font-size: 16px;
     margin: 0 auto;
-    cursor: pointer;
 }
 
 #Registro {
