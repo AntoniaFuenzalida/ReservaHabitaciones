@@ -1,5 +1,5 @@
-<template>
-  <div class="card h-60">
+<template >
+  <div  class="card h-60">
     <!-- Product image-->
     <img class="card-img-top" src="https://i.imgur.com/lg0Vhr6.jpg" alt="..." />
     <!-- Product details-->
@@ -27,18 +27,15 @@
                 <div class="modal-header">
                   <h1 class="modal-title fs-4" :id="'exampleModalLabel-' + reserva.numero">
                     Habitación N° {{ selectedRoom }}</h1>
-                  fecha: {{ this.fechaFin }}
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <h3>se realizo la reserva para las fechas</h3>
-                  <h5>fecha inicio: {{ this.fechaInicio }} y fecha Fin: {{ this.fechaFin }}</h5>
+                  <h3>se realizara la reserva para las fechas</h3>
+                  <h5>fecha inicio: {{ this.fechaInicio  }} y fecha Fin: {{ this.fechaFin }}</h5>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                  <button @click="guardarReserva(this.selectedRoom)" type="button" class="btn btn-primary"
-                    data-bs-dismiss="modal">Ir a Servicios
-                    Adicionales</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <button @click="guardarReserva(this.selectedRoom )" type="button" class="btn btn-primary" data-bs-dismiss="modal">Continuar</button>
 
                 </div>
               </div>
@@ -56,7 +53,7 @@ import app from '../main'
 import { doc, getFirestore, setDoc, getDocs, collection } from "firebase/firestore";
 
 
-export default {
+export default{
   props: {
     reserva: Object,
     fechaFin: {
@@ -68,35 +65,54 @@ export default {
       default: null
     }
   },
-  data() {
-    return {
-      selectedRoom: ''
-    }
-  },
-  methods: {
-    async guardarReserva(numeroHabitacion) {
-      const db = getFirestore(app);
-      const querySnapshot = await getDocs(collection(db, "Reservas"));
-      const reser = {
-        cantidadCamas: "test",
-        cantidadPersonas: "test",
-        estadoReserva: "pendiente",
-        fechaIngreso: String(this.fechaInicio),
-        fechaSalida: String(this.fechaFin),
-        idReserva: "n" + querySnapshot.size,
-        nombreCliente: "usuario prueba",
-        numeroHabitacion: String(numeroHabitacion),
-        rut: "test rut"
-      };
 
-      const variable = "n" + String(querySnapshot.size);
-      // Guardar reserva en Firebase
-      await setDoc(doc(db, "Reservas", variable), reser);
-      // console.log("se registro:" + reser)
-      router.push({ name: 'Servicios_Adicionales', query: { variable } })
+  data:() => ({
+    
+   
 
-    }
+    
+    selectedRoom: '',
+      
+    
+
+    
+  }),
+
+  methods: {  
+  async guardarReserva(numeroHabitacion) {
+    const db = getFirestore(app);
+    const querySnapshot = await getDocs(collection(db, "Reservas"));  
+
+    let ultimaReserva = 0;
+    querySnapshot.forEach( (reservas) => {
+      
+      ultimaReserva = Number(reservas.data().idReserva.replace("n",""));
+      
+    } )
+    let variable="n"+(ultimaReserva+1);
+
+    const reser = {
+      cantidadCamas: this.reserva.cantidadCamas,
+      cantidadPersonas: "test",
+      estadoReserva: "pendiente",
+      fechaIngreso: String(this.fechaInicio),
+      fechaSalida: String(this.fechaFin),
+      idReserva: variable,
+      nombreCliente: "usuario prueba",
+      numeroHabitacion: String(numeroHabitacion),
+      rut: "test rut"
+    };
+
+    
+    // Guardar reserva en Firebase
+    await setDoc(doc(db, "Reservas",variable), reser);
+   // console.log("se registro:" + reser)
+    router.push({ name: 'Servicios_Adicionales', query: { variable } })
+
   }
+
+
+}
 
 }
 
