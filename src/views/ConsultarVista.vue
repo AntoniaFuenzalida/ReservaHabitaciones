@@ -92,6 +92,7 @@
     </div>
   </footer>
 </template>
+
 <script>
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from "../main.js";
