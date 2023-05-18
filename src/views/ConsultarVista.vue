@@ -74,12 +74,11 @@
   <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
       <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
         <div class="col mb-3" v-for="reserva in final" :key="reserva">
-         <Tarjetas :reserva="reserva" :fecha-fin="fecha_fin" :fecha-inicio="fecha_inicio" />
-
-
-
+          <Tarjetas :reserva="reserva" :fecha-fin="fecha_fin" :fecha-inicio="fecha_inicio" />
         </div>
+
       </div>
     </div>
   </section>
@@ -92,6 +91,9 @@
     </div>
   </footer>
 </template>
+
+
+
 <script>
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from "../main.js";
@@ -115,7 +117,7 @@ export default {
       endDate: null,
       Habitaciones: [],
       reservas: [],
-      final:[]
+      final: []
     }
 
 
@@ -124,114 +126,75 @@ export default {
   {
     Tarjetas
   },
-  /* /*watch: {
+ 
 
-    
-  },*/
-  // computed: {
-  //   reservasDisponibles() {
-  //     return this.reservaFiltradas();
-  //   }
-  // },
-  created() {
-    ///this.mostrarColeccionCompleta()
-    this.obtenerHabitaciones()
-    this.obternerReservas()
-    this.final=this.Habitaciones
-  },
 
   methods: {
-     filtrarHabitacionesDisponibles(habitaciones, reservas, fechaInicio, fechaFin) {
-      if (!Array.isArray(habitaciones) || !Array.isArray(reservas)) {
-    throw new Error("Las variables 'habitaciones' y 'reservas' deben ser arrays.");
-  }
-  let habitacionesDisponibles = [];
 
-  habitaciones.forEach(habitacion => {
-    let reservaEncontrada = false;
 
-    reservas.forEach(reserva => {
-      let fechaCortada = reserva.fechaIngreso.split("-");
-      let fechaCortada2 = reserva.fechaSalida.split("-");
-      const fechaIn = new Date(fechaCortada[0], fechaCortada[1] - 1, fechaCortada[2]);
-      const fechaSa = new Date(fechaCortada2[0], fechaCortada2[1] - 1, fechaCortada2[2]);
-      
-      //console.log("reserva:"+reserva.numeroHabitacion)
-      //console.log("habitacion"+habitacion.numero)
-      if (reserva.numeroHabitacion == habitacion.numero)
-        {
-      //console.log("hay una reserva en esta habitacion")   
-      //console.log("llegada en bd"+fechaIn)
-      //console.log("Salida en bd"+fechaSa)
-        if(
-          (fechaIn >= fechaInicio && fechaIn <= fechaFin) ||
-          (fechaSa >= fechaInicio && fechaSa <= fechaFin) ||
-          (fechaIn <= fechaInicio && fechaSa >= fechaFin)
-        ){ 
-          //console.log("hay una reserva en esta habitacion interfirirendo con el rango de fechas") 
-          reservaEncontrada = true;
-        return; // Equivalente a un "break" para salir del bucle forEach interno
-
-      } 
-       
-      }
-    });
-
-    if (!reservaEncontrada) {
-      //console.log(habitacion)
-      //agregar if para ver si la habitacion tiene camas suficientes para los adultos+niños
-      habitacionesDisponibles.push(habitacion);
-    }
-  });
-
-  return habitacionesDisponibles;
-}
-,
     async reservaFiltradas() {
-      if (!this.fecha_inicio || !this.fecha_fin) {
-        ///console.log(this.Habitaciones)
-        return this.Habitaciones
-      }
 
-      const fechaInicio = new Date(this.fecha_inicio)
-      const fechaFin = new Date(this.fecha_fin)
+
+      let fechaInicio = new Date(this.fecha_inicio)
+      let fechaFin = new Date(this.fecha_fin)
       fechaInicio.setMinutes(fechaInicio.getMinutes() + fechaInicio.getTimezoneOffset())
       fechaFin.setMinutes(fechaFin.getMinutes() + fechaFin.getTimezoneOffset())
 
-      console.log("las fechas son:"+fechaInicio)
-      console.log("y:"+fechaFin)
-      var test =  this.filtrarHabitacionesDisponibles(this.Habitaciones, this.reservas, fechaInicio, fechaFin)
-      console.log(test) 
-      this.final=test    
 
-    },
- 
+      fechaInicio = fechaInicio.toISOString().split('T')[0]
+      fechaFin = fechaFin.toISOString().split('T')[0]
 
-    async obtenerHabitaciones() {
-      this.Habitaciones=[]
       const result = await getDocs(collection(db, "Habitaciones"));
+      const resultreservas = await getDocs(collection(db, "Reservas"));
+      //habitacionesOcupadas = []
+
+      let fechaInicioUsuario = Number(fechaInicio.replaceAll("-", ""))
+      let fechaFinUsuario = Number(fechaFin.replaceAll("-", ""))
+
+      let fechaInicioReserva
+      let fechaFinReserva
+
+      let HabitacionesOcupadas
+
+      HabitacionesOcupadas = []
+      resultreservas.forEach((reserva) => {
+        fechaInicioReserva = Number(reserva.data().fechaIngreso.replaceAll("-", ""))
+        fechaFinReserva = Number(reserva.data().fechaSalida.replaceAll("-", ""))
+
+        if (fechaInicioUsuario <= fechaInicioReserva && fechaFinUsuario >= fechaFinReserva) {
+          HabitacionesOcupadas.push((reserva.data().numeroHabitacion))
+        }
+
+        if (fechaFinUsuario >= fechaInicioReserva && fechaFinUsuario <= fechaFinReserva) {
+          HabitacionesOcupadas.push((reserva.data().numeroHabitacion))
+        }
+
+        if (fechaInicioUsuario >= fechaInicioReserva && fechaInicioUsuario <= fechaFinReserva) {
+          HabitacionesOcupadas.push((reserva.data().numeroHabitacion))
+        }
+
+
+      })
+      console.log();
+
       ///console.log(result)
+      this.final = []
+
+      console.log(HabitacionesOcupadas);
+
       result.forEach((doc) => {
-        this.Habitaciones.push(doc.data());
+        console.log(doc.data().numero);
+        if (HabitacionesOcupadas.includes(doc.data().numero)) {
+          console.log("esta ocupada");
+        }
+        else {
+          this.final.push(doc.data());
+        }
+
       });
-      console.log(this.Habitaciones)
     },
-
-    async obternerReservas() {
-      this.reservas=[]
-      const querySnapshot = await getDocs(collection(db, "Reservas"));
-      querySnapshot.forEach((doc) => {
-        this.reservas.push(doc.data());
-
-      });
-    
-
-
-      //console.log(inicio);
-      //console.log(fin);
-    }
-
-}}
+  }
+}
 
 
 </script>
