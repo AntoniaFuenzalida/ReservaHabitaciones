@@ -11,7 +11,6 @@
         aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-
       <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
         <div class="offcanvas-header">
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -78,12 +77,26 @@
     </div>
   </footer>
 </template>
-  
-<script>
 
+<script setup>
+console.log(getCookie('usuarioRegistrado')
+)
+</script>
+
+<script>
 //import { collection, getDocs } from 'firebase/firestore';
 //import { db } from "../main.js";
 
+function getCookie(nombre) {
+  var cookies = document.cookie.split(';');
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i].trim();
+    if (cookie.startsWith(nombre + '=')) {
+      return decodeURIComponent(cookie.substring(nombre.length + 1));
+    }
+  }
+  return null;
+}
 </script>
 
 
