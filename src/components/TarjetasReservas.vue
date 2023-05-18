@@ -83,31 +83,53 @@ export default{
     const db = getFirestore(app);
     const querySnapshot = await getDocs(collection(db, "Reservas"));  
 
+    const usuarios = await getDocs(collection(db, "Cuentas"));
+    let nombreActivo = ""
+    let rutActivo = ""
+
+    
+
+    usuarios.forEach(  (usuario) => {
+      if(usuario.data().Correo_Electronico == getCookie('usuarioRegistrado') ){
+        nombreActivo = usuario.data().Nombre_Apellido
+        rutActivo = usuario.data().Rut
+        console.log(nombreActivo);
+      }
+      else{
+        console.log("no encontro nombre xd");
+      }
+    } )
+
     let ultimaReserva = 0;
     querySnapshot.forEach( (reservas) => {
+      if(ultimaReserva <  Number(reservas.data().idReserva.replace("n",""))){
+        ultimaReserva = Number(reservas.data().idReserva.replace("n",""));
+      }
+
       
-      ultimaReserva = Number(reservas.data().idReserva.replace("n",""));
       
     } )
     let variable="n"+(ultimaReserva+1);
 
     const reser = {
       cantidadCamas: this.reserva.cantidadCamas,
-      cantidadPersonas: "test",
+      
+      cantidadninos: getCookie('ninos'),
+      cantidadAdultos: getCookie('adultos'),
       estadoReserva: "pendiente",
       fechaIngreso: String(this.fechaInicio),
       fechaSalida: String(this.fechaFin),
       idReserva: variable,
-      nombreCliente: "usuario prueba",
+      nombreCliente: nombreActivo,
       numeroHabitacion: String(numeroHabitacion),
-      rut: "test rut"
+      rut: rutActivo
     };
 
     
     // Guardar reserva en Firebase
     await setDoc(doc(db, "Reservas",variable), reser);
    // console.log("se registro:" + reser)
-    router.push({ name: 'Servicios_Adicionales', query: { variable } })
+   router.push({ name: 'Servicios_Adicionales', query: { variable } })
 
   }
 
@@ -115,6 +137,18 @@ export default{
 }
 
 }
+
+function getCookie(nombre) {
+  var cookies = document.cookie.split(';');
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i].trim();
+    if (cookie.startsWith(nombre + '=')) {
+      return decodeURIComponent(cookie.substring(nombre.length + 1));
+    }
+  }
+  return null;
+}
+
 
 
 </script>
