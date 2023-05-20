@@ -17,12 +17,15 @@ export default {
             correo: null,
             rut: null,
             nombre: null,
-            telefono:null
+            telefono:null,
+            reservas:[]
+            
         };
     },
     created() {
        this.correo= this.getCookie('usuarioRegistrado')
        this.buscarUSuario()
+       this.buscarReservas()
     },
     methods: {
       getCookie(nombre) {
@@ -52,9 +55,26 @@ usuarios.forEach((doc) => {
   }
 });
 
+},
+async buscarReservas()
+{
+    var usuario_reservas =[]
+    const resul = await getDocs(collection(db, "Reservas"));
+resul.forEach((doc) => {
+   var accountData = doc.data();
+  if(accountData.rut ==this.rut){
+     this.reservas.push(accountData)
+     usuario_reservas.push(accountData)
+  console.log(accountData)
+  }
 
 
 }
+);
+console.log(usuario_reservas)
+  return(usuario_reservas)
+
+},
     }, 
     components:
     {
@@ -184,9 +204,8 @@ usuarios.forEach((doc) => {
                     <div class="card mb-6" style="margin-left: 12%;">
                         <div>
                             <ul class="list-goup mt-4">
-                                <li class="list-group-item mt-3" v-for="reserva in ArregloReservas" :key="reserva">
-                                    <DropDown :fecha="reserva.fecha" :habitacion="reserva.habitacion"
-                                        :estado="reserva.estado" />
+                                <li class="list-group-item mt-3" v-for="reserva in reservas" :key="reserva">
+                                    <DropDown :reserva="reserva" />
                                 </li>
                             </ul>
                         </div>
