@@ -24,7 +24,7 @@ export default {
     },
     created() {
         this.correo = this.getCookie('usuarioRegistrado')
-        this.buscarUSuario()
+        this.buscarUSuario(this.correo)
         this.buscarReservas()
     },
     methods: {
@@ -39,11 +39,11 @@ export default {
             }
             return null;
         },
-        async buscarUSuario() {
+        async buscarUSuario(correo) {
             const usuarios = await getDocs(collection(db, "Cuentas"));
             usuarios.forEach((doc) => {
                 var accountData = doc.data();
-                if (accountData.Correo_Electronico == this.correo) {
+                if (accountData.Correo_Electronico == correo) {
 
                     console.log(accountData)
                     this.rut = accountData.Rut
