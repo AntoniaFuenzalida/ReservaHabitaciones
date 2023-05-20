@@ -12,50 +12,68 @@ let nombreActivo
 import DropDown from "../components/DropDown.vue";
 export default {
     name: "menu_usuario",
-     data() {
+    data() {
         return {
             correo: null,
             rut: null,
             nombre: null,
-            telefono:null
+            telefono: null,
+            reservas: []
+
         };
     },
     created() {
-       this.correo= this.getCookie('usuarioRegistrado')
-       this.buscarUSuario()
+        this.correo = this.getCookie('usuarioRegistrado')
+        this.buscarUSuario()
+        this.buscarReservas()
     },
     methods: {
-      getCookie(nombre) {
-  var cookies = document.cookie.split(';');
-  for (var i = 0; i < cookies.length; i++) {
-    var cookie = cookies[i].trim();
-    if (cookie.startsWith(nombre + '=')) {
-      return decodeURIComponent(cookie.substring(nombre.length + 1));
-    }
+        getCookie(nombre) {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.startsWith(nombre + '=')) {
+                    return decodeURIComponent(cookie.substring(nombre.length + 1));
+                }
 
-  }
-  return null;
-},
-    async buscarUSuario()
-{
-    const usuarios = await getDocs(collection(db, "Cuentas"));
-usuarios.forEach((doc) => {
-   var accountData = doc.data();
-  if(accountData.Correo_Electronico ==this.correo){
-  
-  console.log(accountData)
-  this.rut = accountData.Rut
-  this.nombre= accountData.Nombre_Apellido 
-  this.telefono= accountData.Telefono
+            }
+            return null;
+        },
+        async buscarUSuario() {
+            const usuarios = await getDocs(collection(db, "Cuentas"));
+            usuarios.forEach((doc) => {
+                var accountData = doc.data();
+                if (accountData.Correo_Electronico == this.correo) {
 
-  return(accountData)
-  }
-});
+                    console.log(accountData)
+                    this.rut = accountData.Rut
+                    this.nombre = accountData.Nombre_Apellido
+                    this.telefono = accountData.Telefono
+
+                    return (accountData)
+                }
+            });
+
+        },
+        async buscarReservas() {
+            var usuario_reservas = []
+            const resul = await getDocs(collection(db, "Reservas"));
+            resul.forEach((doc) => {
+                var accountData = doc.data();
+                if (accountData.rut == this.rut) {
+                    this.reservas.push(accountData)
+                    usuario_reservas.push(accountData)
+                    console.log(accountData)
+                }
 
 
+            }
+            );
+            console.log(usuario_reservas)
+            return (usuario_reservas)
 
-}
-    }, 
+        },
+    },
     components:
     {
         DropDown
@@ -145,7 +163,7 @@ usuarios.forEach((doc) => {
                         </div>
                         <div class="col-sm-9">
                             <p class="text-muted mb-0">
-                                {{this.nombre}}</p>
+                                {{ this.nombre }}</p>
                         </div>
                     </div>
                     <hr>
@@ -154,7 +172,7 @@ usuarios.forEach((doc) => {
                             <p class="mb-0">Rut:</p>
                         </div>
                         <div class="col-sm-9">
-                            <p class="text-muted mb-0">{{this.rut}}</p>
+                            <p class="text-muted mb-0">{{ this.rut }}</p>
                         </div>
                     </div>
                     <hr>
@@ -179,19 +197,20 @@ usuarios.forEach((doc) => {
 
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card mb-6" style="margin-left: 12%;">
+            <div class="row" v-if="reservas.length > 0">
+                <div class="col-md-8">
+                    <div class="card mb-10" style="align-items:center;">
                         <div>
+                            <h2 style="text-align: center;">Reservas</h2>
                             <ul class="list-goup mt-4">
-                                <li class="list-group-item mt-3" v-for="reserva in ArregloReservas" :key="reserva">
-                                    <DropDown :fecha="reserva.fecha" :habitacion="reserva.habitacion"
-                                        :estado="reserva.estado" />
+                                <li class="list-group-item mt-3" v-for="reserva in reservas" :key="reserva"
+                                    style="align-items: center;">
+                                    <DropDown :reserva="reserva" />
                                 </li>
                             </ul>
                         </div>
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent" style="text-align: center;">
-                            <p>Reservas</p>
+
                         </div>
                     </div>
                 </div>
@@ -228,7 +247,7 @@ usuarios.forEach((doc) => {
 
 
     <!-- Footer-->
-    <footer class="py-5 bg-dark">
+    <footer class="py-5 bg-dark" style="margin-top: 2%;">
         <div class="container">
             <p class="m-0 text-center text-white">&copy; Hotel Cordillera, 2023</p>
         </div>
