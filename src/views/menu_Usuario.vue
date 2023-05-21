@@ -11,7 +11,9 @@
           alt="hotel logo"
           loading="lazy"
           style="margin-top: -1px;"
-        /></a>
+        />
+      </a>
+      <a> {{ nombre }} </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -133,13 +135,22 @@
 
 </template>
 
-<script>
-export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
+<script setup>
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from "../main.js";
+
+function getCookie(nombre) {
+  var cookies = document.cookie.split(';');
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i].trim();
+    if (cookie.startsWith(nombre + '=')) {
+      return decodeURIComponent(cookie.substring(nombre.length + 1));
+    }
   }
+  return null;
 }
+let nombre = getCookie('usuarioRegistrado')
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

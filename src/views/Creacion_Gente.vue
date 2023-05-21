@@ -1,8 +1,11 @@
 
 <template>
-    <div class="bg-image" id="portada">
+    <div class="bg-image" id="portada_crear">
         <div id="caja_Adentro_Crea">
-            <img src="../assets/logohotel.png" id="imagen_Adentro" onclick="location.href='./';" >
+            <div id="div_BotonRegreso">
+            <button id="regreso_Boton" @click="$router.go(-1)"> <img id="imagen_regreso_Boton" src="../icons/atras.jpg" /></button>
+            </div>
+            <img src="../assets/logohotel.png" id="imagen_Adentro_crea" >
             <h3 id="texto_Crear">Creación de Cuenta</h3>
             <p v-if="errors.length">
             <b>Por favor, corrija el(los) siguiente(s) error(es):</b>
@@ -78,7 +81,7 @@ export default {
         },
 
         checkForm: function (e) {
-            console.log("ENTRO GENTE");
+
             if (this.Contraseña === this.repetir_Contra && this.validateEmail(this.Correo_Electronico)
                 && this.Rut.trim() != '' && this.Nombre_Apellido.trim() != '' && this.Contraseña.trim() != '' && this.Telefono.trim() != ''
                 && this.repetir_Contra.trim() != '' && this.Nombre_Apellido.trim() != '' && this.Rut.length <= 8 && this.Telefono.length === 8 && Number(this.Rut) && Number(this.Telefono)) { 
@@ -130,28 +133,29 @@ export default {
 </script>
 
 <style>
-#portada {
-    background-image: url('../assets/Fondo.jpg');
+#portada_crear {
+    background-image:url('../assets/Fondo.jpg');
     background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    background-size: cover;
-    max-width: 100%;
+    background-size: 100% 100%;
+    width: 100%;
+    height: 100%;
     height: 100vh;
     opacity: 0.9;
     justify-content: center;
     align-items: center;
     display: flex;
+    margin:0px;
+    position: absolute;
 }
 
 #caja_Adentro_Crea {
-    height: 70%;
+    height: 90%;
     width: 40%;
     background-color: white;
     opacity: 75%;
 }
 
-#imagen_Adentro {
+#imagen_Adentro_crea {
 
     display: block;
     margin: 0%auto;

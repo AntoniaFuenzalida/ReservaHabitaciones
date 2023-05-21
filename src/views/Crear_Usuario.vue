@@ -1,9 +1,18 @@
 <template>
-  <div class="bg-image" id="pagina">
+  <div class="bg-image" id="pagina_ini">
     <div id="caja_Adentro">
-      <img src="../assets/logohotel.png"  id="imagen_Adentro">
+      <div id="div_BotonRegreso">
+      <button id="regreso_Boton" @click="$router.go(-1)"> <img id="imagen_regreso_Boton" src="../icons/atras.jpg" /></button>
+      </div>
+      <img src="../assets/logohotel.png"  id="imagen_Adentro">  
       <br>
       <br>
+      <p v-if="errors.length">
+            <b>Por favor, corrija el(los) siguiente(s) error(es):</b>
+            <ul>
+            <li v-for="error in errors" v-bind:key="error.id" >{{ error }}</li>
+            </ul>
+            </p>      
       <form id="formulario" @submit.prevent="validar_Datos">
         <label for="Email"> </label>
         <input type="text" id="ingreso_Correo" name="ingreso_Correo" placeholder="Correo electronico" v-model="ingreso_Correo">
@@ -16,12 +25,6 @@
       <a id="olvidaste" href='./menuAdmin'>¿Olvidaste tu contraseña?</a>
       <br>
       <div id="div_Botón"><button id="inicio_Sesión" onclick="location.href='./Creacion_Gente';" class="btn btn-dark mt-auto"> Crear cuenta</button></div>
-     
-
-     
-      
-
-
     </div>
 
   </div>
@@ -35,6 +38,7 @@
   name: 'validar_Datos',
   data() {
     return {
+      errors: [],
       ingreso_Correo: '',
       ingreso_Contraseña: '',
     }
@@ -43,25 +47,27 @@
     async validar_Datos() {
       const db = getFirestore(app); //Se crea la instancia de FireBase
       const cuentasRef = collection(db, 'Cuentas'); //Se accede a la colección de Cuentas con la instancia de la base de datos y se crea una instancia de eso
-
-      console.log("Correo=" + this.ingreso_Correo);//Para Debugear
-      console.log("Contraseña=" + this.ingreso_Contraseña);//Same 
+      this.errors = [];
       if (this.validateEmail(this.ingreso_Correo)) {
-        console.log("DEBUGGG");
         const q = query(cuentasRef, where("Correo_Electronico", "==", this.ingreso_Correo), where("Contraseña", "==", this.ingreso_Contraseña)); //Se crea la petición a la base de datos
         //Y se busca dentro de toda la información una persona que tenga el correo ingresado y la contraseña
         const querySnapshot = await getDocs(q); //La petición se solicita y se crea una "petición general"
         if (querySnapshot.empty) { //Se verifica que la petición retorne algo o no, si la petición esta vacia, significa que no se encontró un login valido 
-          console.log("No iniciaste sesión");
+          this.errors.push("Datos invalidos");
         } else { //Si no está vacia se ve la base de datos y solicita toda la información del usuario
           querySnapshot.forEach((doc) => {
-            console.log("Docs=" + doc)//Debug
             if (doc.exists) {
-              console.log(doc.id, "=>", doc.data());//Debug
-              console.log("Iniciaste sesión");
+              console.log("Rol:" + doc.data)
+              if(doc.data.name("Rol") === 'Predeterminado'){
+                console.log(doc.id, "=>", doc.data());//Debug
+                setCookie('usuarioRegistrado',this.ingreso_Correo,1)
+                console.log(getCookie('usuarioRegistrado'));
+                //location.href = './menu_Usuario'; //Se lleva al menú usuario 
+              }
+              console.log("Es acmin");
               setCookie('usuarioRegistrado',this.ingreso_Correo,1)
               console.log(getCookie('usuarioRegistrado'));
-              location.href = './menu_Usuario'; //Se lleva al menú usuario 
+              //location.href = './menu_Usuario'; //Se lleva al menú usuario 
               //AUN NO SE IMPLEMENTA QUE EL INICIO DE SESIÓN PERDURE ENTRE CAMBIOS DE PAGINA
             }
           });
@@ -105,31 +111,33 @@ function getCookie(nombre) {
 </script>
   
 <style>
-#pagina {
+#pagina_ini {
   background-image:url('../assets/Fondo.jpg');
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-  background-size: cover;
-  max-width: 100%;
+  background-size: 100% 100%;
+  width: 100%;
+  height: 100%;
   height: 100vh;
   opacity: 0.9;
   justify-content: center;
   align-items: center;
   display: flex;
+  margin:0px;
+  position: absolute;
 }
 
 #caja_Adentro {
-  height: 60%;
+  height: 100%;
   width: 20%;
   background-color: white;
   opacity: 75%;
+  position: absolute;
 }
 
 #imagen_Adentro {
+  height: 25%;
+  width: 100%;
   
-  display: block;
-  margin: 0%auto;
 }
 
 #ingreso_Correo {
@@ -186,4 +194,13 @@ function getCookie(nombre) {
   display: flex;
   justify-content: center;
   text-decoration: underline black;
-}</style>
+}
+#regreso_Boton{
+  width: 15%;
+  height: 15%;
+}
+#imagen_regreso_Boton{
+  width: 100%;
+  height: 100%;
+}
+</style>

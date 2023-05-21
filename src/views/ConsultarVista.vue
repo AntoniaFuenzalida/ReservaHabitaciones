@@ -6,7 +6,7 @@
             <a class="navbar-brand" href="/">
                 <img src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg" height="50" alt="hotel logo"
                     loading="lazy" style="margin-top: -1px" /></a>
-
+                    <a> {{ nombre }} </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                 aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -97,9 +97,25 @@
     <!--pop up error-->
 </template>
 
-<script>
-import { collection, getDocs } from "firebase/firestore";
+<script setup>
+import { collection, getDocs } from 'firebase/firestore';
 import { db } from "../main.js";
+
+function getCookie(nombre) {
+  var cookies = document.cookie.split(';');
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i].trim();
+    if (cookie.startsWith(nombre + '=')) {
+      return decodeURIComponent(cookie.substring(nombre.length + 1));
+    }
+  }
+  return null;
+}
+let nombre = getCookie('usuarioRegistrado')
+
+</script>
+
+<script>
 import Tarjetas from "../components/TarjetasReservas.vue";
 
 export default {

@@ -11,6 +11,7 @@
                     loading="lazy"
                     style="margin-top: -1px"
             /></a>
+            <a> {{ nombre }} </a>
 
             <button
                 class="navbar-toggler"
@@ -375,6 +376,24 @@
         </div>
     </footer>
 </template>
+
+<script setup>
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from "../main.js";
+
+function getCookie(nombre) {
+  var cookies = document.cookie.split(';');
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i].trim();
+    if (cookie.startsWith(nombre + '=')) {
+      return decodeURIComponent(cookie.substring(nombre.length + 1));
+    }
+  }
+  return null;
+}
+let nombre = getCookie('usuarioRegistrado')
+
+</script>
 
 <script>
 import app from "../main";
