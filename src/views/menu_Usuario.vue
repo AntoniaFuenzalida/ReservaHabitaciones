@@ -105,7 +105,7 @@
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <div class="text-center"><a class="btn btn-dark mt-auto" href="#">Promociones</a></div>
+                                    <div class="text-center"><a class="btn btn-dark mt-auto" href="./tus_Promociones">Promociones</a></div>
                                 </div>
                             </div>
                         </div>

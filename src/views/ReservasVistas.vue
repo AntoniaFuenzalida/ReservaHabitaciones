@@ -1,100 +1,90 @@
-<script>
-export default {
-    porps: {
-        tittle: String
-    },
-    data: () => ({
-        Mostrar: false
-    }),
-    methods: {
-        Desplegar() {
-            this.Mostrar = !this.Mostrar;
-        }
-    },
-    components: { DropDown }
-}
-</script>
+
+
+
 <script setup>
-import DropDown from '../components/DropDown.vue';
-
-
-//const ReservaLista = "";
-//const ReservaPorConfirmar = 1;
-//const ReservaCancelada = 1;
-//const ReservaUtilizada = 1;
-
-// ArregloReservas es un placeholder habra que cambiarlo cuando se realize la version definitiva
-
-const ArregloReservas = [
-    {
-        fecha: "02-05",
-        habitacion: "7",
-        estado: "Lista",
-    },
-    {
-        fecha: "26-04",
-        habitacion: "3",
-        estado: "PorConfirmar",
-    },
-    {
-        fecha: "02-08",
-        habitacion: "7",
-        estado: "Utilizada",
-    },
-    {
-        fecha: "02-08",
-        habitacion: "7",
-        estado: "Utilizada",
-    },
-    {
-        fecha: "02-05",
-        habitacion: "7",
-        estado: "Lista",
-    },
-    {
-        fecha: "26-04",
-        habitacion: "3",
-        estado: "PorConfirmar",
-    },
-    {
-        fecha: "02-08",
-        habitacion: "7",
-        estado: "Utilizada",
-    },
-    {
-        fecha: "26-04",
-        habitacion: "3",
-        estado: "PorConfirmar",
-    },
-    {
-        fecha: "02-08",
-        habitacion: "7",
-        estado: "Utilizada",
-    },
-    {
-        fecha: "02-08",
-        habitacion: "7",
-        estado: "Utilizada",
-    }
-
-];
-
-const UsuarioActual =
-{
-    Rut: "25468597-6",
-    Nombre: "Benito Camelo",
-    Telefono:"+569 9794 0689",
-    Correo:"benitocamelo@gmail.com",
-    Dirreccion: "Calle Falsa 123",
-
-}
-
-/*const Regresar = () => {
-    console.log("Regresando...")
-}
-*/
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from "../main.js";
 
 </script>
+<script>
+let nombreActivo
+
+import DropDown from "../components/DropDown.vue";
+export default {
+    name: "menu_usuario",
+    data() {
+        return {
+            correo: null,
+            rut: null,
+            nombre: null,
+            telefono: null,
+            reservas: []
+
+        };
+    },
+    created() {
+        this.correo = this.getCookie('usuarioRegistrado')
+        this.buscarUSuario(this.correo)
+        this.buscarReservas()
+    },
+    methods: {
+        getCookie(nombre) {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.startsWith(nombre + '=')) {
+                    return decodeURIComponent(cookie.substring(nombre.length + 1));
+                }
+
+            }
+            return null;
+        },
+        async buscarUSuario(correo) {
+            const usuarios = await getDocs(collection(db, "Cuentas"));
+            usuarios.forEach((doc) => {
+                var accountData = doc.data();
+                if (accountData.Correo_Electronico == correo) {
+
+                    console.log(accountData)
+                    this.rut = accountData.Rut
+                    this.nombre = accountData.Nombre_Apellido
+                    this.telefono = accountData.Telefono
+
+                    return (accountData)
+                }
+            });
+
+        },
+        async buscarReservas() {
+            var usuario_reservas = []
+            const resul = await getDocs(collection(db, "Reservas"));
+            resul.forEach((doc) => {
+                var accountData = doc.data();
+                if (accountData.rut == this.rut) {
+                    this.reservas.push(accountData)
+                    usuario_reservas.push(accountData)
+                    console.log(accountData)
+                }
+
+
+            }
+            );
+            console.log(usuario_reservas)
+            return (usuario_reservas)
+
+        },
+    },
+    components:
+    {
+        DropDown
+    }
+};
+
+
+</script>
+
+
+
 
 <template>
     <!-- Navigation-->
@@ -154,7 +144,7 @@ const UsuarioActual =
                 <div class="card-body text-center">
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
                         class="rounded-circle img-fluid" style="width: 150px;">
-                    <h5 class="my-3">{{ UsuarioActual.Nombre }}</h5>
+                    <h5 class="my-3">{{ this.nombre }}</h5>
                     <div class="d-flex justify-content-center mb-2">
                         <button type="button" onclick="location.href='./menu_Usuario';"
                             class="btn btn-primary">Regresar</button>
@@ -173,7 +163,7 @@ const UsuarioActual =
                         </div>
                         <div class="col-sm-9">
                             <p class="text-muted mb-0">
-                                {{ UsuarioActual.Nombre }}</p>
+                                {{ this.nombre }}</p>
                         </div>
                     </div>
                     <hr>
@@ -182,7 +172,7 @@ const UsuarioActual =
                             <p class="mb-0">Rut:</p>
                         </div>
                         <div class="col-sm-9">
-                            <p class="text-muted mb-0">{{ UsuarioActual.Rut }}</p>
+                            <p class="text-muted mb-0">{{ this.rut }}</p>
                         </div>
                     </div>
                     <hr>
@@ -191,7 +181,7 @@ const UsuarioActual =
                             <p class="mb-0">Número Celular:</p>
                         </div>
                         <div class="col-sm-9">
-                            <p class="text-muted mb-0">{{ UsuarioActual.Telefono }}</p>
+                            <p class="text-muted mb-0">{{ this.telefono }}</p>
                         </div>
                     </div>
                     <hr>
@@ -200,33 +190,27 @@ const UsuarioActual =
                             <p class="mb-0">Correo Electronico</p>
                         </div>
                         <div class="col-sm-9">
-                            <p class="text-muted mb-0">{{ UsuarioActual.Correo }}</p>
+                            <p class="text-muted mb-0">{{ this.correo }}</p>
                         </div>
                     </div>
                     <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0">Dirección</p>
-                        </div>
-                        <div class="col-sm-9">
-                            <p class="text-muted mb-0">{{UsuarioActual.Dirreccion}} </p>
-                        </div>
-                    </div>
+
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card mb-6" style="margin-left: 12%;">
+            <div class="row" v-if="reservas.length > 0">
+                <div class="col-md-8">
+                    <div class="card mb-10" style="align-items:center;">
                         <div>
+                            <h2 style="text-align: center;">Reservas</h2>
                             <ul class="list-goup mt-4">
-                                <li class="list-group-item mt-3" v-for="reserva in ArregloReservas" :key="reserva">
-                                    <DropDown :fecha="reserva.fecha" :habitacion="reserva.habitacion"
-                                        :estado="reserva.estado" />
+                                <li class="list-group-item mt-3" v-for="reserva in reservas" :key="reserva"
+                                    style="align-items: center;">
+                                    <DropDown :reserva="reserva" />
                                 </li>
                             </ul>
                         </div>
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent" style="text-align: center;">
-                            <p>Reservas</p>
+
                         </div>
                     </div>
                 </div>
@@ -263,7 +247,7 @@ const UsuarioActual =
 
 
     <!-- Footer-->
-    <footer class="py-5 bg-dark">
+    <footer class="py-5 bg-dark" style="margin-top: 2%;">
         <div class="container">
             <p class="m-0 text-center text-white">&copy; Hotel Cordillera, 2023</p>
         </div>

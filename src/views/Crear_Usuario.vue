@@ -30,7 +30,7 @@
 
 <script>
   import app from '../main'
-  import {getFirestore, collection, where,query, getDocs, doc} from "firebase/firestore";
+  import {getFirestore, collection, where,query, getDocs} from "firebase/firestore";
   export default {
   name: 'validar_Datos',
   data() {
@@ -59,6 +59,8 @@
             if (doc.exists) {
               console.log(doc.id, "=>", doc.data());//Debug
               console.log("Iniciaste sesión");
+              setCookie('usuarioRegistrado',this.ingreso_Correo,1)
+              console.log(getCookie('usuarioRegistrado'));
               location.href = './menu_Usuario'; //Se lleva al menú usuario 
               //AUN NO SE IMPLEMENTA QUE EL INICIO DE SESIÓN PERDURE ENTRE CAMBIOS DE PAGINA
             }
@@ -66,6 +68,7 @@
         }
       }
 
+    
       
     },
        async validateEmail(email) {
@@ -76,6 +79,26 @@
 
         },
   }
+
+  
+
+function setCookie(nombre, valor, expiracion) {
+      var fechaExpiracion = new Date();
+      fechaExpiracion.setTime(fechaExpiracion.getTime() + expiracion * 24 * 60 * 60 * 1000);
+      var cookie = nombre + '=' + encodeURIComponent(valor) + '; expires=' + fechaExpiracion.toUTCString() + '; path=/';
+     document.cookie = cookie;
+    }
+  
+function getCookie(nombre) {
+  var cookies = document.cookie.split(';');
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i].trim();
+    if (cookie.startsWith(nombre + '=')) {
+      return decodeURIComponent(cookie.substring(nombre.length + 1));
+    }
+  }
+  return null;
+}
     
     
 

@@ -8,6 +8,7 @@ import menu_Usuario from "@/views/menu_Usuario.vue"
 import ReservasVistas from "@/views/ReservasVistas.vue"
 import ConsultarVista from "@/views/ConsultarVista.vue"
 import servicioAdicional from "@/views/servicioAdicional.vue"
+import tus_Promociones from "@/views/tus_Promociones.vue"
 
 import MenuAdmin from "@/views/MenuAdmin.vue"
 
@@ -16,8 +17,6 @@ const routes = [
 		path: "/MenuAdmin",
 		name: "MenuAdmin",
 		component: MenuAdmin,
-
-
 	},
 	{
 		path: "/",
@@ -59,7 +58,11 @@ const routes = [
 		name: "Servicios_Adicionales",
 		component: servicioAdicional,
 	},
-	
+	{
+		path: "/Tus_Promociones",
+		name: "Promociones",
+		component: tus_Promociones,
+	},
 ]
 const router = createRouter({
   history: createWebHistory(),
