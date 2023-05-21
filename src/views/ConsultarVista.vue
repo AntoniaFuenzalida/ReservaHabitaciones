@@ -161,6 +161,7 @@
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../main.js";
 import Tarjetas from "../components/TarjetasReservas.vue";
+import { z } from "alga-css/src/configs/preset";
 
 export default {
     data() {
@@ -300,36 +301,29 @@ export default {
                 }
                 if (!Number(this.adultos)) {
                     this.adultos = 0;
-                    this.final = [];
-                    console.log(this.adultos);
-                    console.log(
-                        "El numero de adultos debe ser un numero positivo"
-                    );
                 }
-                if (isNaN(this.kid) || this.kid == "") {
+                if (isNaN(this.kid) || this.kid == "" || Number(this.kid) < 1) {
                     this.kid = 0;
-                }
-                if (!Number(this.kid) && this.kid != "0") {
-                    this.final = [];
-                    console.log(
-                        "El numero de niños debe ser un numero positivo o cero"
-                    );
                 }
 
                 setCookie("ninos", this.kid, 1);
                 setCookie("adultos", this.adultos, 1);
 
-                let tamanno = Number(this.adultos) + Number(this.kid) / 2;
-                result.forEach((doc) => {
-                    if (HabitacionesOcupadas.includes(doc.data().numero)) {
-                        console.log();
-                    } else if (
-                        Number(doc.data().cantidadCamas) >= tamanno &&
-                        Number(doc.data().cantidadCamas) <= tamanno + 2
-                    ) {
-                        this.final.push(doc.data());
-                    }
-                });
+                if (Number(this.adultos) > 0) {
+                    let tamanno = Number(this.adultos) + Number(this.kid) / 2;
+                    result.forEach((doc) => {
+                        if (HabitacionesOcupadas.includes(doc.data().numero)) {
+                            console.log();
+                        } else if (
+                            Number(doc.data().cantidadCamas) >= tamanno &&
+                            Number(doc.data().cantidadCamas) <= tamanno + 2
+                        ) {
+                            this.final.push(doc.data());
+                        }
+                    });
+                } else {
+                    console.log("no cumple la cantidad de adultos");
+                }
             }
         },
     },
