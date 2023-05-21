@@ -14,7 +14,7 @@
                 <form id="formulario_Arriba">  
                 <input type="text" id="nombre_Completo" name="nombre_Completo" placeholder="Nombre Completo" v-model="Nombre_Apellido">
                     
-               <input type="text" id="ingresar_Rut" name="ingresar_Rut" placeholder="Rut (Sin digito verificador)" v-model="Rut">
+               <input type="text" id="ingresar_Rut" name="ingresar_Rut" placeholder="Rut (sin puntos con guión)" v-model="Rut">
                 </form>
                 <form id="formulario_Medio">
                     <input type="password" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña" v-model="Contraseña">
@@ -34,7 +34,7 @@
 
 <script>
 import app from '../main'
-import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { collection, doc, getFirestore, setDoc, where,query, getDocs } from "firebase/firestore";
 
 export default {
     name: 'guardarDatos',
@@ -55,9 +55,24 @@ export default {
     methods: {
         async guardarDatos(e) {
             const db = getFirestore(app);
-            console.log(Number(this.Rut))
-            console.log(Number(this.Telefono))
-            if (this.checkForm(e)) {
+            const coleccion = collection(db,'Cuentas');
+            let correoExiste = false;
+            let rutExiste = false;
+
+            const correoQuery = query(coleccion, where('Correo_Electronico', '==' , this.Correo_Electronico));
+            const correoSnap = await getDocs(correoQuery);
+            const rutQuery = query(coleccion, where('Rut', '==' , this.Rut));
+            const rutSnap = await getDocs(rutQuery);
+
+            correoSnap.forEach((doc) => {
+                correoExiste = true;
+            });
+
+            rutSnap.forEach((doc) => {
+                rutExiste = true;
+            });
+            if(!correoExiste && !rutExiste){
+                if (this.checkForm(e)) {
                 await setDoc(doc(db, "Cuentas", this.Rut), {
                     Nombre_Apellido: this.Nombre_Apellido,
                     Correo_Electronico: this.Correo_Electronico,
@@ -67,55 +82,96 @@ export default {
                     Telefono: Number(this.Telefono),
                 })
                 location.href = './Iniciar_sesion';
-            } else {
-                console.log('Datos no validos')
+                } else {
+                    console.log('Datos no validos')
+                }
+            }else{
+                if(correoExiste){
+                    console.log('El correo ya esta en uso');
+                }
+                if(rutExiste){
+                    console.log('El rut ya esta en uso');
+                }
+                
             }
+            
         },
 
         async validateEmail(email) {
-            const res = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
-            return res.test(String(email).toLowerCase());
+            const res = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;  
+            return res.test(String(email).toLowerCase())
+        },
+
+        async validateRut(rut){
+            const rutValidate = /^[0-9]+-[0-9kK]{1}$/;
+            if(rutValidate.test(String(rut).toLowerCase())){
+                return true
+            }else{
+                return false
+            }
+            
+        },
+
+        async validateNum(num){
+            const numValidate = /^(\+?56)?(\s?)(0?9)(\s?)[987654321]\d{7}$/;
+            return numValidate.test(String(num))
         },
 
         checkForm: function (e) {
             console.log("ENTRO GENTE");
             if (this.Contraseña === this.repetir_Contra && this.validateEmail(this.Correo_Electronico)
-                && this.Rut.trim() != '' && this.Nombre_Apellido.trim() != '' && this.Contraseña.trim() != '' && this.Telefono.trim() != ''
-                && this.repetir_Contra.trim() != '' && this.Nombre_Apellido.trim() != '' && this.Rut.length <= 8 && this.Telefono.length === 8 && Number(this.Rut) && Number(this.Telefono)) { 
+                && this.validateRut(this.Rut) && this.validateNum(this.Telefono) && this.Rut.trim() != '' && this.Nombre_Apellido.trim() != '' && this.Contraseña.trim() != '' && this.Telefono.trim() != ''
+                && this.repetir_Contra.trim() != '' && this.Nombre_Apellido.trim() != '' && this.Rut.length === 10 && this.Telefono.length <= 11 /*&& Number(this.Rut) && Number(this.Telefono)*/) 
+                { 
                 return true;
             }
 
             this.errors = [];
             if (this.Rut.trim() == '') {
                 this.errors.push('El Rut es obligatorio ');
+            }else{
+                console.log(!this.validateRut(this.Rut)+ ' uwu')
+                if (!this.validateRut(this.Rut) || String(this.Rut).length != 10) {
+                    this.errors.push('Rut invalido ');
+                    console.log('enter');
+                }
             }
             if (this.Nombre_Apellido.trim() == '') {
                 this.errors.push('Nombre y Apellido es obligatorio ');
+            }
+            if (this.Correo_Electronico.trim() == '') {
+                this.errors.push('Correo electronico es obligatorio ');
+            }else{
+                if(!this.validateEmail(this.Correo_Electronico)){
+                    this.errors.push('Correo invalido ');
+                }
             }
             if (this.Contraseña.trim() == '') {
                 this.errors.push('La Contraseña es obligatoria ');
             }
             if (this.Telefono.trim() == '') {
                 this.errors.push('El número de telefono es obligatorio ');
+            }else{
+                if (!this.validateNum(this.Telefono) || String(this.Telefono).length != 11){
+                    this.errors.push('Numero de teléfono invalido ');
+            }
             }
             if (this.repetir_Contra.trim() == '') {
                 this.errors.push('Repetir contraseña es obligatorio ');
             }
-            /*if (this.Nombre_Apellido.trim() != '') {
-                this.errors.push('El Rut es obligatorio');
-            }*/
-            if (this.Rut.length >= 9) {
-                this.errors.push('El Rut tiene que ser 8 o menos ');
+            if (this.Contraseña != this.repetir_Contra) {
+                this.errors.push('Las contraseñas no coinciden ');
             }
+
+            
+            
+            /*
             if (this.Telefono.length != 8) {
                 this.errors.push('El número de telefono tiene que ser de 8 digitos ');
             }
-            if (!Number(this.Rut)) {
-                this.errors.push('El Rut tiene que ser un número ');
-            }
             if (!Number(this.Telefono)) {
                 this.errors.push('El telefono tiene que ser un número ');
-            }
+            }*/
             e.preventDefault();
             console.log("Errores: "+ this.errors)
             return false;

@@ -17,12 +17,12 @@ export default{
             this.Mostrar = !this.Mostrar;
         },
 
-        async buscarReserva() {
+        /*async buscarReserva() {
             const db = getFirestore(app); 
             const cuentasRef = collection(db, 'Reservas'); 
             const q = query(cuentasRef, where("idReservas", "==", algo)); 
             console.log("DEBUGGG");
-        },
+        },*/
     }
 }
 </script>
