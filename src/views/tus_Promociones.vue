@@ -1,24 +1,23 @@
-
-
-
-
 <script>
 import app from '../main'
 import { doc, getFirestore, setDoc, getDocs, collection } from "firebase/firestore";
 import { db } from "../main.js";
 export default {
 
-
   data() {
     return {
       nombre: "uwu",
       reservas: [],
+      Promocion_Activa: "ESTA ES SU PROMOCIÓN",
+      MensajePromocion: "MENSAJE PROMOCIÓN",
+      Promobollean: false
     }
   },
 
   created() {
     this.nombre = this.buscarUSuario(this.getCookie('usuarioRegistrado')).Nombre_Apellido
     this.reservas = this.buscarReservas()
+    this.calculaPromocion()
 
   },
 
@@ -96,14 +95,11 @@ export default {
       }
       return correcto;
     },
-
     async buscarUSuario(correo) {
       const usuarios = await getDocs(collection(db, "Cuentas"));
       usuarios.forEach((doc) => {
         var accountData = doc.data();
         if (accountData.Correo_Electronico == correo) {
-
-          console.log(accountData)
           this.rut = accountData.Rut
           this.nombre = accountData.Nombre_Apellido
           this.telefono = accountData.Telefono
@@ -113,26 +109,40 @@ export default {
       });
 
     },
+    async buscarUSuarioRut(correo) {
+      const usuarios = await getDocs(collection(db, "Cuentas"));
+      usuarios.forEach((doc) => {
+        var accountData = doc.data();
+        if (accountData.Correo_Electronico == correo) {
+          this.rut = accountData.Rut
+          this.nombre = accountData.Nombre_Apellido
+          this.telefono = accountData.Telefono
 
+          return (accountData.Rut)
+        }
+      });
+
+    },
+    
     async buscarReservas() {
       var usuario_reservas = []
       const resul = await getDocs(collection(db, "Reservas"));
       resul.forEach((doc) => {
+        console.log(doc.data())
         var accountData = doc.data();
-        if (accountData.Correo_Electronico == this.getCookie('usuarioRegistrado')) {
+        console.log(this.buscarUSuarioRut(this.getCookie('usuarioRegistrado')));
+        if (accountData.rut == this.buscarUSuarioRut(this.getCookie('usuarioRegistrado'))) {
           this.reservas.push(accountData)
           usuario_reservas.push(accountData)
           console.log(accountData)
+          console.log("xd")
         }
-
-
       }
       );
       console.log(usuario_reservas)
       return (usuario_reservas)
 
     },
-
     getCookie(nombre) {
       var cookies = document.cookie.split(';');
       for (var i = 0; i < cookies.length; i++) {
@@ -144,7 +154,6 @@ export default {
       }
       return null;
     },
-
     setCookie(nombre, valor, expiracion) {
       var fechaExpiracion = new Date();
       fechaExpiracion.setTime(
@@ -158,21 +167,22 @@ export default {
         fechaExpiracion.toUTCString() +
         "; path=/";
       document.cookie = cookie;
-    }
-
-
-
+    },
+    async calculaPromocion(){
+      console.log(this.reservas)
+      if(this.reservas.length > 5){
+        this.Promocion_Activa = "hola soy una promo uwu"
+        this.Promobollean = true
+        this.MensajePromocion = "Por acumulación de reservas, tiene un 15% de descuento al costo de su cuenta"
+      } else{
+        this.Promocion_Activa = "No tienes promoción"
+        this.Promobollean = false
+        this.MensajePromocion = " Para tener una promoción, debes tener con anterioridad 5 reservas finalizadas!"
+      }
+    },
   }
 }
-
 </script>
-
-<script setup>
-
-</script>
-
-
-
 
 <template>
   <!-- -------------          header               ------------ -->
@@ -190,7 +200,6 @@ export default {
         <div class="offcanvas-header">
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item dropdown">
@@ -222,15 +231,15 @@ export default {
                 <img class="card-img-top" src="https://i.imgur.com/y2Xra35.jpg" alt="..." />
                 <div class="card-body p-4">
                   <div class="text-center">
-                    <h5 class="fw-bolder">Promoción activa</h5>
-                    Por acumulación de reservas,<b> tiene un 15% de descuento al costo de su cuenta </b>
+                    <h5 class="fw-bolder"> {{ Promocion_Activa }}</h5>
+                    {{ MensajePromocion }}
                   </div>
                 </div>
 
                 <!-- Product actions-->
 
                 <v-card>
-                  <div> <button type="button" class="btn btn-primary" data-bs-toggle="modal" style="margin-right: 5px;">
+                  <div> <button type="button" class="btn btn-primary" data-bs-toggle="modal" style="margin-right: 5px;" v-if="Promobollean">
                       Aplicar Descuento
                     </button>
                   </div>
@@ -250,13 +259,6 @@ export default {
     </div>
   </footer>
 </template>
-
-
-
-
-
-
-
 
 <style scoped>
 h6 {
