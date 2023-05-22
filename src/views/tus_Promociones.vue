@@ -96,7 +96,6 @@ export default {
       }
       return correcto;
     },
-
     async buscarUSuario(correo) {
       const usuarios = await getDocs(collection(db, "Cuentas"));
       usuarios.forEach((doc) => {
@@ -158,6 +157,18 @@ export default {
         fechaExpiracion.toUTCString() +
         "; path=/";
       document.cookie = cookie;
+    },
+
+
+
+
+    async Aplica_Descuento() {
+      //crear cookie
+      let descuento = 15
+
+      this.setCookie("descuento", descuento, 1)
+      //vinculo
+      location.href = './Reservar_Vista';
     }
 
 
@@ -230,7 +241,8 @@ export default {
                 <!-- Product actions-->
 
                 <v-card>
-                  <div> <button type="button" class="btn btn-primary" data-bs-toggle="modal" style="margin-right: 5px;">
+                  <div> <button @click="Aplica_Descuento" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                      style="margin-right: 5px;">
                       Aplicar Descuento
                     </button>
                   </div>
