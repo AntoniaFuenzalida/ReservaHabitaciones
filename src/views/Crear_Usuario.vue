@@ -48,38 +48,44 @@
       const db = getFirestore(app); //Se crea la instancia de FireBase
       const cuentasRef = collection(db, 'Cuentas'); //Se accede a la colección de Cuentas con la instancia de la base de datos y se crea una instancia de eso
       this.errors = [];
-      if (this.validateEmail(this.ingreso_Correo)) {
+      
+      if (this.validateEmail(this.ingreso_Correo) && this.ingreso_Contraseña.trim() != null) {
         const q = query(cuentasRef, where("Correo_Electronico", "==", this.ingreso_Correo), where("Contraseña", "==", this.ingreso_Contraseña)); //Se crea la petición a la base de datos
         //Y se busca dentro de toda la información una persona que tenga el correo ingresado y la contraseña
         const querySnapshot = await getDocs(q); //La petición se solicita y se crea una "petición general"
         if (querySnapshot.empty) { //Se verifica que la petición retorne algo o no, si la petición esta vacia, significa que no se encontró un login valido 
           this.errors.push("Datos invalidos");
+
         } else { //Si no está vacia se ve la base de datos y solicita toda la información del usuario
           querySnapshot.forEach((doc) => {
             if (doc.exists) {
-              console.log("Rol:" + doc.data)
-              if(doc.data.name("Rol") === 'Predeterminado'){
-                console.log(doc.id, "=>", doc.data());//Debug
+              if(doc.get('Rol') == 'Predeterminado'){
                 setCookie('usuarioRegistrado',this.ingreso_Correo,1)
-                console.log(getCookie('usuarioRegistrado'));
+
                 //location.href = './menu_Usuario'; //Se lleva al menú usuario 
-              }
-              console.log("Es acmin");
-              setCookie('usuarioRegistrado',this.ingreso_Correo,1)
-              console.log(getCookie('usuarioRegistrado'));
+                }else{
+                console.log("Es acmin");
+                setCookie('usuarioRegistrado',this.ingreso_Correo,1)
+                }
               //location.href = './menu_Usuario'; //Se lleva al menú usuario 
               //AUN NO SE IMPLEMENTA QUE EL INICIO DE SESIÓN PERDURE ENTRE CAMBIOS DE PAGINA
             }
           });
         }
+      } else {
+        this.errors.push("Rellene ambos campos");
       }
 
     
       
     },
-       async validateEmail(email) {
-      const res = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
-      return res.test(String(email).toLowerCase());
+      async validateEmail(email) {
+        const res = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        if (res.test(String(email).toLowerCase())) {
+          return true;
+        } else {
+          return false;
+        }
     },
 
 
