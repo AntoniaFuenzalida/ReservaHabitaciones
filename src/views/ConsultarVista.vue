@@ -117,6 +117,7 @@ export default {
           kids: null,
         },
       ],
+      nulos:false,
       error: false,
       mensaje: "error",
       fecha_fin: null,
@@ -131,7 +132,7 @@ export default {
   components: {
     Tarjetas,
   },
-
+  
   methods: {
     reiniciar() {
       this.error = false
@@ -150,7 +151,6 @@ export default {
       fechaHoy.setHours(0, 0, 0, 0);
       auxFechainicio.setHours(0, 0, 0, 0);
       auxFechaFin.setHours(0, 0, 0, 0);
-
       //diferencia entre hoy y la de llegada
 
       var diferenciaMs = Math.abs(auxFechainicio - fechaHoy);
@@ -166,17 +166,36 @@ export default {
       diferenciaMs = Math.abs(auxFechaFin - fechaHoy);
       let dif_hoy_fin = Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24));
 
+      if(this.fecha_fin==null ||this.fecha_inicio==null)
+      {
+        console.log(this.fecha_inicio)
+        console.log(this.fecha_fin)
+        this.mensaje="Error: ingrese correctamente los parametros en ambos campos de fechas"
+        this.error=true
+        this.nulos=true
+      }
+      else
+      {
+        this.nulos=false
+      }
+
+
+
       //verifica que la fecha no se salga de los limites de un año
       if (
         dif_ini_hoy >= 365 ||
         dif_ini_fin >= 365 ||
         dif_hoy_fin >= 365
       ) {
+        if(this.nulos==false)
+        {
         this.fecha_fin = null;
         this.fecha_inicio = null;
         this.mensaje = "Error: ingrese un rango fechas dentro del el rango valido"
         this.error = true
         this.final = [];
+        }
+
       }
 
       //verifica que la fecha sea valida
@@ -185,14 +204,16 @@ export default {
         auxFechainicio < fechaHoy ||
         auxFechaFin <= fechaHoy
       ) {
+        if (this.nulos==false){
         this.fecha_fin = null;
         this.fecha_inicio = null;
         this.final = [];
         this.mensaje = "Error: ese rango de fechas no es valido"
         this.error = true
-        console.log("la fecha no es valida");
+        console.log("la fecha no es valida");}
       } else {
-        this.error=false
+        if(this.fecha_fin!=null && this.fecha_inicio!=null){
+          this.error=false
         let fechaInicio = new Date(this.fecha_inicio);
         let fechaFin = new Date(this.fecha_fin);
 
@@ -249,6 +270,7 @@ export default {
               reserva.data().numeroHabitacion
             );
           }
+        
         });
 
         this.final = [];
@@ -279,11 +301,12 @@ export default {
             }
           });
         } else {
+
           this.mensaje = "Error: no cumple con la cantidad minima de adultos"
           this.error = true
           console.log("no cumple la cantidad de adultos");
         }
-      }
+      }}
     },
   },
 };
