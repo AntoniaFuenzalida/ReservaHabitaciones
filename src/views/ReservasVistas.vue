@@ -40,6 +40,7 @@ export default {
             return null;
         },
         async buscarUSuario(correo) {
+            this.reservas=[]
             const usuarios = await getDocs(collection(db, "Cuentas"));
             usuarios.forEach((doc) => {
                 var accountData = doc.data();
@@ -56,6 +57,7 @@ export default {
 
         },
         async buscarReservas() {
+            this.reservas=[]
             var usuario_reservas = []
             const resul = await getDocs(collection(db, "Reservas"));
             resul.forEach((doc) => {

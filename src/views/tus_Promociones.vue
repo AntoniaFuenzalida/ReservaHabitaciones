@@ -123,7 +123,7 @@ export default {
       });
 
     },
-    
+
     async buscarReservas() {
       var usuario_reservas = []
       const resul = await getDocs(collection(db, "Reservas"));
@@ -168,20 +168,37 @@ export default {
         "; path=/";
       document.cookie = cookie;
     },
-    async calculaPromocion(){
+
+    async calculaPromocion() {
       console.log(this.reservas)
-      if(this.reservas.length > 5){
+      if (this.reservas.length > 5) {
         this.Promocion_Activa = "hola soy una promo uwu"
         this.Promobollean = true
         this.MensajePromocion = "Por acumulación de reservas, tiene un 15% de descuento al costo de su cuenta"
-      } else{
+      } else {
         this.Promocion_Activa = "No tienes promoción"
         this.Promobollean = false
         this.MensajePromocion = " Para tener una promoción, debes tener con anterioridad 5 reservas finalizadas!"
       }
     },
-  }
+
+
+
+    async Aplica_Descuento() {
+      //crear cookie
+      let descuento = 15
+
+      this.setCookie("descuento", descuento, 1)
+      //vinculo
+      location.href = './Reservar_Vista';
+    },
+
+
+
+  },
+
 }
+
 </script>
 
 <template>
@@ -239,7 +256,9 @@ export default {
                 <!-- Product actions-->
 
                 <v-card>
-                  <div> <button type="button" class="btn btn-primary" data-bs-toggle="modal" style="margin-right: 5px;" v-if="Promobollean">
+                  <div> <button @click="Aplica_Descuento" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                      style="margin-right: 5px;" v-if="Promobollean">
+
                       Aplicar Descuento
                     </button>
                   </div>

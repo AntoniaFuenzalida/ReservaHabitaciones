@@ -1,4 +1,6 @@
 <script setup>
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from "../main.js";
 
   let datosContacto =
 {
@@ -11,8 +13,55 @@
 
 
 </script>
+<script>
+export default {
+    name: "menu_Home",
+    data() {
+        return {
+            correo: null,
+            rut: null,
+            nombre: null,
+        };
+    },
+    created() {
+        this.correo = this.getCookie('usuarioRegistrado')
+        this.buscarUSuario(this.correo)
 
+    },
+    methods: {
+        getCookie(nombre) {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.startsWith(nombre + '=')) {
+                    return decodeURIComponent(cookie.substring(nombre.length + 1));
+                }
 
+            }
+            return null;
+        },
+        async buscarUSuario(correo) {
+            this.reservas=[]
+            const usuarios = await getDocs(collection(db, "Cuentas"));
+            usuarios.forEach((doc) => {
+                var accountData = doc.data();
+                if (accountData.Correo_Electronico == correo) {
+
+                    console.log(accountData)
+                    this.rut = accountData.Rut
+                    this.nombre = accountData.Nombre_Apellido
+                    this.telefono = accountData.Telefono
+
+                    return (accountData)
+                }
+            });
+
+        },
+    },
+
+};
+
+</script>
 
 
 <template>
@@ -34,7 +83,7 @@
       <a class="navbar-brand" href="/">
         <img src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg" height="50" alt="hotel logo"
           loading="lazy" style="margin-top: -1px;" /></a>
-
+        {{ this.nombre }}
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
         aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -51,8 +100,8 @@
                 Menú
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="./Iniciar_sesion">Iniciar sesión</a></li>
-                <li><a class="dropdown-item" href="./Reservar_Vista">Reservar ahora</a></li>
+                <li v-if="correo==null"><a class="dropdown-item" href="./Iniciar_sesion">Iniciar sesión</a></li>
+                <li v-else-if="correo!=null"><a class="dropdown-item" href="./Reservar_Vista">Reservar ahora</a></li>
               </ul>
             </li>
           </ul>
