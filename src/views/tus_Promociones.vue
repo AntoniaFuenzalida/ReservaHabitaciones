@@ -123,7 +123,6 @@ export default {
       });
 
     },
-
     async buscarReservas() {
       var usuario_reservas = []
       const resul = await getDocs(collection(db, "Reservas"));
@@ -168,7 +167,6 @@ export default {
         "; path=/";
       document.cookie = cookie;
     },
-
     async calculaPromocion() {
       console.log(this.reservas)
       if (this.reservas.length > 5) {

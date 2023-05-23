@@ -144,7 +144,7 @@ export default {
         <div class="col-lg-4">
             <div class="card mb-4">
                 <div class="card-body text-center">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                    <img src="https://imgur.com/XXR2XfJ.jpg" alt="avatar"
                         class="rounded-circle img-fluid" style="width: 150px;">
                     <h5 class="my-3">{{ this.nombre }}</h5>
                     <div class="d-flex justify-content-center mb-2">
