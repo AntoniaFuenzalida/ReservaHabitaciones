@@ -12,7 +12,7 @@
                     alt="hotel logo"
                     loading="lazy"
                     style="margin-top: -1px"
-            /></a>
+            />
             <a> {{ nombre }} </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"

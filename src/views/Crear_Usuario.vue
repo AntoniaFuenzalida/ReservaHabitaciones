@@ -22,7 +22,7 @@
       <br>
       <div id="div_Botón" ><button id="inicio_Sesión" @click="validar_Datos" type="submit" class="btn btn-dark mt-auto"> Iniciar sesión</button></div>
       <br>
-      <a id="olvidaste" href='./menuAdmin'>¿Olvidaste tu contraseña?</a>
+      <a id="olvidaste" >¿Olvidaste tu contraseña?</a>
       <br>
       <div id="div_Botón"><button id="inicio_Sesión" onclick="location.href='./Creacion_Gente';" class="btn btn-dark mt-auto"> Crear cuenta</button></div>
     </div>
@@ -48,7 +48,7 @@
       const db = getFirestore(app); //Se crea la instancia de FireBase
       const cuentasRef = collection(db, 'Cuentas'); //Se accede a la colección de Cuentas con la instancia de la base de datos y se crea una instancia de eso
       this.errors = [];
-      
+      console.log(this.validateEmail(this.ingreso_Correo));
       if (this.validateEmail(this.ingreso_Correo) && this.ingreso_Contraseña.trim() != null) {
         const q = query(cuentasRef, where("Correo_Electronico", "==", this.ingreso_Correo), where("Contraseña", "==", this.ingreso_Contraseña)); //Se crea la petición a la base de datos
         //Y se busca dentro de toda la información una persona que tenga el correo ingresado y la contraseña
@@ -62,12 +62,11 @@
               if(doc.get('Rol') == 'Predeterminado'){
                 setCookie('usuarioRegistrado',this.ingreso_Correo,1)
 
-                //location.href = './menu_Usuario'; //Se lleva al menú usuario 
+                location.href = './menu_Usuario'; //Se lleva al menú usuario 
                 }else{
-                console.log("Es acmin");
                 setCookie('usuarioRegistrado',this.ingreso_Correo,1)
                 }
-              //location.href = './menu_Usuario'; //Se lleva al menú usuario 
+              location.href = href = './menuAdmin'; //Se lleva al menú admin
               //AUN NO SE IMPLEMENTA QUE EL INICIO DE SESIÓN PERDURE ENTRE CAMBIOS DE PAGINA
             }
           });
@@ -82,8 +81,10 @@
       async validateEmail(email) {
         const res = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
         if (res.test(String(email).toLowerCase())) {
+          console.log("verda")
           return true;
         } else {
+          console.log("falso")
           return false;
         }
     },
