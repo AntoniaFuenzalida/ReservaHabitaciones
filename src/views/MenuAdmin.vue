@@ -1,12 +1,12 @@
 <script>
-    import { DatePicker } from 'v-calendar'
-    import 'v-calendar/dist/style.css'
-   
-    import app from '../main'
-    import { doc, getFirestore, setDoc, getDocs, collection } from "firebase/firestore";
+import { DatePicker } from 'v-calendar'
+import 'v-calendar/dist/style.css'
 
-    export default {
-    
+import app from '../main'
+import { doc, getFirestore, setDoc, getDocs, collection } from "firebase/firestore";
+
+export default {
+
 
     data() {
         return {
@@ -22,77 +22,118 @@
         async guardarDatos() {
             console.log("Guardando")
             const db = getFirestore(app);
-            if (await this.datosCorrectos(true)===1){
+            if (await this.datosCorrectos(true) === 1) {
                 await setDoc(doc(db, "Habitaciones", this.numero), {
-                cantidadCamas: this.cantidadCamas,
-                descripcion: this.descripcion,
-                numero: this.numero,
-                precio: this.precio,
+                    cantidadCamas: this.cantidadCamas,
+                    descripcion: this.descripcion,
+                    numero: this.numero,
+                    precio: this.precio,
                 })
                 console.log("termine de guardar")
-            }else{
+            } else {
                 console.log("Datos Incorrectos")
-            }         
+            }
         },
         async modificarDatos(numero) {
             console.log(numero)
             const db = getFirestore(app);
             this.numero = numero   // esto es para validar los datos
-            if (await this.datosCorrectos(false)==1){
+            if (await this.datosCorrectos(false) == 1) {
                 await setDoc(doc(db, "Habitaciones", numero), {
-                cantidadCamas: this.cantidadCamas,
-                descripcion: this.descripcion,
-                numero: numero,
-                precio: this.precio,
-            })
-            }else{
+                    cantidadCamas: this.cantidadCamas,
+                    descripcion: this.descripcion,
+                    numero: numero,
+                    precio: this.precio,
+                })
+            } else {
                 console.log("Datos Incorrectos")
-            }          
+            }
         },
+
+        async Cerrarsecion() {
+            this.setCookie('usuarioRegistrado', null, 1)
+            location.href = "/Cerrar sesión"
+        },
+
         async datosCorrectos(rep) {
             const db = getFirestore(app);
             const querySnapshot = await getDocs(collection(db, "Habitaciones"));
             var correcto = 1
 
             // numero valido      
-            if (!Number(this.numero) && this.numero!="0"){
+            if (!Number(this.numero) && this.numero != "0") {
                 correcto = 0
                 console.log("El numero de habitacion debe ser un numero")
             }
-            else if (this.numero < 1){
+            else if (this.numero < 1) {
                 correcto = 0
                 console.log("El numero de habitacion debe ser positivo")
-            }else if (rep){
+            } else if (rep) {
                 // numero de habitacion repetido
                 querySnapshot.forEach((doc) => {
-                    if (doc.data().numero == this.numero){
+                    if (doc.data().numero == this.numero) {
                         correcto = 0
                         console.log("Numero repetido")
                     }
-                    },
+                },
                 );
             }
 
             // precio valido
-            if (!Number(this.precio) && this.precio!="0"){
+            if (!Number(this.precio) && this.precio != "0") {
                 correcto = 0
                 console.log("El precio de la habitacion debe ser un numero")
-            }else if (this.precio < 1){
+            } else if (this.precio < 1) {
                 correcto = 0
                 console.log("El precio de la habitacion debe ser positivo")
             }
-            
+
             // cantidadCamas valido
-            if (!Number(this.cantidadCamas) && this.cantidadCamas!="0"){
+            if (!Number(this.cantidadCamas) && this.cantidadCamas != "0") {
                 correcto = 0
                 console.log("La cantidad de camas de la habitacion debe ser un numero")
-            }else if (this.cantidadCamas < 1){
+            } else if (this.cantidadCamas < 1) {
                 correcto = 0
                 console.log("La cantidad de camas de la habitacion debe ser positiva")
             }
             return correcto;
         },
+
+
+        getCookie(nombre) {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.startsWith(nombre + '=')) {
+                    return decodeURIComponent(cookie.substring(nombre.length + 1));
+                }
+
+            }
+            return null;
+        },
+        setCookie(nombre, valor, expiracion) {
+            var fechaExpiracion = new Date();
+            fechaExpiracion.setTime(
+                fechaExpiracion.getTime() + expiracion * 24 * 60 * 60 * 1000
+            );
+            var cookie =
+                nombre +
+                "=" +
+                encodeURIComponent(valor) +
+                "; expires=" +
+                fechaExpiracion.toUTCString() +
+                "; path=/";
+            document.cookie = cookie;
+        },
+
+
+
+
     }
+
+
+
+
 }
 
 </script>
@@ -119,13 +160,13 @@ var numHabitacion = {}
 
 const CargarFecha = () => {
     seleccionado.reserva = NaN
-    console.log("fecha seleccionada: "+ seleccionado.fecha)
+    console.log("fecha seleccionada: " + seleccionado.fecha)
 }
 const Seleccionar = (reserva) => {
     seleccionado.reserva = reserva
 }
 
-const cargarLasReservas = async() =>{
+const cargarLasReservas = async () => {
     const db = getFirestore(app);
     const querySnapshot = await getDocs(collection(db, "Reservas"));
     querySnapshot.forEach((doc) => {
@@ -138,23 +179,24 @@ const cargarLasReservas = async() =>{
             fechaSalida: doc.data().fechaSalida,
             idReserva: doc.data().idReserva,
             nombreCliente: doc.data().nombreCliente,
-            rut: doc.data().rut}
-        },
+            rut: doc.data().rut
+        }
+    },
     );
 }
 
-const cargarHabitacion = async() =>{
-    
+const cargarHabitacion = async () => {
+
     const db = getFirestore(app);
     const querySnapshot = await getDocs(collection(db, "Habitaciones"));
     querySnapshot.forEach((doc) => {
         numHabitacion[doc.data().numero] = {
             numero: doc.data().numero,
         }
-        }
-
-        );
     }
+
+    );
+}
 
 cargarLasReservas()
 cargarHabitacion()
@@ -186,7 +228,9 @@ console.log(numHabitacion)
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="./menu_Usuario">Perfil</a></li>
-                                <li><a class="dropdown-item" href="/">Cerrar sesión</a></li>
+                                <li><a class="dropdown-item" @click="Cerrarsecion"></a></li>
+                                <!--@click="   href="/">Cerrar sesión-->
+
                             </ul>
                         </li>
                     </ul>
@@ -385,51 +429,56 @@ console.log(numHabitacion)
 
                     <!--  -->
                     <div class="container">
-                       
-                        
+
+
                         <div class="row" style="margin-top: 5%;">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                     <span class="input-group-text" >numero</span>
-                                 </div>
-                                    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="numero" v-model="numero">
-                            </div>                            
+                                    <span class="input-group-text">numero</span>
+                                </div>
+                                <input type="text" class="form-control" aria-label="Default"
+                                    aria-describedby="inputGroup-sizing-default" name="numero" v-model="numero">
+                            </div>
                         </div>
 
                         <div class="row" style="margin-top: 2%;">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                     <span class="input-group-text" >Cantidad Camas</span>
-                                 </div>
-                                    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="cantidadCamas" v-model="cantidadCamas">
-                            </div>                            
+                                    <span class="input-group-text">Cantidad Camas</span>
+                                </div>
+                                <input type="text" class="form-control" aria-label="Default"
+                                    aria-describedby="inputGroup-sizing-default" name="cantidadCamas"
+                                    v-model="cantidadCamas">
+                            </div>
                         </div>
 
                         <div class="row" style="margin-top: 2%;">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                     <span class="input-group-text">Precio</span>
-                                 </div>
-                                    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="precio" v-model="precio">
-                            </div>                            
+                                    <span class="input-group-text">Precio</span>
+                                </div>
+                                <input type="text" class="form-control" aria-label="Default"
+                                    aria-describedby="inputGroup-sizing-default" name="precio" v-model="precio">
+                            </div>
                         </div>
 
                         <div class="input-group">
-                                <textarea class="form-control" aria-label="With textarea" rows="3" name="descripcion" v-model="descripcion" ></textarea>
+                            <textarea class="form-control" aria-label="With textarea" rows="3" name="descripcion"
+                                v-model="descripcion"></textarea>
                         </div>
 
-                       
+
 
                     </div>
 
 
                 </div>
                 <div class="modal-footer">
-                    
-                   <!--  v-for="habitacion in habitaciones" :key="habitacion" -->
+
+                    <!--  v-for="habitacion in habitaciones" :key="habitacion" -->
                     <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-dark" @click="guardarDatos()" >Guardar</button>
-                
+                    <button type="button" class="btn btn-dark" @click="guardarDatos()">Guardar</button>
+
                 </div>
             </div>
         </div>
@@ -443,67 +492,71 @@ console.log(numHabitacion)
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    
+
                     <!--  -->
-                        <div class="container">
-                            <div class="row">
-                            
-                                <select v-model="seleccionado.numero"  class="form-control" id="habitacionesSelector">
-                                    <option> seleccionar habitacion</option>
-                                    <option v-for="numero in numHabitacion" :key="numero">
-                                        {{numero.numero}}
-                                    </option>
-                                </select>
-                                
-                                
+                    <div class="container">
+                        <div class="row">
+
+                            <select v-model="seleccionado.numero" class="form-control" id="habitacionesSelector">
+                                <option> seleccionar habitacion</option>
+                                <option v-for="numero in numHabitacion" :key="numero">
+                                    {{ numero.numero }}
+                                </option>
+                            </select>
 
 
-                            </div>
-                            
-                            
-                            <div class="row" style="margin-top: 2%;">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                         <span class="input-group-text" id="cantidadCamas">Cantidad Camas</span>
-                                     </div>
-                                        <input type="text" class="form-control" aria-label="Default" v-model="cantidadCamas" aria-describedby="inputGroup-sizing-default">
-                                </div>                            
-                            </div>
-    
-                            <div class="row" style="margin-top: 2%;">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                         <span class="input-group-text" id="precio">Precio</span>
-                                     </div>
-                                        <input type="text" class="form-control" aria-label="Default" v-model="precio" aria-describedby="inputGroup-sizing-default">
-                                </div>                            
-                            </div>
-    
-                            <div class="input-group">
-                                    <textarea class="form-control" aria-label="With textarea" rows="3" v-model="descripcion"></textarea>
-                            </div>
-    
-                           
-    
+
+
                         </div>
-                
-            <!-- botones -->
-                <div>
-                        
 
 
-                </div>
+                        <div class="row" style="margin-top: 2%;">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="cantidadCamas">Cantidad Camas</span>
+                                </div>
+                                <input type="text" class="form-control" aria-label="Default" v-model="cantidadCamas"
+                                    aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top: 2%;">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="precio">Precio</span>
+                                </div>
+                                <input type="text" class="form-control" aria-label="Default" v-model="precio"
+                                    aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <textarea class="form-control" aria-label="With textarea" rows="3"
+                                v-model="descripcion"></textarea>
+                        </div>
+
+
+
+                    </div>
+
+                    <!-- botones -->
+                    <div>
+
+
+
+                    </div>
 
 
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-dark" @click="modificarDatos(seleccionado.numero)" >Guardar</button>
+                    <button type="button" class="btn btn-dark" @click="modificarDatos(seleccionado.numero)">Guardar</button>
                 </div>
             </div>
         </div>
-</div></template>
+    </div>
+</template>
 
 
 

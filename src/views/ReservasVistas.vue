@@ -103,7 +103,7 @@ export default {
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="./menu_Usuario">Perfil</a></li>
-                                <li><a class="dropdown-item" href="./">Cerrar sesión</a></li>
+                                <li><a class="dropdown-item" href="/Iniciar_sesion">Cerrar sesión</a></li>
                             </ul>
                         </li>
                     </ul>
