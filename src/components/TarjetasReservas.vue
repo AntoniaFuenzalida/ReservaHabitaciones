@@ -1,5 +1,5 @@
 <template >
-  <div  class="card h-60">
+  <div class="card h-60">
     <!-- Product image-->
     <img class="card-img-top" src="https://i.imgur.com/lg0Vhr6.jpg" alt="..." />
     <!-- Product details-->
@@ -31,11 +31,12 @@
                 </div>
                 <div class="modal-body">
                   <h3>se realizara la reserva para las fechas</h3>
-                  <h5>fecha inicio: {{ this.fechaInicio  }} y fecha Fin: {{ this.fechaFin }}</h5>
+                  <h5>fecha inicio: {{ this.fechaInicio }} y fecha Fin: {{ this.fechaFin }}</h5>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                  <button @click="guardarReserva(this.selectedRoom )" type="button" class="btn btn-primary" data-bs-dismiss="modal">Continuar</button>
+                  <button @click="guardarReserva(this.selectedRoom)" type="button" class="btn btn-primary"
+                    data-bs-dismiss="modal">Continuar</button>
 
                 </div>
               </div>
@@ -53,7 +54,7 @@ import app from '../main'
 import { doc, getFirestore, setDoc, getDocs, collection } from "firebase/firestore";
 
 
-export default{
+export default {
   props: {
     reserva: Object,
     fechaFin: {
@@ -66,75 +67,79 @@ export default{
     }
   },
 
-  data:() => ({
-    
-   
+  data: () => ({
 
-    
+
+
+
     selectedRoom: '',
-      
-    
 
-    
+
+
+
   }),
 
-  methods: {  
-  async guardarReserva(numeroHabitacion) {
-    const db = getFirestore(app);
-    const querySnapshot = await getDocs(collection(db, "Reservas"));  
+  methods: {
+    async guardarReserva(numeroHabitacion) {
+      const db = getFirestore(app);
+      const querySnapshot = await getDocs(collection(db, "Reservas"));
 
-    const usuarios = await getDocs(collection(db, "Cuentas"));
-    let nombreActivo = ""
-    let rutActivo = ""
+      const usuarios = await getDocs(collection(db, "Cuentas"));
+      let nombreActivo = ""
+      let rutActivo = ""
 
-    
 
-    usuarios.forEach(  (usuario) => {
-      if(usuario.data().Correo_Electronico == getCookie('usuarioRegistrado') ){
-        nombreActivo = usuario.data().Nombre_Apellido
-        rutActivo = usuario.data().Rut
-        console.log(nombreActivo);
-      }
-      else{
-        console.log("no encontro nombre xd");
-      }
-    } )
 
-    let ultimaReserva = 0;
-    querySnapshot.forEach( (reservas) => {
-      if(ultimaReserva <  Number(reservas.data().idReserva.replace("n",""))){
-        ultimaReserva = Number(reservas.data().idReserva.replace("n",""));
-      }
+      usuarios.forEach((usuario) => {
+        if (usuario.data().Correo_Electronico == getCookie('usuarioRegistrado')) {
+          nombreActivo = usuario.data().Nombre_Apellido
+          rutActivo = usuario.data().Rut
+          console.log(nombreActivo);
+        }
+        else {
+          console.log("no encontro nombre xd");
+        }
+      })
 
-      
-      
-    } )
-    let variable="n"+(ultimaReserva+1);
+      let ultimaReserva = 0;
+      querySnapshot.forEach((reservas) => {
+        if (ultimaReserva < Number(reservas.data().idReserva.replace("n", ""))) {
+          ultimaReserva = Number(reservas.data().idReserva.replace("n", ""));
+        }
 
-    const reser = {
-      cantidadCamas: this.reserva.cantidadCamas,
-      
-      cantidadninos: getCookie('ninos'),
-      cantidadAdultos: getCookie('adultos'),
-      estadoReserva: "pendiente",
-      fechaIngreso: String(this.fechaInicio),
-      fechaSalida: String(this.fechaFin),
-      idReserva: variable,
-      nombreCliente: nombreActivo,
-      numeroHabitacion: String(numeroHabitacion),
-      rut: rutActivo
-    };
 
-    
-    // Guardar reserva en Firebase
-    await setDoc(doc(db, "Reservas",variable), reser);
-   // console.log("se registro:" + reser)
-   router.push({ name: 'Servicios_Adicionales', query: { variable } })
+
+      })
+      let variable = "n" + (ultimaReserva + 1);
+
+      const reser = {
+        cantidadCamas: this.reserva.cantidadCamas,
+
+        cantidadninos: getCookie('ninos'),
+        cantidadAdultos: getCookie('adultos'),
+        estadoReserva: "pendiente",
+        fechaIngreso: String(this.fechaInicio),
+        fechaSalida: String(this.fechaFin),
+        idReserva: variable,
+        nombreCliente: nombreActivo,
+        numeroHabitacion: String(numeroHabitacion),
+        rut: rutActivo,
+        descuento: getCookie('descuento')
+      };
+
+      setCookie('descuento', 0, 1)
+      console.log(getCookie('descuento'));
+      // Guardar reserva en Firebase
+      await setDoc(doc(db, "Reservas", variable), reser);
+      // console.log("se registro:" + reser)
+      router.push({ name: 'Servicios_Adicionales', query: { variable } })
+
+    },
+
+
+
 
   }
-
-
-}
 
 }
 
@@ -147,6 +152,21 @@ function getCookie(nombre) {
     }
   }
   return null;
+}
+
+function setCookie(nombre, valor, expiracion) {
+  var fechaExpiracion = new Date();
+  fechaExpiracion.setTime(
+    fechaExpiracion.getTime() + expiracion * 24 * 60 * 60 * 1000
+  );
+  var cookie =
+    nombre +
+    "=" +
+    encodeURIComponent(valor) +
+    "; expires=" +
+    fechaExpiracion.toUTCString() +
+    "; path=/";
+  document.cookie = cookie;
 }
 
 

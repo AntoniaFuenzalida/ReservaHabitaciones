@@ -40,6 +40,7 @@ export default {
             return null;
         },
         async buscarUSuario(correo) {
+            this.reservas=[]
             const usuarios = await getDocs(collection(db, "Cuentas"));
             usuarios.forEach((doc) => {
                 var accountData = doc.data();
@@ -56,6 +57,7 @@ export default {
 
         },
         async buscarReservas() {
+            this.reservas=[]
             var usuario_reservas = []
             const resul = await getDocs(collection(db, "Reservas"));
             resul.forEach((doc) => {
@@ -142,7 +144,7 @@ export default {
         <div class="col-lg-4">
             <div class="card mb-4">
                 <div class="card-body text-center">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                    <img src="https://imgur.com/XXR2XfJ.jpg" alt="avatar"
                         class="rounded-circle img-fluid" style="width: 150px;">
                     <h5 class="my-3">{{ this.nombre }}</h5>
                     <div class="d-flex justify-content-center mb-2">
