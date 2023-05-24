@@ -49,6 +49,9 @@ export default {
                 }
             });
         },
+        retroceder() {
+            window.history.back();
+        },
         async buscarReservas() {
             this.reservas = [];
             var usuario_reservas = [];
@@ -73,7 +76,8 @@ export default {
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid px-4 px-lg-5">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand">
+                <button id="regreso_Boton" @click="retroceder()"> <img id="imagen_regreso_Boton" src="../icons/atras.jpg" /></button>
                 <img
                     src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg"
                     height="50"

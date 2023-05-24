@@ -3,7 +3,8 @@
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
-      <a class="navbar-brand" href="/">
+      <a class="navbar-brand" >
+        <button id="regreso_Boton" @click="retroceder()"> <img id="imagen_regreso_Boton" src="../icons/atras.jpg" /></button>
         <img src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg" height="50" alt="hotel logo"
           loading="lazy" style="margin-top: -1px;" /></a>
 
@@ -149,6 +150,16 @@ function getCookie(nombre) {
 }
 let nombre = getCookie('usuarioRegistrado')
 
+</script>
+<script>
+export default {
+  name: 'menu_Usuario',
+  methods: {
+    retroceder() {
+      window.history.back();
+    },
+  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

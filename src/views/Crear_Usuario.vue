@@ -2,7 +2,7 @@
   <div class="bg-image" id="pagina_ini">
     <div id="caja_Adentro">
       <div id="div_BotonRegreso">
-      <button id="regreso_Boton" @click="$router.go(-1)"> <img id="imagen_regreso_Boton" src="../icons/atras.jpg" /></button>
+      <button id="regreso_Boton" @click="retroceder()"> <img id="imagen_regreso_Boton" src="../icons/atras.jpg" /></button>
       </div>
       <img src="../assets/logohotel.png"  id="imagen_Adentro">  
       <br>
@@ -77,6 +77,9 @@
 
     
       
+    },
+    retroceder() {
+      window.history.back();
     },
       async validateEmail(email) {
         const res = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
