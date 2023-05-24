@@ -41,6 +41,8 @@ export default {
 
     data() {
         return {
+            correoExiste : false,
+            rutExiste : false,
             errors: [],
             Correo_Electronico: '',
             Nombre_Apellido: '',
@@ -56,8 +58,6 @@ export default {
         async guardarDatos(e) {
             const db = getFirestore(app);
             const coleccion = collection(db,'Cuentas');
-            let correoExiste = false;
-            let rutExiste = false;
 
             const correoQuery = query(coleccion, where('Correo_Electronico', '==' , this.Correo_Electronico));
             const correoSnap = await getDocs(correoQuery);
@@ -65,37 +65,39 @@ export default {
             const rutSnap = await getDocs(rutQuery);
 
             correoSnap.forEach((doc) => {
-                correoExiste = true;
+                this.correoExiste = true;
             });
 
             rutSnap.forEach((doc) => {
-                rutExiste = true;
+                this.rutExiste = true;
             });
-            if(!correoExiste && !rutExiste){
-                if (this.checkForm(e)) {
-                await setDoc(doc(db, "Cuentas", this.Rut), {
-                    Nombre_Apellido: this.Nombre_Apellido,
-                    Correo_Electronico: this.Correo_Electronico,
-                    Contraseña: this.Contraseña,
-                    Rol: 'Predeterminado',
-                    Rut: Number(this.Rut),
-                    Telefono: Number(this.Telefono),
-                })
-                location.href = './Iniciar_sesion';
-                } else {
-                    console.log('Datos no validos')
-                }
-            }else{
-                if(correoExiste){
-                    console.log('El correo ya esta en uso');
-                }
-                if(rutExiste){
-                    console.log('El rut ya esta en uso');
-                }
-                
+            
+            if (this.checkForm(e) && !this.correoExiste && !this.rutExiste) {
+            await setDoc(doc(db, "Cuentas", this.Rut), {
+                Nombre_Apellido: this.Nombre_Apellido,
+                Correo_Electronico: this.Correo_Electronico,
+                Contraseña: this.Contraseña,
+                Rol: 'Predeterminado',
+                Rut: this.Rut,
+                Telefono: Number(this.Telefono),
+            })
+            location.href = './Iniciar_sesion';
+            } else {
+                    if(this.correoExiste){
+                        console.log('El correo ya esta en uso');
+                        this.correoExiste = false;
+                    }
+                    if(this.rutExiste){
+                        console.log('El rut ya esta en uso');
+                        this.rutExiste = false;
+                    }
+                console.log('Datos no validos')
             }
             
+            
         },
+
+
 
         async validateEmail(email) {
             const res = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;  
@@ -163,8 +165,15 @@ export default {
                 this.errors.push('Las contraseñas no coinciden ');
             }
 
-            
-            
+            if(this.correoExiste){
+                this.errors.push('Este correo ya esta registrado')
+            }            
+
+            if(this.rutExiste){
+                this.errors.push('Este rut ya esta registrado')
+            }       
+
+
             /*
             if (this.Telefono.length != 8) {
                 this.errors.push('El número de telefono tiene que ser de 8 digitos ');
