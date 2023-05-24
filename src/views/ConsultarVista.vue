@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light"> 
     
     <div class="container px-4 px-lg-5"> 
-      <button onclick="location.href='./';" id="regreso_Boton"> Volver</button>
+      <button id="regreso_Boton" @click="retroceder()"> <img id="imagen_regreso_Boton" src="../icons/atras.jpg" /></button>
       <a class="navbar-brand" >
         
         <img src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg" height="50" alt="hotel logo"
@@ -143,6 +143,9 @@ export default {
   methods: {
     reiniciar() {
       this.error = false
+    },
+    retroceder() {
+      window.history.back();
     },
     async reservaFiltradas() {
 
