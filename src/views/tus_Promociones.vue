@@ -134,8 +134,6 @@ export default {
       });
 
     },
-
-
     async ObtenerRut() {
       const resul = await getDocs(collection(db, "Cuentas"));
       resul.forEach((usuario) => {
@@ -145,7 +143,6 @@ export default {
       }
       )
     },
-
     async buscarReservas() {
       this.reservas = []
       this.largo = 0
@@ -166,8 +163,6 @@ export default {
       console.log(usuario_reservas)
       return (this.largo)
     },
-
-
     getCookie(nombre) {
       var cookies = document.cookie.split(';');
       for (var i = 0; i < cookies.length; i++) {
@@ -179,7 +174,6 @@ export default {
       }
       return null;
     },
-
     setCookie(nombre, valor, expiracion) {
       var fechaExpiracion = new Date();
       fechaExpiracion.setTime(
@@ -194,9 +188,8 @@ export default {
         "; path=/";
       document.cookie = cookie;
     },
-
     async calculaPromocion(larglista) {
-      console.log("pormoooooooooooooo")
+      console.log("Promo!")
       console.log(this.finalLargo);
       console.log(this.reservas.length)
 
@@ -212,9 +205,6 @@ export default {
         this.MensajePromocion = " Para tener una promoción, debes tener con anterioridad 5 reservas finalizadas!"
       }
     },
-
-
-
     async Aplica_Descuento() {
       //crear cookie
       let descuento = 15
@@ -223,9 +213,6 @@ export default {
       //vinculo
       location.href = './Reservar_Vista';
     },
-
-
-
   },
 
 }
@@ -273,32 +260,27 @@ function obtieneasync(retorno) {
       <div class="text-white">
         <h1 class="display-4 fw-bolder text-center">Tus Promociones</h1>
         <form>
-          <div class="col-7">
-            <div class="col">
-              <div class="card h-100">
+          <div class="card h-100">
 
-                <!-- Product details-->
+            <!-- Product details-->
 
-                <img class="card-img-top" src="https://i.imgur.com/y2Xra35.jpg" alt="..." />
-                <div class="card-body p-4">
-                  <div class="text-center">
-                    <h5 class="fw-bolder"> {{ Promocion_Activa }}</h5>
-                    {{ MensajePromocion }}
-                  </div>
-                </div>
-
-                <!-- Product actions-->
-
-                <v-card>
-                  <div> <button @click="Aplica_Descuento" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                      style="margin-right: 5px;" v-if="Promobollean">
-
-                      Aplicar Descuento
-                    </button>
-                  </div>
-                </v-card>
+            <img class="card-img-top" src="https://i.imgur.com/y2Xra35.jpg" alt="..." />
+            <div class="card-body p-4">
+              <div class="text-center">
+                <h5 class="fw-bolder"> {{ Promocion_Activa }}</h5>
+                {{ MensajePromocion }}
               </div>
             </div>
+
+            <!-- Product actions-->
+
+            <v-card>
+              <div> <button @click="Aplica_Descuento" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                  style="margin-right: 5px;" v-if="Promobollean">
+                  Aplicar Descuento
+                </button>
+              </div>
+            </v-card>
           </div>
         </form>
       </div>

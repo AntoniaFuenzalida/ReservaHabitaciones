@@ -1,27 +1,53 @@
+<script setup>
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from "../main.js";
+import { query, where, updateDoc } from "firebase/firestore";
+</script>
+
 <script>
 export default {
     props: {
         reserva: Object,
     },
     data: () => ({
-        Mostrar: false
+        Mostrar: false,
+        selecionada: ''
     }),
     methods: {
         Desplegar() {
             this.Mostrar = !this.Mostrar;
         },
-        Borrar() {
-            console.log("Eliminar");
+        async Borrar() {
+            console.log(this.selecionada);
+
+            const querySnapshot = await getDocs(query(collection(db, "Reservas"), where("idReserva", "==", this.selecionada)));
+            querySnapshot.forEach((doc) => {
+                // Accede a los datos del documento
+                const data = doc.data();
+                console.log(data);
+
+                // Actualiza el campo "estadoReserva" a "Cancelado"
+                const docRef = doc.ref;
+                updateDoc(docRef, { estadoReserva: "Cancelada" })
+                    .then(() => {
+                        console.log("Reserva actualizada correctamente");
+                    })
+                    .catch((error) => {
+                        console.error("Error al actualizar la reserva:", error);
+                    });
+            });
         }
+
     }
 }
 </script>
+
 <template>
     <div class="DropDown" v-if="reserva.estadoReserva === 'Lista'">
         <div class="dropdown-header" @click="Desplegar">
             <img src="/verde.ico" class="dropdown-icon">
             Desde: {{ reserva.fechaIngreso }} Hasta: {{ reserva.fechaSalida }} // habitacion: {{ reserva.numeroHabitacion }}
-            <div class="trash-container" @click.stop="Borrar()">
+            <div class="trash-container" @click="selecionada = reserva.idReserva" @click.stop="Borrar()">
                 <img src="/trash.ico" class="trash-icon">
             </div>
         </div>
@@ -39,9 +65,6 @@ export default {
         <div class="dropdown-header" @click="Desplegar">
             <img src="/rojo.ico" class="dropdown-icon">
             Desde: {{ reserva.fechaIngreso }} Hasta: {{ reserva.fechaSalida }} // habitacion: {{ reserva.numeroHabitacion }}
-            <div class="trash-container" @click.stop="Borrar()">
-                <img src="/trash.ico" class="trash-icon">
-            </div>
         </div>
         <!--         <div class="dropdown-wraper" v-if="Mostrar">
             <ul class="dropdown-list list-group">
@@ -57,7 +80,7 @@ export default {
         <div class="dropdown-header" @click="Desplegar">
             <img src="/amarillo.ico" class="dropdown-icon">
             Desde: {{ reserva.fechaIngreso }} Hasta: {{ reserva.fechaSalida }} // habitacion: {{ reserva.numeroHabitacion }}
-            <div class="trash-container" @click.stop="Borrar()">
+            <div class="trash-container" @click="selecionada = reserva.idReserva" @click.stop="Borrar()">
                 <img src="/trash.ico" class="trash-icon">
             </div>
         </div>
@@ -75,7 +98,7 @@ export default {
         <div class="dropdown-header" @click="Desplegar">
             <img src="/azul.ico" class="dropdown-icon">
             Desde: {{ reserva.fechaIngreso }} Hasta: {{ reserva.fechaSalida }} // habitacion: {{ reserva.numeroHabitacion }}
-            <div class="trash-container" @click.stop="Borrar()">
+            <div class="trash-container" @click="selecionada = reserva.idReserva" @click.stop="Borrar()">
                 <img src="/trash.ico" class="trash-icon">
             </div>
         </div>
