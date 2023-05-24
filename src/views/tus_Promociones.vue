@@ -8,17 +8,23 @@ export default {
     return {
       nombre: "uwu",
       reservas: [],
-      Promocion_Activa: "ESTA ES SU PROMOCIÓN",
-      MensajePromocion: "MENSAJE PROMOCIÓN",
-      Promobollean: false
+      Promocion_Activa: "",
+      MensajePromocion: "",
+      Promobollean: false,
+      correo: null,
+      rut: null,
+      largo: null,
+      finalLargo: null,
+      telefono: null,
+
     }
   },
 
   created() {
     this.nombre = this.buscarUSuario(this.getCookie('usuarioRegistrado')).Nombre_Apellido
-    this.reservas = this.buscarReservas()
-    this.calculaPromocion()
-
+    //ordersId().then(orders => console.log(orders))
+    this.buscarReservas().then(largo => this.calculaPromocion(largo));
+    console.log(this.reservas);
   },
 
   methods: {
@@ -109,6 +115,8 @@ export default {
       });
 
     },
+
+    //obsoleto xd
     async buscarUSuarioRut(correo) {
       const usuarios = await getDocs(collection(db, "Cuentas"));
       usuarios.forEach((doc) => {
@@ -123,25 +131,34 @@ export default {
       });
 
     },
-
+    async ObtenerRut() {
+      const resul = await getDocs(collection(db, "Cuentas"));
+      resul.forEach((usuario) => {
+        if (usuario.data().Correo_Electronico == this.getCookie('usuarioRegistrado')) {
+          return usuario.data().Rut
+        }
+      }
+      )
+    },
     async buscarReservas() {
+      this.reservas = []
+      this.largo = 0
       var usuario_reservas = []
       const resul = await getDocs(collection(db, "Reservas"));
       resul.forEach((doc) => {
-        console.log(doc.data())
         var accountData = doc.data();
-        console.log(this.buscarUSuarioRut(this.getCookie('usuarioRegistrado')));
-        if (accountData.rut == this.buscarUSuarioRut(this.getCookie('usuarioRegistrado'))) {
-          this.reservas.push(accountData)
+        if (accountData.rut == this.rut) {
           usuario_reservas.push(accountData)
           console.log(accountData)
-          console.log("xd")
+          this.largo = this.largo + 1
+          console.log("+1 añsldfkñl");
+          console.log(this.largo)
         }
       }
       );
+      this.finalLargo = this.largo
       console.log(usuario_reservas)
-      return (usuario_reservas)
-
+      return (this.largo)
     },
     getCookie(nombre) {
       var cookies = document.cookie.split(';');
@@ -168,11 +185,15 @@ export default {
         "; path=/";
       document.cookie = cookie;
     },
+    async calculaPromocion(larglista) {
+      console.log("Promo!")
+      console.log(this.finalLargo);
+      console.log(this.reservas.length)
 
-    async calculaPromocion() {
-      console.log(this.reservas)
-      if (this.reservas.length > 5) {
-        this.Promocion_Activa = "hola soy una promo uwu"
+      //pa cuando use descuento borrar las promos usadas xd
+
+      if (larglista > 5) {
+        this.Promocion_Activa = "Tienes Promocion"
         this.Promobollean = true
         this.MensajePromocion = "Por acumulación de reservas, tiene un 15% de descuento al costo de su cuenta"
       } else {
@@ -181,9 +202,6 @@ export default {
         this.MensajePromocion = " Para tener una promoción, debes tener con anterioridad 5 reservas finalizadas!"
       }
     },
-
-
-
     async Aplica_Descuento() {
       //crear cookie
       let descuento = 15
@@ -192,11 +210,11 @@ export default {
       //vinculo
       location.href = './Reservar_Vista';
     },
-
-
-
   },
 
+}
+function obtieneasync(retorno) {
+  return retorno
 }
 
 </script>
@@ -225,7 +243,7 @@ export default {
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="./menu_Usuario">Perfil</a></li>
-                <li><a class="dropdown-item" href="./">Cerrar sesión</a></li>
+                <li><a class="dropdown-item" href="/Iniciar_sesion">Cerrar sesión</a></li>
               </ul>
             </li>
           </ul>
@@ -239,32 +257,27 @@ export default {
       <div class="text-white">
         <h1 class="display-4 fw-bolder text-center">Tus Promociones</h1>
         <form>
-          <div class="col-7">
-            <div class="col">
-              <div class="card h-100">
+          <div class="card h-100">
 
-                <!-- Product details-->
+            <!-- Product details-->
 
-                <img class="card-img-top" src="https://i.imgur.com/y2Xra35.jpg" alt="..." />
-                <div class="card-body p-4">
-                  <div class="text-center">
-                    <h5 class="fw-bolder"> {{ Promocion_Activa }}</h5>
-                    {{ MensajePromocion }}
-                  </div>
-                </div>
-
-                <!-- Product actions-->
-
-                <v-card>
-                  <div> <button @click="Aplica_Descuento" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                      style="margin-right: 5px;" v-if="Promobollean">
-
-                      Aplicar Descuento
-                    </button>
-                  </div>
-                </v-card>
+            <img class="card-img-top" src="https://i.imgur.com/y2Xra35.jpg" alt="..." />
+            <div class="card-body p-4">
+              <div class="text-center">
+                <h5 class="fw-bolder"> {{ Promocion_Activa }}</h5>
+                {{ MensajePromocion }}
               </div>
             </div>
+
+            <!-- Product actions-->
+
+            <v-card>
+              <div> <button @click="Aplica_Descuento" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                  style="margin-right: 5px;" v-if="Promobollean">
+                  Aplicar Descuento
+                </button>
+              </div>
+            </v-card>
           </div>
         </form>
       </div>
