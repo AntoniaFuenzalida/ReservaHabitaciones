@@ -9,7 +9,7 @@
                     loading="lazy"
                     style="margin-top: -1px"
             /></a>
-
+            <a> {{ nombre }} </a>
             <button
                 class="navbar-toggler"
                 type="button"
@@ -157,27 +157,12 @@
     </footer>
 </template>
 
-<script setup>
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from "../main.js";
-
-function getCookie(nombre) {
-  var cookies = document.cookie.split(';');
-  for (var i = 0; i < cookies.length; i++) {
-    var cookie = cookies[i].trim();
-    if (cookie.startsWith(nombre + '=')) {
-      return decodeURIComponent(cookie.substring(nombre.length + 1));
-    }
-  }
-  return null;
-}
-let nombre = getCookie('usuarioRegistrado')
-
-</script>
 
 <script>
 import Tarjetas from "../components/TarjetasReservas.vue";
 import { z } from "alga-css/src/configs/preset";
+import { doc, getFirestore, setDoc, getDocs, collection } from "firebase/firestore";
+import { db } from "../main.js";
 
 export default {
     data() {
@@ -198,6 +183,11 @@ export default {
             reservas: [],
             final: [],
         };
+    },
+    created() {
+        this.nombre = this.buscarUSuario(this.getCookie('usuarioRegistrado')).Nombre_Apellido
+        this.reservas = this.buscarReservas()
+
     },
     components: {
         Tarjetas,
@@ -342,8 +332,67 @@ export default {
                 }
             }
         },
+        async buscarUSuarioRut(correo) {
+            const usuarios = await getDocs(collection(db, "Cuentas"));
+            usuarios.forEach((doc) => {
+                var accountData = doc.data();
+                if (accountData.Correo_Electronico == correo) {
+                    this.rut = accountData.Rut
+                    this.nombre = accountData.Nombre_Apellido
+                    this.telefono = accountData.Telefono
+
+                    return (accountData.Rut)
+                }
+            });
+
+        },
+            async buscarReservas() {
+            var usuario_reservas = []
+            const resul = await getDocs(collection(db, "Reservas"));
+            resul.forEach((doc) => {
+                console.log(doc.data())
+                var accountData = doc.data();
+                console.log(this.buscarUSuarioRut(this.getCookie('usuarioRegistrado')));
+                if (accountData.rut == this.buscarUSuarioRut(this.getCookie('usuarioRegistrado'))) {
+                    this.reservas.push(accountData)
+                    usuario_reservas.push(accountData)
+                    console.log(accountData)
+                    console.log("xd")
+                }
+            }
+            );
+            console.log(usuario_reservas)
+            return (usuario_reservas)
+
+        },
+        async buscarUSuario(correo) {
+            const usuarios = await getDocs(collection(db, "Cuentas"));
+            usuarios.forEach((doc) => {
+                var accountData = doc.data();
+                if (accountData.Correo_Electronico == correo) {
+                    this.rut = accountData.Rut
+                    this.nombre = accountData.Nombre_Apellido
+                    this.telefono = accountData.Telefono
+
+                    return (accountData)
+                }
+            });
+
+        },
+        getCookie(nombre) {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.startsWith(nombre + '=')) {
+                    return decodeURIComponent(cookie.substring(nombre.length + 1));
+                }
+
+            }
+            return null;
+        },
     },
 };
+
 
 function setCookie(nombre, valor, expiracion) {
     var fechaExpiracion = new Date();

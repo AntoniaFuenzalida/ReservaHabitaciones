@@ -2,7 +2,7 @@
   <div class="bg-image" id="pagina_ini">
     <div id="caja_Adentro">
       <div id="div_BotonRegreso">
-      <button id="regreso_Boton" @click="$router.go(-1)"> <img id="imagen_regreso_Boton" src="../icons/atras.jpg" /></button>
+      <button id="regreso_Boton" @click="$router.go(-1)"> <img id="imagen_regreso_Boton" src="../icons/atras.png" /></button>
       </div>
       <img src="../assets/logohotel.png"  id="imagen_Adentro">  
       <br>
@@ -61,12 +61,12 @@
             if (doc.exists) {
               if(doc.get('Rol') == 'Predeterminado'){
                 setCookie('usuarioRegistrado',this.ingreso_Correo,1)
-
                 location.href = './menu_Usuario'; //Se lleva al menú usuario 
                 }else{
-                setCookie('usuarioRegistrado',this.ingreso_Correo,1)
+                setCookie('usuarioRegistrado', this.ingreso_Correo, 1)
+                location.href = './menuAdmin';//Se lleva al menú admin
                 }
-              location.href = href = './menuAdmin'; //Se lleva al menú admin
+               
               //AUN NO SE IMPLEMENTA QUE EL INICIO DE SESIÓN PERDURE ENTRE CAMBIOS DE PAGINA
             }
           });
@@ -205,6 +205,9 @@ function getCookie(nombre) {
 #regreso_Boton{
   width: 15%;
   height: 15%;
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.6)
 }
 #imagen_regreso_Boton{
   width: 100%;
