@@ -2,7 +2,10 @@
 <template>
     <div class="bg-image" id="portada">
         <div id="caja_Adentro_Crea">
-            <img src="../assets/logohotel.png" id="imagen_Adentro" onclick="location.href='./';" >
+            <button onclick="location.href='./';" id="boton_volver">
+                Volver
+            </button>
+            <img src="../assets/logohotel.png" id="imagen_Adentro" >
             <h3 id="texto_Crear">Creación de Cuenta</h3>
             <p v-if="errors.length">
             <b>Por favor, corrija el(los) siguiente(s) error(es):</b>
@@ -334,4 +337,10 @@ export default {
     text-decoration: underline black;
 }
 
+#boton_volver{
+    position: absolute;
+    height: 40px;
+    width: 75px;
+    border-radius: 5px;
+}
 </style>
