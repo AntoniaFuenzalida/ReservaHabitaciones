@@ -22,38 +22,39 @@ export default {
             console.log(this.selecionada);
 
             const querySnapshot = await getDocs(query(collection(db, "Reservas"), where("idReserva", "==", this.selecionada)));
-            querySnapshot.forEach((doc) => {
+            for (const doc of querySnapshot.docs) {
                 // Accede a los datos del documento
                 const data = doc.data();
                 console.log(data);
 
                 // Actualiza el campo "estadoReserva" a "Cancelado"
                 const docRef = doc.ref;
-                updateDoc(docRef, { estadoReserva: "Cancelada" })
+                await updateDoc(docRef, { estadoReserva: "Cancelada" })
                     .then(() => {
                         console.log("Reserva actualizada correctamente");
                     })
                     .catch((error) => {
                         console.error("Error al actualizar la reserva:", error);
                     });
-            });
-            this.ocultarModalBorrar()
-        },
-        mostrarModalBorrar() {
-            // Mostrar el modal
-            this.$refs.modalBorrar.classList.add('show');
-            this.$refs.modalBorrar.style.display = 'block';
-            document.body.classList.add('modal-open');
-            document.body.appendChild(this.$refs.modalBorrar);
-        },
-        ocultarModalBorrar() {
-            // Ocultar el modal
-            this.$refs.modalBorrar.classList.remove('show');
-            this.$refs.modalBorrar.style.display = 'none';
-            document.body.classList.remove('modal-open');
+                }
+                this.ocultarModalBorrar()
+                location.href = "/Consulta_Vistas"
+            },
+            mostrarModalBorrar() {
+                // Mostrar el modal
+                this.$refs.modalBorrar.classList.add('show');
+                this.$refs.modalBorrar.style.display = 'block';
+                document.body.classList.add('modal-open');
+                document.body.appendChild(this.$refs.modalBorrar);
+            },
+            ocultarModalBorrar() {
+                // Ocultar el modal
+                this.$refs.modalBorrar.classList.remove('show');
+                this.$refs.modalBorrar.style.display = 'none';
+                document.body.classList.remove('modal-open');
+            }
         }
     }
-}
 </script>
 
 <template>
