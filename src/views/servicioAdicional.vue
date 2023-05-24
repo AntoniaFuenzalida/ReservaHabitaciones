@@ -27,7 +27,7 @@
                                     <a class="dropdown-item" href="./menu_Usuario">Perfil</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="/">Cerrar sesión</a>
+                                    <a class="dropdown-item" href="/Iniciar_sesion">Cerrar sesión</a>
                                 </li>
                             </ul>
                         </li>

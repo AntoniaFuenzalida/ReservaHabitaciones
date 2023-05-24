@@ -40,7 +40,7 @@ export default {
             return null;
         },
         async buscarUSuario(correo) {
-            this.reservas=[]
+            this.reservas = []
             const usuarios = await getDocs(collection(db, "Cuentas"));
             usuarios.forEach((doc) => {
                 var accountData = doc.data();
@@ -57,7 +57,7 @@ export default {
 
         },
         async buscarReservas() {
-            this.reservas=[]
+            this.reservas = []
             var usuario_reservas = []
             const resul = await getDocs(collection(db, "Reservas"));
             resul.forEach((doc) => {
@@ -112,7 +112,7 @@ export default {
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="./menu_Usuario">Perfil</a></li>
-                                <li><a class="dropdown-item" href="./">Cerrar sesión</a></li>
+                                <li><a class="dropdown-item" href="/Iniciar_sesion">Cerrar sesión</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -144,8 +144,8 @@ export default {
         <div class="col-lg-4">
             <div class="card mb-4">
                 <div class="card-body text-center">
-                    <img src="https://imgur.com/XXR2XfJ.jpg" alt="avatar"
-                        class="rounded-circle img-fluid" style="width: 150px;">
+                    <img src="https://imgur.com/XXR2XfJ.jpg" alt="avatar" class="rounded-circle img-fluid"
+                        style="width: 150px;">
                     <h5 class="my-3">{{ this.nombre }}</h5>
                     <div class="d-flex justify-content-center mb-2">
                         <button type="button" onclick="location.href='./menu_Usuario';"

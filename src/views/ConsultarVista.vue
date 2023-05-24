@@ -24,7 +24,7 @@
                   <a class="dropdown-item" href="./menu_Usuario">Perfil</a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="./">Cerrar sesión</a>
+                  <a class="dropdown-item" href="/Iniciar_sesion">Cerrar sesión</a>
                 </li>
                 <li>
                   <hr class="dropdown-divider" />
@@ -117,7 +117,7 @@ export default {
           kids: null,
         },
       ],
-      nulos:false,
+      nulos: false,
       error: false,
       mensaje: "error",
       fecha_fin: null,
@@ -132,7 +132,7 @@ export default {
   components: {
     Tarjetas,
   },
-  
+
   methods: {
     reiniciar() {
       this.error = false
@@ -166,17 +166,15 @@ export default {
       diferenciaMs = Math.abs(auxFechaFin - fechaHoy);
       let dif_hoy_fin = Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24));
 
-      if(this.fecha_fin==null ||this.fecha_inicio==null)
-      {
+      if (this.fecha_fin == null || this.fecha_inicio == null) {
         console.log(this.fecha_inicio)
         console.log(this.fecha_fin)
-        this.mensaje="Error: ingrese correctamente los parametros en ambos campos de fechas"
-        this.error=true
-        this.nulos=true
+        this.mensaje = "Error: ingrese correctamente los parametros en ambos campos de fechas"
+        this.error = true
+        this.nulos = true
       }
-      else
-      {
-        this.nulos=false
+      else {
+        this.nulos = false
       }
 
 
@@ -187,13 +185,12 @@ export default {
         dif_ini_fin >= 365 ||
         dif_hoy_fin >= 365
       ) {
-        if(this.nulos==false)
-        {
-        this.fecha_fin = null;
-        this.fecha_inicio = null;
-        this.mensaje = "Error: ingrese un rango fechas dentro del el rango valido"
-        this.error = true
-        this.final = [];
+        if (this.nulos == false) {
+          this.fecha_fin = null;
+          this.fecha_inicio = null;
+          this.mensaje = "Error: ingrese un rango fechas dentro del el rango valido"
+          this.error = true
+          this.final = [];
         }
 
       }
@@ -204,109 +201,111 @@ export default {
         auxFechainicio < fechaHoy ||
         auxFechaFin <= fechaHoy
       ) {
-        if (this.nulos==false){
-        this.fecha_fin = null;
-        this.fecha_inicio = null;
-        this.final = [];
-        this.mensaje = "Error: ese rango de fechas no es valido"
-        this.error = true
-        console.log("la fecha no es valida");}
-      } else {
-        if(this.fecha_fin!=null && this.fecha_inicio!=null){
-          this.error=false
-        let fechaInicio = new Date(this.fecha_inicio);
-        let fechaFin = new Date(this.fecha_fin);
-
-        fechaInicio = fechaInicio.toISOString().split("T")[0];
-        fechaFin = fechaFin.toISOString().split("T")[0];
-
-        const result = await getDocs(collection(db, "Habitaciones"));
-        const resultreservas = await getDocs(
-          collection(db, "Reservas")
-        );
-
-        let fechaInicioUsuario = Number(
-          fechaInicio.replaceAll("-", "")
-        );
-        let fechaFinUsuario = Number(fechaFin.replaceAll("-", ""));
-
-        let fechaInicioReserva;
-        let fechaFinReserva;
-
-        // buscar en las reservas las habitaciones que ya estan ocupadas en esas fechas
-        let HabitacionesOcupadas;
-        HabitacionesOcupadas = [];
-        resultreservas.forEach((reserva) => {
-          fechaInicioReserva = Number(
-            reserva.data().fechaIngreso.replaceAll("-", "")
-          );
-          fechaFinReserva = Number(
-            reserva.data().fechaSalida.replaceAll("-", "")
-          );
-
-          if (
-            fechaInicioUsuario <= fechaInicioReserva &&
-            fechaFinUsuario >= fechaFinReserva
-          ) {
-            HabitacionesOcupadas.push(
-              reserva.data().numeroHabitacion
-            );
-          }
-
-          if (
-            fechaFinUsuario >= fechaInicioReserva &&
-            fechaFinUsuario <= fechaFinReserva
-          ) {
-            HabitacionesOcupadas.push(
-              reserva.data().numeroHabitacion
-            );
-          }
-
-          if (
-            fechaInicioUsuario >= fechaInicioReserva &&
-            fechaInicioUsuario <= fechaFinReserva
-          ) {
-            HabitacionesOcupadas.push(
-              reserva.data().numeroHabitacion
-            );
-          }
-        
-        });
-
-        this.final = [];
-
-        if (isNaN(this.adultos)) {
-          this.adultos = 0;
-        }
-        if (!Number(this.adultos)) {
-          this.adultos = 0;
-        }
-        if (isNaN(this.kid) || this.kid == "" || Number(this.kid) < 1) {
-          this.kid = 0;
-        }
-
-        setCookie("ninos", this.kid, 1);
-        setCookie("adultos", this.adultos, 1);
-
-        if (Number(this.adultos) > 0) {
-          let tamanno = Number(this.adultos) + Number(this.kid) / 2;
-          result.forEach((doc) => {
-            if (HabitacionesOcupadas.includes(doc.data().numero)) {
-              console.log();
-            } else if (
-              Number(doc.data().cantidadCamas) >= tamanno &&
-              Number(doc.data().cantidadCamas) <= tamanno + 2
-            ) {
-              this.final.push(doc.data());
-            }
-          });
-        } else {
-
-          this.mensaje = "Error: no cumple con la cantidad minima de adultos"
+        if (this.nulos == false) {
+          this.fecha_fin = null;
+          this.fecha_inicio = null;
+          this.final = [];
+          this.mensaje = "Error: ese rango de fechas no es valido"
           this.error = true
-          console.log("no cumple la cantidad de adultos");
+          console.log("la fecha no es valida");
         }
-      }}
+      } else {
+        if (this.fecha_fin != null && this.fecha_inicio != null) {
+          this.error = false
+          let fechaInicio = new Date(this.fecha_inicio);
+          let fechaFin = new Date(this.fecha_fin);
+
+          fechaInicio = fechaInicio.toISOString().split("T")[0];
+          fechaFin = fechaFin.toISOString().split("T")[0];
+
+          const result = await getDocs(collection(db, "Habitaciones"));
+          const resultreservas = await getDocs(
+            collection(db, "Reservas")
+          );
+
+          let fechaInicioUsuario = Number(
+            fechaInicio.replaceAll("-", "")
+          );
+          let fechaFinUsuario = Number(fechaFin.replaceAll("-", ""));
+
+          let fechaInicioReserva;
+          let fechaFinReserva;
+
+          // buscar en las reservas las habitaciones que ya estan ocupadas en esas fechas
+          let HabitacionesOcupadas;
+          HabitacionesOcupadas = [];
+          resultreservas.forEach((reserva) => {
+            fechaInicioReserva = Number(
+              reserva.data().fechaIngreso.replaceAll("-", "")
+            );
+            fechaFinReserva = Number(
+              reserva.data().fechaSalida.replaceAll("-", "")
+            );
+
+            if (
+              fechaInicioUsuario <= fechaInicioReserva &&
+              fechaFinUsuario >= fechaFinReserva
+            ) {
+              HabitacionesOcupadas.push(
+                reserva.data().numeroHabitacion
+              );
+            }
+
+            if (
+              fechaFinUsuario >= fechaInicioReserva &&
+              fechaFinUsuario <= fechaFinReserva
+            ) {
+              HabitacionesOcupadas.push(
+                reserva.data().numeroHabitacion
+              );
+            }
+
+            if (
+              fechaInicioUsuario >= fechaInicioReserva &&
+              fechaInicioUsuario <= fechaFinReserva
+            ) {
+              HabitacionesOcupadas.push(
+                reserva.data().numeroHabitacion
+              );
+            }
+
+          });
+
+          this.final = [];
+
+          if (isNaN(this.adultos)) {
+            this.adultos = 0;
+          }
+          if (!Number(this.adultos)) {
+            this.adultos = 0;
+          }
+          if (isNaN(this.kid) || this.kid == "" || Number(this.kid) < 1) {
+            this.kid = 0;
+          }
+
+          setCookie("ninos", this.kid, 1);
+          setCookie("adultos", this.adultos, 1);
+
+          if (Number(this.adultos) > 0) {
+            let tamanno = Number(this.adultos) + Number(this.kid) / 2;
+            result.forEach((doc) => {
+              if (HabitacionesOcupadas.includes(doc.data().numero)) {
+                console.log();
+              } else if (
+                Number(doc.data().cantidadCamas) >= tamanno &&
+                Number(doc.data().cantidadCamas) <= tamanno + 2
+              ) {
+                this.final.push(doc.data());
+              }
+            });
+          } else {
+
+            this.mensaje = "Error: no cumple con la cantidad minima de adultos"
+            this.error = true
+            console.log("no cumple la cantidad de adultos");
+          }
+        }
+      }
     },
   },
 };

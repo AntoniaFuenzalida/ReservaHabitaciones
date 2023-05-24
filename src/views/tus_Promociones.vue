@@ -25,9 +25,6 @@ export default {
     //ordersId().then(orders => console.log(orders))
     this.buscarReservas().then(largo => this.calculaPromocion(largo));
     console.log(this.reservas);
-
-
-
   },
 
   methods: {
@@ -259,7 +256,7 @@ function obtieneasync(retorno) {
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="./menu_Usuario">Perfil</a></li>
-                <li><a class="dropdown-item" href="./">Cerrar sesión</a></li>
+                <li><a class="dropdown-item" href="/Iniciar_sesion">Cerrar sesión</a></li>
               </ul>
             </li>
           </ul>
