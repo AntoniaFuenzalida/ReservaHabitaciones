@@ -1,7 +1,9 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container px-4 px-lg-5">
-      <a class="navbar-brand" href="/">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light"> 
+    
+    <div class="container px-4 px-lg-5"> 
+      <button onclick="location.href='./';" id="regreso_Boton"> Volver</button>
+      <a class="navbar-brand" >
         
         <img src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg" height="50" alt="hotel logo"
           loading="lazy" style="margin-top: -1px" /></a>
@@ -10,12 +12,15 @@
         aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+      
       <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
         <div class="offcanvas-header">
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body">
+        <div class="offcanvas-body"> 
+          
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Menú
@@ -43,7 +48,7 @@
 
   <!-- Header-->
   <header class="bg-dark py-5">
-    <div class="container px-4 px-lg-5 my-5">
+    <div class="container px-4 px-lg-5 my-5"> 
       <div class="text-white">
         <h1 class="display-4 fw-bolder text-center">
           Reserva con Nosotros
@@ -374,4 +379,17 @@ a {
 .closebtn:hover {
   color: black;
 }
+
+#regreso_Boton{
+  position: absolute;
+  float: left;
+  left: 10px;
+  top: 22px;
+  width: 8%;
+  height: 8%;
+  background-color: transparent;
+  border: transparent;
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.6)
+}
+
 </style>

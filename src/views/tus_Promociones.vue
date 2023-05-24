@@ -223,6 +223,7 @@ function obtieneasync(retorno) {
   <!-- -------------          header               ------------ -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
+      <button onclick="location.href='./';" id="regreso_Boton"> Volver</button>
       <a class="navbar-brand" href="/">
         <img src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg" height="50" alt="hotel logo"
           loading="lazy" style="margin-top: -1px;" /></a>
@@ -315,4 +316,17 @@ li {
 a {
   color: black;
 }
+
+#regreso_Boton{
+  position: absolute;
+  float: left;
+  left: 10px;
+  top: 22px;
+  width: 8%;
+  height: 8%;
+  background-color: transparent;
+  border: transparent;
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.6)
+}
+
 </style>
