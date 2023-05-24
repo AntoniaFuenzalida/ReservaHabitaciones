@@ -1,6 +1,6 @@
 
 <template>
-    <div class="bg-image" id="portada">
+    <div class="bg-image" id="portada_crear">
         <div id="caja_Adentro_Crea">
             <button onclick="location.href='./';" id="boton_volver">
                 Volver
@@ -198,28 +198,29 @@ export default {
 </script>
 
 <style>
-#portada {
-    background-image: url('../assets/Fondo.jpg');
+#portada_crear {
+    background-image:url('../assets/Fondo.jpg');
     background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    background-size: cover;
-    max-width: 100%;
+    background-size: 100% 100%;
+    width: 100%;
+    height: 100%;
     height: 100vh;
     opacity: 0.9;
     justify-content: center;
     align-items: center;
     display: flex;
+    margin:0px;
+    position: absolute;
 }
 
 #caja_Adentro_Crea {
-    height: 70%;
+    height: 90%;
     width: 40%;
     background-color: white;
     opacity: 75%;
 }
 
-#imagen_Adentro {
+#imagen_Adentro_crea {
 
     display: block;
     margin: 0%auto;

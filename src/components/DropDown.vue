@@ -1,90 +1,208 @@
+<script setup>
+import {
+    collection,
+    getDocs,
+    query,
+    updateDoc,
+    where,
+    getFirestore,
+} from "firebase/firestore";
+import { db } from "../main.js";
+import app from "../main";
+</script>
+
 <script>
-import app from '../main'
-import {getFirestore, collection, where,query, getDocs, doc} from "firebase/firestore";
-
-
-export default{
-    props:{
-        fecha: String,
-        habitacion: String,
-        estado:String
+export default {
+    props: {
+        reserva: Object,
     },
     data: () => ({
-        Mostrar:false
+        Mostrar: false,
+        selecionada: "",
+        validarBorrar: false,
+        codigo: "",
     }),
+    created() {
+        this.CargarCodigo();
+    },
     methods: {
-        Desplegar(){
+        Desplegar() {
             this.Mostrar = !this.Mostrar;
         },
+};
+    },
+        },
+            });
+                }
+                    this.codigo = "// codigo: " + doc.data().codigo;
+                ) {
+        async Borrar() {
+            const querySnapshot = await getDocs(
+                    collection(db, "Reservas"),
+                query(
+                )
+                    where("idReserva", "==", this.selecionada)
+            );
+            for (const doc of querySnapshot.docs) {
+                // Accede a los datos del documento
+                const data = doc.data();
 
-        /*async buscarReserva() {
-            const db = getFirestore(app); 
-            const cuentasRef = collection(db, 'Reservas'); 
-            const q = query(cuentasRef, where("idReservas", "==", algo)); 
-            console.log("DEBUGGG");
-        },*/
-    }
-}
+                // Actualiza el campo "estadoReserva" a "Cancelado"
+                const docRef = doc.ref;
+                await updateDoc(docRef, { estadoReserva: "Cancelada" })
+                    .then(() => {
+                        console.log("Reserva actualizada correctamente");
+                    .catch((error) => {
+                    })
+                        console.error("Error al actualizar la reserva:", error);
+                    });
+            }
+            this.ocultarModalBorrar();
+            location.href = "/Consulta_Vistas";
+        },
+        mostrarModalBorrar() {
+            this.$refs.modalBorrar.classList.add("show");
+            // Mostrar el modal
+            this.$refs.modalBorrar.style.display = "block";
+            document.body.appendChild(this.$refs.modalBorrar);
+            document.body.classList.add("modal-open");
+        },
+            const db = getFirestore(app);
+        async CargarCodigo() {
+        },
+            document.body.classList.remove("modal-open");
+            this.$refs.modalBorrar.style.display = "none";
+            this.$refs.modalBorrar.classList.remove("show");
+            // Ocultar el modal
+        ocultarModalBorrar() {
+            const querySnapshot = await getDocs(
+                collection(db, "Servicios_Adicionales")
+                    doc.data().codigo
+                    doc.data().idReserva == this.reserva.idReserva &&
+                if (
+
+                console.log(doc.data());
+            );
+            querySnapshot.forEach((doc) => {
 </script>
+
 <template>
-    <div class="DropDown"  v-if="estado==='Lista'">
-        <div class="dropdown-header" @click="Desplegar">
-            <img src="/verde.ico" class="dropdown-icon">
-            {{ fecha }}  // habitacion: {{ habitacion }}<button type="button" @click.stop="Borrar()"> <img src="/trash.ico"></button>
-        </div>
-        <div class="dropdown-wraper" v-if="Mostrar">
-            <ul class="dropdown-list list-group">
-                <li class="dropdown-list-item list-group-item">
-                    <div>
-                        Falta agregar los datos de la reserva aqui
-                    </div>
-                </li>
-            </ul>
+    <div
+        class="modal fade"
+        id="Borrar"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        ref="modalBorrar"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-4" id="exampleModalLabel">
+                        Ayuda
+                    </h1>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        @click="this.ocultarModalBorrar"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <h5>
+                        Estas seguro de que deseas eliminar la reserva
+                        {{ this.selecionada }}
+                    </h5>
+                </div>
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        @click="this.ocultarModalBorrar"
+                    >
+                        Cerrar
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        @click="this.Borrar()"
+                    >
+                        Borrar
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="dropdown"  v-else-if="estado==='Cancelada'">
+
+    <div class="DropDown" v-if="reserva.estadoReserva === 'Lista'">
         <div class="dropdown-header" @click="Desplegar">
-            <img src="/rojo.ico" class="dropdown-icon">
-            {{ fecha }}  // habitacion: {{ habitacion }}<button type="button" @click.stop="Borrar()"> <img src="/trash.ico"></button>
-        </div>
-        <div class="dropdown-wraper" v-if="Mostrar">
-            <ul class="dropdown-list list-group">
-                <li class="dropdown-list-item list-group-item">
-                    <div>
-                        Falta agregar los datos de la reserva aqui
-                    </div>
-                </li>
-            </ul>
+            <img src="/verde.ico" class="dropdown-icon" />
+            Desde: {{ reserva.fechaIngreso }} Hasta:
+            {{ reserva.fechaSalida }} // habitacion:
+            {{ reserva.numeroHabitacion }}
+            {{ this.codigo }}
+            <div
+                class="trash-container"
+                @click="this.selecionada = reserva.idReserva"
+                @click.stop="mostrarModalBorrar()"
+            >
+                <img src="/trash.ico" class="trash-icon" />
+            </div>
         </div>
     </div>
-    <div class="dropdown"  v-else-if="estado==='PorConfirmar'">
+
+    <div class="dropdown" v-else-if="reserva.estadoReserva === 'Cancelada'">
         <div class="dropdown-header" @click="Desplegar">
-            <img src="/amarillo.ico" class="dropdown-icon">
-            {{ fecha }}  // habitacion: {{ habitacion }}<button type="button" @click.stop="Borrar()"> <img src="/trash.ico"> </button>
-        </div>
-        <div class="dropdown-wraper" v-if="Mostrar">
-            <ul class="dropdown-list list-group">
-                <li class="dropdown-list-item list-group-item">
-                    <div>
-                        Falta agregar los datos de la reserva aqui
-                    </div>
-                </li>
-            </ul>
+            <img src="/rojo.ico" class="dropdown-icon" />
+            Desde: {{ reserva.fechaIngreso }} Hasta:
+            {{ reserva.fechaSalida }} // habitacion:
+            {{ reserva.numeroHabitacion }}
+            {{ this.codigo }}
         </div>
     </div>
-    <div class="dropdown"  v-else-if="estado==='Utilizada'">
+
+    <div class="dropdown" v-else-if="reserva.estadoReserva === 'pendiente'">
         <div class="dropdown-header" @click="Desplegar">
-            <img src="/azul.ico" class="dropdown-icon">
-            {{ fecha }}  // habitacion: {{ habitacion }}<button type="button" @click.stop="Borrar()"> <img src="/trash.ico"></button>
+            <img src="/amarillo.ico" class="dropdown-icon" />
+            Desde: {{ reserva.fechaIngreso }} Hasta:
+            {{ reserva.fechaSalida }} // habitacion:
+            {{ reserva.numeroHabitacion }}
+            {{ this.codigo }}
+            <div
+                class="trash-container"
+                @click="this.selecionada = reserva.idReserva"
+                @click.stop="mostrarModalBorrar()"
+            >
+                <img src="/trash.ico" class="trash-icon" />
+            </div>
         </div>
-        <div class="dropdown-wraper" v-if="Mostrar">
-            <ul class="dropdown-list list-group">
-                <li class="dropdown-list-item list-group-item">
-                    <div>
-                        Falta agregar los datos de la reserva aqui
-                    </div>
-                </li>
-            </ul>
+    </div>
+
+    <div class="dropdown" v-else-if="reserva.estadoReserva === 'Utilizada'">
+        <div class="dropdown-header" @click="Desplegar">
+            <img src="/azul.ico" class="dropdown-icon" />
+            Desde: {{ reserva.fechaIngreso }} Hasta:
+            {{ reserva.fechaSalida }} // habitacion:
+            {{ reserva.numeroHabitacion }}
+            {{ this.codigo }}
+            <div
+                class="trash-container"
+                @click="this.selecionada = reserva.idReserva"
+                @click.stop="mostrarModalBorrar()"
+            >
+                <img src="/trash.ico" class="trash-icon" />
+            </div>
         </div>
     </div>
 </template>
+<style>
+.trash-container {
+    display: inline-block;
+    margin-left: auto;
+    padding-left: 2%;
+}
+
+.trash-icon {
+    vertical-align: middle;
+}
+</style>
