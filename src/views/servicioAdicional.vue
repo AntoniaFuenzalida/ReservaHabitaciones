@@ -327,12 +327,12 @@
                                             <input
                                                 class="form-check-input"
                                                 type="checkbox"
-                                                id="flexSwitchCheckDefault"
+                                                id="desayunoInput"
                                                 v-model="checkDesayuno"
                                             />
                                             <label
                                                 class="form-check-label"
-                                                for="flexSwitchCheckDefault"
+                                                for="desayunoInput"
                                                 >Desayuno</label
                                             >
                                         </div>
@@ -355,12 +355,12 @@
                                             <input
                                                 class="form-check-input"
                                                 type="checkbox"
-                                                id="flexSwitchCheckDefault"
+                                                id="almuerzoInput"
                                                 v-model="checkAlmuerzo"
                                             />
                                             <label
                                                 class="form-check-label"
-                                                for="flexSwitchCheckDefault"
+                                                for="almuerzoInput"
                                                 >Almuerzo</label
                                             >
                                         </div>
@@ -383,12 +383,12 @@
                                             <input
                                                 class="form-check-input"
                                                 type="checkbox"
-                                                id="flexSwitchCheckDefault"
+                                                id="cenaInput"
                                                 v-model="checkCena"
                                             />
                                             <label
                                                 class="form-check-label"
-                                                for="flexSwitchCheckDefault"
+                                                for="cenaInput"
                                                 >Cena</label
                                             >
                                         </div>
@@ -440,6 +440,7 @@ export default {
             lavanderia: null,
             limpiezaHabitacion: "2",
             cambioSabanas: "2",
+            codigo: "",
         };
     },
     mounted() {
@@ -464,7 +465,21 @@ export default {
                 Limpieza: this.limpiezaHabitacion,
                 Sabanas: this.cambioSabanas,
                 idReserva: this.variable,
+                codigo: NaN,
             };
+            if (this.checkDesayuno || this.checkAlmuerzo || this.checkCena) {
+                Servicio.codigo = this.variable.replace("n", "") + "-";
+                if (this.checkDesayuno) {
+                    Servicio.codigo += "1";
+                }
+                if (this.checkAlmuerzo) {
+                    Servicio.codigo += "2";
+                }
+                if (this.checkCena) {
+                    Servicio.codigo += "3";
+                }
+            }
+
             // Guardar reserva en Firebase
             await setDoc(
                 doc(db, "Servicios_Adicionales", this.variable),
