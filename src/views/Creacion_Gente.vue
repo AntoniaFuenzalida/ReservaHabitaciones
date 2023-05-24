@@ -2,7 +2,7 @@
 <template>
     <div class="bg-image" id="portada_crear">
         <div id="caja_Adentro_Crea">
-            <button onclick="location.href='./';" id="boton_volver">
+            <button onclick="location.href='./';" id="regreso_boton">
                 Volver
             </button>
             <img src="../assets/logohotel.png" id="imagen_Adentro" >
@@ -338,10 +338,11 @@ export default {
     text-decoration: underline black;
 }
 
-#boton_volver{
-    position: absolute;
-    height: 40px;
-    width: 75px;
-    border-radius: 5px;
+#regreso_Boton{
+  width: 15%;
+  height: 15%;
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.6)
 }
 </style>

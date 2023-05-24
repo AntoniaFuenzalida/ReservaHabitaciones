@@ -29,19 +29,12 @@ export default {
         Desplegar() {
             this.Mostrar = !this.Mostrar;
         },
-};
-    },
-        },
-            });
-                }
-                    this.codigo = "// codigo: " + doc.data().codigo;
-                ) {
         async Borrar() {
             const querySnapshot = await getDocs(
-                    collection(db, "Reservas"),
                 query(
-                )
+                    collection(db, "Reservas"),
                     where("idReserva", "==", this.selecionada)
+                )
             );
             for (const doc of querySnapshot.docs) {
                 // Accede a los datos del documento
@@ -52,8 +45,8 @@ export default {
                 await updateDoc(docRef, { estadoReserva: "Cancelada" })
                     .then(() => {
                         console.log("Reserva actualizada correctamente");
-                    .catch((error) => {
                     })
+                    .catch((error) => {
                         console.error("Error al actualizar la reserva:", error);
                     });
             }
@@ -61,29 +54,36 @@ export default {
             location.href = "/Consulta_Vistas";
         },
         mostrarModalBorrar() {
-            this.$refs.modalBorrar.classList.add("show");
             // Mostrar el modal
+            this.$refs.modalBorrar.classList.add("show");
             this.$refs.modalBorrar.style.display = "block";
-            document.body.appendChild(this.$refs.modalBorrar);
             document.body.classList.add("modal-open");
+            document.body.appendChild(this.$refs.modalBorrar);
         },
-            const db = getFirestore(app);
-        async CargarCodigo() {
-        },
-            document.body.classList.remove("modal-open");
-            this.$refs.modalBorrar.style.display = "none";
-            this.$refs.modalBorrar.classList.remove("show");
-            // Ocultar el modal
         ocultarModalBorrar() {
+            // Ocultar el modal
+            this.$refs.modalBorrar.classList.remove("show");
+            this.$refs.modalBorrar.style.display = "none";
+            document.body.classList.remove("modal-open");
+        },
+        async CargarCodigo() {
+            const db = getFirestore(app);
             const querySnapshot = await getDocs(
                 collection(db, "Servicios_Adicionales")
-                    doc.data().codigo
-                    doc.data().idReserva == this.reserva.idReserva &&
-                if (
-
-                console.log(doc.data());
             );
             querySnapshot.forEach((doc) => {
+                console.log(doc.data());
+
+                if (
+                    doc.data().idReserva == this.reserva.idReserva &&
+                    doc.data().codigo
+                ) {
+                    this.codigo = "// codigo: " + doc.data().codigo;
+                }
+            });
+        },
+    },
+};
 </script>
 
 <template>
