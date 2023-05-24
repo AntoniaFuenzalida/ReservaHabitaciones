@@ -1,7 +1,14 @@
 <script setup>
-import { collection, getDocs } from 'firebase/firestore';
+import {
+    collection,
+    getDocs,
+    query,
+    updateDoc,
+    where,
+    getFirestore,
+} from "firebase/firestore";
 import { db } from "../main.js";
-import { query, where, updateDoc } from "firebase/firestore";
+import app from "../main";
 </script>
 
 <script>
@@ -11,21 +18,27 @@ export default {
     },
     data: () => ({
         Mostrar: false,
-        selecionada: '',
-        validarBorrar: false
+        selecionada: "",
+        validarBorrar: false,
+        codigo: "",
     }),
+    created() {
+        this.CargarCodigo();
+    },
     methods: {
         Desplegar() {
             this.Mostrar = !this.Mostrar;
         },
         async Borrar() {
-            console.log(this.selecionada);
-
-            const querySnapshot = await getDocs(query(collection(db, "Reservas"), where("idReserva", "==", this.selecionada)));
+            const querySnapshot = await getDocs(
+                query(
+                    collection(db, "Reservas"),
+                    where("idReserva", "==", this.selecionada)
+                )
+            );
             for (const doc of querySnapshot.docs) {
                 // Accede a los datos del documento
                 const data = doc.data();
-                console.log(data);
 
                 // Actualiza el campo "estadoReserva" a "Cancelado"
                 const docRef = doc.ref;
@@ -36,42 +49,86 @@ export default {
                     .catch((error) => {
                         console.error("Error al actualizar la reserva:", error);
                     });
-                }
-                this.ocultarModalBorrar()
-                location.href = "/Consulta_Vistas"
-            },
-            mostrarModalBorrar() {
-                // Mostrar el modal
-                this.$refs.modalBorrar.classList.add('show');
-                this.$refs.modalBorrar.style.display = 'block';
-                document.body.classList.add('modal-open');
-                document.body.appendChild(this.$refs.modalBorrar);
-            },
-            ocultarModalBorrar() {
-                // Ocultar el modal
-                this.$refs.modalBorrar.classList.remove('show');
-                this.$refs.modalBorrar.style.display = 'none';
-                document.body.classList.remove('modal-open');
             }
-        }
-    }
+            this.ocultarModalBorrar();
+            location.href = "/Consulta_Vistas";
+        },
+        mostrarModalBorrar() {
+            // Mostrar el modal
+            this.$refs.modalBorrar.classList.add("show");
+            this.$refs.modalBorrar.style.display = "block";
+            document.body.classList.add("modal-open");
+            document.body.appendChild(this.$refs.modalBorrar);
+        },
+        ocultarModalBorrar() {
+            // Ocultar el modal
+            this.$refs.modalBorrar.classList.remove("show");
+            this.$refs.modalBorrar.style.display = "none";
+            document.body.classList.remove("modal-open");
+        },
+        async CargarCodigo() {
+            const db = getFirestore(app);
+            const querySnapshot = await getDocs(
+                collection(db, "Servicios_Adicionales")
+            );
+            querySnapshot.forEach((doc) => {
+                console.log(doc.data());
+
+                if (
+                    doc.data().idReserva == this.reserva.idReserva &&
+                    doc.data().codigo
+                ) {
+                    this.codigo = "// codigo: " + doc.data().codigo;
+                }
+            });
+        },
+    },
+};
 </script>
 
 <template>
-    <div class="modal fade" id="Borrar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-        ref="modalBorrar">
+    <div
+        class="modal fade"
+        id="Borrar"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        ref="modalBorrar"
+    >
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-4" id="exampleModalLabel">Ayuda</h1>
-                    <button type="button" class="btn-close" @click="this.ocultarModalBorrar" aria-label="Close"></button>
+                    <h1 class="modal-title fs-4" id="exampleModalLabel">
+                        Ayuda
+                    </h1>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        @click="this.ocultarModalBorrar"
+                        aria-label="Close"
+                    ></button>
                 </div>
                 <div class="modal-body">
-                    <h5>Estas seguro de que deseas eliminar la reserva {{ this.selecionada }}</h5>
+                    <h5>
+                        Estas seguro de que deseas eliminar la reserva
+                        {{ this.selecionada }}
+                    </h5>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" @click="this.ocultarModalBorrar">Cerrar</button>
-                    <button type="button" class="btn btn-primary" @click="this.Borrar()">Borrar</button>
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        @click="this.ocultarModalBorrar"
+                    >
+                        Cerrar
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        @click="this.Borrar()"
+                    >
+                        Borrar
+                    </button>
                 </div>
             </div>
         </div>
@@ -79,42 +136,61 @@ export default {
 
     <div class="DropDown" v-if="reserva.estadoReserva === 'Lista'">
         <div class="dropdown-header" @click="Desplegar">
-            <img src="/verde.ico" class="dropdown-icon">
-            Desde: {{ reserva.fechaIngreso }} Hasta: {{ reserva.fechaSalida }} // habitacion: {{ reserva.numeroHabitacion }}
-            <div class="trash-container" @click="this.selecionada = reserva.idReserva" @click.stop="mostrarModalBorrar()">
-                <img src="/trash.ico" class="trash-icon">
+            <img src="/verde.ico" class="dropdown-icon" />
+            Desde: {{ reserva.fechaIngreso }} Hasta:
+            {{ reserva.fechaSalida }} // habitacion:
+            {{ reserva.numeroHabitacion }}
+            {{ this.codigo }}
+            <div
+                class="trash-container"
+                @click="this.selecionada = reserva.idReserva"
+                @click.stop="mostrarModalBorrar()"
+            >
+                <img src="/trash.ico" class="trash-icon" />
             </div>
         </div>
     </div>
-
 
     <div class="dropdown" v-else-if="reserva.estadoReserva === 'Cancelada'">
         <div class="dropdown-header" @click="Desplegar">
-            <img src="/rojo.ico" class="dropdown-icon">
-            Desde: {{ reserva.fechaIngreso }} Hasta: {{ reserva.fechaSalida }} // habitacion: {{ reserva.numeroHabitacion }}
+            <img src="/rojo.ico" class="dropdown-icon" />
+            Desde: {{ reserva.fechaIngreso }} Hasta:
+            {{ reserva.fechaSalida }} // habitacion:
+            {{ reserva.numeroHabitacion }}
+            {{ this.codigo }}
         </div>
     </div>
 
-
     <div class="dropdown" v-else-if="reserva.estadoReserva === 'pendiente'">
         <div class="dropdown-header" @click="Desplegar">
-            <img src="/amarillo.ico" class="dropdown-icon">
-            Desde: {{ reserva.fechaIngreso }} Hasta: {{ reserva.fechaSalida }} // habitacion: {{ reserva.numeroHabitacion }}
-            <div class="trash-container" @click="this.selecionada = reserva.idReserva;" @click.stop="mostrarModalBorrar()">
-
-
-                <img src="/trash.ico" class="trash-icon">
+            <img src="/amarillo.ico" class="dropdown-icon" />
+            Desde: {{ reserva.fechaIngreso }} Hasta:
+            {{ reserva.fechaSalida }} // habitacion:
+            {{ reserva.numeroHabitacion }}
+            {{ this.codigo }}
+            <div
+                class="trash-container"
+                @click="this.selecionada = reserva.idReserva"
+                @click.stop="mostrarModalBorrar()"
+            >
+                <img src="/trash.ico" class="trash-icon" />
             </div>
         </div>
     </div>
 
-
     <div class="dropdown" v-else-if="reserva.estadoReserva === 'Utilizada'">
         <div class="dropdown-header" @click="Desplegar">
-            <img src="/azul.ico" class="dropdown-icon">
-            Desde: {{ reserva.fechaIngreso }} Hasta: {{ reserva.fechaSalida }} // habitacion: {{ reserva.numeroHabitacion }}
-            <div class="trash-container" @click="this.selecionada = reserva.idReserva" @click.stop="mostrarModalBorrar()">
-                <img src="/trash.ico" class="trash-icon">
+            <img src="/azul.ico" class="dropdown-icon" />
+            Desde: {{ reserva.fechaIngreso }} Hasta:
+            {{ reserva.fechaSalida }} // habitacion:
+            {{ reserva.numeroHabitacion }}
+            {{ this.codigo }}
+            <div
+                class="trash-container"
+                @click="this.selecionada = reserva.idReserva"
+                @click.stop="mostrarModalBorrar()"
+            >
+                <img src="/trash.ico" class="trash-icon" />
             </div>
         </div>
     </div>
