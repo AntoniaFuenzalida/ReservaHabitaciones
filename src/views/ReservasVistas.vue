@@ -202,9 +202,7 @@ export default {
                                 </li>
                             </ul>
                         </div>
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent" style="text-align: center;">
-
-                        </div>
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent" style="text-align: center;"></div>
                     </div>
                 </div>
             </div>
