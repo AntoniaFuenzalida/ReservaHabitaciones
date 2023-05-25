@@ -65,16 +65,6 @@
                                         >Cerrar sesión</a
                                     >
                                 </li>
-                                <li>
-                                    <hr class="dropdown-divider" />
-                                </li>
-                                <li>
-                                    <a
-                                        class="dropdown-item"
-                                        href="Servicios_Adicionales"
-                                        >Servicios adicionales</a
-                                    >
-                                </li>
                             </ul>
                         </li>
                     </ul>
