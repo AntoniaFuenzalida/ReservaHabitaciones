@@ -22,8 +22,6 @@
       <br>
       <div id="div_Botón" ><button id="inicio_Sesión" @click="validar_Datos" type="submit" class="btn btn-dark mt-auto"> Iniciar sesión</button></div>
       <br>
-      <a id="olvidaste" >¿Olvidaste tu contraseña?</a>
-      <br>
       <div id="div_Botón"><button id="inicio_Sesión" onclick="location.href='./Creacion_Gente';" class="btn btn-dark mt-auto"> Crear cuenta</button></div>
     </div>
 

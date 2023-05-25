@@ -53,6 +53,9 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
+                                    <a class="dropdown-item" href="/">Inicio</a>
+                                </li>
+                                <li>
                                     <a
                                         class="dropdown-item"
                                         href="/Iniciar_sesion"

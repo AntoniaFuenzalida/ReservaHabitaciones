@@ -125,6 +125,9 @@ export default {
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
+                                    <a class="dropdown-item" href="/">Inicio</a>
+                                </li>
+                                <li>
                                     <a
                                         class="dropdown-item"
                                         href="./menu_Usuario"
@@ -171,13 +174,6 @@ export default {
                     />
                     <h5 class="my-3">{{ this.nombre }}</h5>
                     <div class="d-flex justify-content-center mb-2">
-                        <button
-                            type="button"
-                            onclick="location.href='./menu_Usuario';"
-                            class="btn btn-primary"
-                        >
-                            Regresar
-                        </button>
                         <button
                             type="button"
                             class="btn btn-outline-primary ms-1"
@@ -230,7 +226,6 @@ export default {
                             <p class="text-muted mb-0">{{ this.correo }}</p>
                         </div>
                     </div>
-                    <hr />
                 </div>
             </div>
             <div class="row" v-if="reservas.length > 0">
