@@ -56,15 +56,13 @@ export default {
         },
         mostrarModalBorrar() {
             // calcular devolucion
-            let fechaInicio = new Date(this.reserva.fechaIngreso).getTime();
+            let fechaInicio = new Date(this.reserva.fechaIngreso);
             let fechaHoy = new Date();
-            let diff = fechaHoy - fechaInicio;
+            let diff = fechaInicio - fechaHoy;
             diff = diff / (1000 * 60 * 60 * 24);
             if (diff > 7) {
-                console.log("mas");
                 this.devolucion = this.reserva.pagado;
             } else {
-                console.log("menos");
                 if (this.reserva.valor == this.reserva.pagado) {
                     this.devolucion = Number(this.reserva.pagado) / 2;
                 } else {
