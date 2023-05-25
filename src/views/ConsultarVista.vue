@@ -5,49 +5,23 @@
                 <button id="regreso_Boton" @click="retroceder()">
                     <img id="imagen_regreso_Boton" src="../icons/atras.jpg" />
                 </button>
-                <img
-                    src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg"
-                    height="50"
-                    alt="hotel logo"
-                    loading="lazy"
-                    style="margin-top: -1px"
-            /></a>
+                <img src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg" height="50" alt="hotel logo"
+                    loading="lazy" style="margin-top: -1px" /></a>
 
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasNavbar"
-                aria-controls="offcanvasNavbar"
-                aria-label="Toggle navigation"
-            >
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div
-                class="offcanvas offcanvas-end"
-                tabindex="-1"
-                id="offcanvasNavbar"
-                aria-labelledby="offcanvasNavbarLabel"
-            >
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="offcanvas"
-                        aria-label="Close"
-                    ></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                         <li class="nav-item dropdown">
-                            <a
-                                class="nav-link dropdown-toggle"
-                                href="#"
-                                role="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                            >
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
                                 Menú
                             </a>
                             <ul class="dropdown-menu">
@@ -55,18 +29,10 @@
                                     <a class="dropdown-item" href="/">Inicio</a>
                                 </li>
                                 <li>
-                                    <a
-                                        class="dropdown-item"
-                                        href="./menu_Usuario"
-                                        >Perfil</a
-                                    >
+                                    <a class="dropdown-item" href="./menu_Usuario">Perfil</a>
                                 </li>
                                 <li>
-                                    <a
-                                        class="dropdown-item"
-                                        href="/Iniciar_sesion"
-                                        >Cerrar sesión</a
-                                    >
+                                    <a class="dropdown-item" href="/Iniciar_sesion">Cerrar sesión</a>
                                 </li>
                             </ul>
                         </li>
@@ -89,37 +55,17 @@
                 <br />
 
                 <form>
-                    <input
-                        type="date"
-                        id="start"
-                        min="2018-01-01"
-                        v-model="fecha_inicio"
-                    />
-                    <input
-                        type="date"
-                        id="fin"
-                        min="2018-01-01"
-                        v-model="fecha_fin"
-                    />
+                    <input type="date" id="start" min="2018-01-01" v-model="fecha_inicio" />
+                    <input type="date" id="fin" min="2018-01-01" v-model="fecha_fin" />
                     <div class="form-group w-25">
                         <br />
                         <label for="inputsm"> Cantidad Adultos</label>
-                        <input
-                            class="form-control input-sm"
-                            id="inputsm"
-                            type="text"
-                            v-model="adultos"
-                        />
+                        <input class="form-control input-sm" id="inputsm" type="text" v-model="adultos" />
                     </div>
                     <br />
                     <div class="form-group w-25">
                         <label for="inputdefault">Cantidad Niños</label>
-                        <input
-                            class="form-control"
-                            id="inputdefault"
-                            type="text"
-                            v-model="kid"
-                        />
+                        <input class="form-control" id="inputdefault" type="text" v-model="kid" />
                     </div>
                 </form>
             </div>
@@ -133,15 +79,9 @@
 
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
-            <div
-                class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
-            >
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 <div class="col mb-3" v-for="reserva in final" :key="reserva">
-                    <Tarjetas
-                        :reserva="reserva"
-                        :fecha-fin="fecha_fin"
-                        :fecha-inicio="fecha_inicio"
-                    />
+                    <Tarjetas :reserva="reserva" :fecha-fin="fecha_fin" :fecha-inicio="fecha_inicio" />
                 </div>
                 <div v-if="this.final.length == 0">
                     <p>No hay disponibles habitaciones para esos valores</p>
@@ -204,7 +144,7 @@ export default {
             this.error = false;
         },
         retroceder() {
-            window.history.back();
+            location.href = "/menu_Usuario"
         },
         async reservaFiltradas() {
             //creo variables auxiliares para hacer la verificacion si las fechas son validas(que no sean menor a hoy )
@@ -452,6 +392,7 @@ a {
     border: 1px solid #ffffff;
     box-shadow: 0 0px 0px rgba(0, 0, 0, 0.6);
 }
+
 #imagen_regreso_Boton {
     width: 100%;
     height: 100%;

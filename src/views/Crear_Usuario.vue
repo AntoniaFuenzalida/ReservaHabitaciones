@@ -1,28 +1,30 @@
 <template>
   <div class="bg-image" id="pagina_ini">
     <div id="caja_Adentro">
-      <div id="div_BotonRegreso">
-      <button id="regreso_Boton" @click="retroceder()"> <img id="imagen_regreso_Boton" src="../icons/atras.jpg" /></button>
-      </div>
-      <img src="../assets/logohotel.png"  id="imagen_Adentro">  
+
+      <img src="../assets/logohotel.png" id="imagen_Adentro">
       <br>
       <br>
       <p v-if="errors.length">
-            <b>Por favor, corrija el(los) siguiente(s) error(es):</b>
-            <ul>
-            <li v-for="error in errors" v-bind:key="error.id" >{{ error }}</li>
-            </ul>
-            </p>      
+        <b>Por favor, corrija el(los) siguiente(s) error(es):</b>
+      <ul>
+        <li v-for="error in errors" v-bind:key="error.id">{{ error }}</li>
+      </ul>
+      </p>
       <form id="formulario" @submit.prevent="validar_Datos">
         <label for="Email"> </label>
-        <input type="text" id="ingreso_Correo" name="ingreso_Correo" placeholder="Correo electronico" v-model="ingreso_Correo">
+        <input type="text" id="ingreso_Correo" name="ingreso_Correo" placeholder="Correo electronico"
+          v-model="ingreso_Correo">
         <label for="contraseña"> </label>
-        <input type="password" id="ingreso_Contraseña" name="ingreso_Contraseña" placeholder="Contraseña" v-model="ingreso_Contraseña">
+        <input type="password" id="ingreso_Contraseña" name="ingreso_Contraseña" placeholder="Contraseña"
+          v-model="ingreso_Contraseña">
       </form>
       <br>
-      <div id="div_Botón" ><button id="inicio_Sesión" @click="validar_Datos" type="submit" class="btn btn-dark mt-auto"> Iniciar sesión</button></div>
+      <div id="div_Botón"><button id="inicio_Sesión" @click="validar_Datos" type="submit" class="btn btn-dark mt-auto">
+          Iniciar sesión</button></div>
       <br>
-      <div id="div_Botón"><button id="inicio_Sesión" onclick="location.href='./Creacion_Gente';" class="btn btn-dark mt-auto"> Crear cuenta</button></div>
+      <div id="div_Botón"><button id="inicio_Sesión" onclick="location.href='./Creacion_Gente';"
+          class="btn btn-dark mt-auto"> Crear cuenta</button></div>
     </div>
 
   </div>
@@ -30,9 +32,9 @@
 
 
 <script>
-  import app from '../main'
-  import {getFirestore, collection, where,query, getDocs} from "firebase/firestore";
-  export default {
+import app from '../main'
+import { getFirestore, collection, where, query, getDocs } from "firebase/firestore";
+export default {
   name: 'validar_Datos',
   data() {
     return {
@@ -57,14 +59,14 @@
         } else { //Si no está vacia se ve la base de datos y solicita toda la información del usuario
           querySnapshot.forEach((doc) => {
             if (doc.exists) {
-              if(doc.get('Rol') == 'Predeterminado'){
-                setCookie('usuarioRegistrado',this.ingreso_Correo,1)
+              if (doc.get('Rol') == 'Predeterminado') {
+                setCookie('usuarioRegistrado', this.ingreso_Correo, 1)
                 location.href = './menu_Usuario'; //Se lleva al menú usuario 
-                }else{
+              } else {
                 setCookie('usuarioRegistrado', this.ingreso_Correo, 1)
                 location.href = './menuAdmin';//Se lleva al menú admin
-                }
-               
+              }
+
               //AUN NO SE IMPLEMENTA QUE EL INICIO DE SESIÓN PERDURE ENTRE CAMBIOS DE PAGINA
             }
           });
@@ -73,36 +75,34 @@
         this.errors.push("Rellene ambos campos");
       }
 
-    
-      
+
+
     },
-    retroceder() {
-      window.history.back();
-    },
-      async validateEmail(email) {
-        const res = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
-        if (res.test(String(email).toLowerCase())) {
-          console.log("verda")
-          return true;
-        } else {
-          console.log("falso")
-          return false;
-        }
+
+    async validateEmail(email) {
+      const res = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+      if (res.test(String(email).toLowerCase())) {
+        console.log("verda")
+        return true;
+      } else {
+        console.log("falso")
+        return false;
+      }
     },
 
 
-        },
-  }
+  },
+}
 
-  
+
 
 function setCookie(nombre, valor, expiracion) {
-      var fechaExpiracion = new Date();
-      fechaExpiracion.setTime(fechaExpiracion.getTime() + expiracion * 24 * 60 * 60 * 1000);
-      var cookie = nombre + '=' + encodeURIComponent(valor) + '; expires=' + fechaExpiracion.toUTCString() + '; path=/';
-     document.cookie = cookie;
-    }
-  
+  var fechaExpiracion = new Date();
+  fechaExpiracion.setTime(fechaExpiracion.getTime() + expiracion * 24 * 60 * 60 * 1000);
+  var cookie = nombre + '=' + encodeURIComponent(valor) + '; expires=' + fechaExpiracion.toUTCString() + '; path=/';
+  document.cookie = cookie;
+}
+
 function getCookie(nombre) {
   var cookies = document.cookie.split(';');
   for (var i = 0; i < cookies.length; i++) {
@@ -113,14 +113,14 @@ function getCookie(nombre) {
   }
   return null;
 }
-    
-    
+
+
 
 </script>
   
 <style>
 #pagina_ini {
-  background-image:url('../assets/Fondo.jpg');
+  background-image: url('../assets/Fondo.jpg');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 100%;
@@ -130,7 +130,7 @@ function getCookie(nombre) {
   justify-content: center;
   align-items: center;
   display: flex;
-  margin:0px;
+  margin: 0px;
   position: absolute;
 }
 
@@ -145,7 +145,7 @@ function getCookie(nombre) {
 #imagen_Adentro {
   height: 25%;
   width: 100%;
-  
+
 }
 
 #ingreso_Correo {
@@ -203,14 +203,16 @@ function getCookie(nombre) {
   justify-content: center;
   text-decoration: underline black;
 }
-#regreso_Boton{
+
+#regreso_Boton {
   width: 15%;
   height: 15%;
   background-color: transparent;
   border: 1px solid #ffffff;
   box-shadow: 0 0px 0px rgba(0, 0, 0, 0.6)
 }
-#imagen_regreso_Boton{
+
+#imagen_regreso_Boton {
   width: 100%;
   height: 100%;
 }

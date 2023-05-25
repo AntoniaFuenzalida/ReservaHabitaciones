@@ -1,32 +1,40 @@
 
 <template>
     <div class="bg-image" id="portada_crear">
-        <div  align="left"  id="caja_Adentro_Crea">
-            <button id="regreso_Boton_Gente" @click="retroceder()"> <img float="left" id="imagen_regreso_Boton_Gente" src="../icons/atras.jpg" /></button>
-            <img src="../assets/logohotel.png" id="imagen_Adentro" >
+        <div align="left" id="caja_Adentro_Crea">
+            <button id="regreso_Boton_Gente" @click="retroceder()"> <img float="left" id="imagen_regreso_Boton_Gente"
+                    src="../icons/atras.jpg" /></button>
+            <img src="../assets/logohotel.png" id="imagen_Adentro">
             <h3 id="texto_Crear">Creación de Cuenta</h3>
             <p v-if="errors.length">
-            <b>Por favor, corrija el(los) siguiente(s) error(es):</b>
+                <b>Por favor, corrija el(los) siguiente(s) error(es):</b>
             <ul>
-            <li v-for="error in errors" v-bind:key="error.id" >{{ error }}</li>
+                <li v-for="error in errors" v-bind:key="error.id">{{ error }}</li>
             </ul>
             </p>
-            <form id ="Todos" @submit.prevent="guardarDatos">
-                <form id="formulario_Arriba">  
-                <input type="text" id="nombre_Completo" name="nombre_Completo" placeholder="Nombre Completo" v-model="Nombre_Apellido">
-                    
-               <input type="text" id="ingresar_Rut" name="ingresar_Rut" placeholder="Rut (sin puntos con guión)" v-model="Rut">
+            <form id="Todos" @submit.prevent="guardarDatos">
+                <form id="formulario_Arriba">
+                    <input type="text" id="nombre_Completo" name="nombre_Completo" placeholder="Nombre Completo"
+                        v-model="Nombre_Apellido">
+
+                    <input type="text" id="ingresar_Rut" name="ingresar_Rut" placeholder="Rut (sin puntos con guión)"
+                        v-model="Rut">
                 </form>
                 <form id="formulario_Medio">
-                    <input type="password" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña" v-model="Contraseña">
-                    <input type="password" id="repetir_Contraseña" name="repetir_Contraseña" placeholder="Repetir Contraseña" v-model="repetir_Contra">
+                    <input type="password" id="ingresar_Contraseña" name="Contraseña" placeholder="Contraseña"
+                        v-model="Contraseña">
+                    <input type="password" id="repetir_Contraseña" name="repetir_Contraseña"
+                        placeholder="Repetir Contraseña" v-model="repetir_Contra">
                 </form>
                 <form id="formulario_Abajo">
-                    <input type="text" id="ingreso_Correo_Crear" name="ingreso_Correo" placeholder="Correo electronico" v-model="Correo_Electronico">
-                    <input type="text" id="numero_Telefono" name="numero_Telefono" placeholder="Número de Telefono" v-model="Telefono">
+                    <input type="text" id="ingreso_Correo_Crear" name="ingreso_Correo" placeholder="Correo electronico"
+                        v-model="Correo_Electronico">
+                    <input type="text" id="numero_Telefono" name="numero_Telefono" placeholder="Número de Telefono"
+                        v-model="Telefono">
                 </form>
                 <br>
-                <div  hre id="Registro"><button type="submit" id="registro_boton"  class="btn btn-dark mt-auto" @click="guardarDatos" > Registrarse</button></div>
+                <div hre id="Registro"><button type="submit" id="registro_boton" class="btn btn-dark mt-auto"
+                        @click="guardarDatos"> Registrarse</button></div>
             </form>
         </div>
     </div>
@@ -35,15 +43,15 @@
 
 <script>
 import app from '../main'
-import { collection, doc, getFirestore, setDoc, where,query, getDocs } from "firebase/firestore";
+import { collection, doc, getFirestore, setDoc, where, query, getDocs } from "firebase/firestore";
 
 export default {
     name: 'guardarDatos',
 
     data() {
         return {
-            correoExiste : false,
-            rutExiste : false,
+            correoExiste: false,
+            rutExiste: false,
             errors: [],
             Correo_Electronico: '',
             Nombre_Apellido: '',
@@ -58,11 +66,11 @@ export default {
     methods: {
         async guardarDatos(e) {
             const db = getFirestore(app);
-            const coleccion = collection(db,'Cuentas');
+            const coleccion = collection(db, 'Cuentas');
 
-            const correoQuery = query(coleccion, where('Correo_Electronico', '==' , this.Correo_Electronico));
+            const correoQuery = query(coleccion, where('Correo_Electronico', '==', this.Correo_Electronico));
             const correoSnap = await getDocs(correoQuery);
-            const rutQuery = query(coleccion, where('Rut', '==' , this.Rut));
+            const rutQuery = query(coleccion, where('Rut', '==', this.Rut));
             const rutSnap = await getDocs(rutQuery);
 
             correoSnap.forEach((doc) => {
@@ -72,54 +80,54 @@ export default {
             rutSnap.forEach((doc) => {
                 this.rutExiste = true;
             });
-            
+
             if (this.checkForm(e) && !this.correoExiste && !this.rutExiste) {
-            await setDoc(doc(db, "Cuentas", this.Rut), {
-                Nombre_Apellido: this.Nombre_Apellido,
-                Correo_Electronico: this.Correo_Electronico,
-                Contraseña: this.Contraseña,
-                Rol: 'Predeterminado',
-                Rut: this.Rut,
-                Telefono: Number(this.Telefono),
-            })
+                await setDoc(doc(db, "Cuentas", this.Rut), {
+                    Nombre_Apellido: this.Nombre_Apellido,
+                    Correo_Electronico: this.Correo_Electronico,
+                    Contraseña: this.Contraseña,
+                    Rol: 'Predeterminado',
+                    Rut: this.Rut,
+                    Telefono: Number(this.Telefono),
+                })
                 location.href = './Iniciar_sesion';
             } else {
-                    if(this.correoExiste){
-                        console.log('El correo ya esta en uso');
-                        this.correoExiste = false;
-                    }
-                    if(this.rutExiste){
-                        console.log('El rut ya esta en uso');
-                        this.rutExiste = false;
-                    }
+                if (this.correoExiste) {
+                    console.log('El correo ya esta en uso');
+                    this.correoExiste = false;
+                }
+                if (this.rutExiste) {
+                    console.log('El rut ya esta en uso');
+                    this.rutExiste = false;
+                }
                 console.log('Datos no validos')
             }
-            
-            
+
+
         },
 
         retroceder() {
-            window.history.back();
+            location.href = "/Iniciar_sesion"
         },
 
 
 
         async validateEmail(email) {
-            const res = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;  
+            const res = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
             return res.test(String(email).toLowerCase())
         },
 
-        async validateRut(rut){
+        async validateRut(rut) {
             const rutValidate = /^[0-9]+-[0-9kK]{1}$/;
-            if(rutValidate.test(String(rut).toLowerCase())){
+            if (rutValidate.test(String(rut).toLowerCase())) {
                 return true
-            }else{
+            } else {
                 return false
             }
-            
+
         },
 
-        async validateNum(num){
+        async validateNum(num) {
             const numValidate = /^(\+?56)?(\s?)(0?9)(\s?)[987654321]\d{7}$/;
             return numValidate.test(String(num))
         },
@@ -128,16 +136,15 @@ export default {
             console.log("ENTRO GENTE");
             if (this.Contraseña === this.repetir_Contra && this.validateEmail(this.Correo_Electronico)
                 && this.validateRut(this.Rut) && this.validateNum(this.Telefono) && this.Rut.trim() != '' && this.Nombre_Apellido.trim() != '' && this.Contraseña.trim() != '' && this.Telefono.trim() != ''
-                && this.repetir_Contra.trim() != '' && this.Nombre_Apellido.trim() != '' && this.Rut.length === 10 && this.Telefono.length <= 11 /*&& Number(this.Rut) && Number(this.Telefono)*/) 
-                { 
+                && this.repetir_Contra.trim() != '' && this.Nombre_Apellido.trim() != '' && this.Rut.length === 10 && this.Telefono.length <= 11 /*&& Number(this.Rut) && Number(this.Telefono)*/) {
                 return true;
             }
 
             this.errors = [];
             if (this.Rut.trim() == '') {
                 this.errors.push('El Rut es obligatorio ');
-            }else{
-                console.log(!this.validateRut(this.Rut)+ ' uwu')
+            } else {
+                console.log(!this.validateRut(this.Rut) + ' uwu')
                 if (!this.validateRut(this.Rut) || String(this.Rut).length != 10) {
                     this.errors.push('Rut invalido ');
                     console.log('enter');
@@ -148,8 +155,8 @@ export default {
             }
             if (this.Correo_Electronico.trim() == '') {
                 this.errors.push('Correo electronico es obligatorio ');
-            }else{
-                if(!this.validateEmail(this.Correo_Electronico)){
+            } else {
+                if (!this.validateEmail(this.Correo_Electronico)) {
                     this.errors.push('Correo invalido ');
                 }
             }
@@ -158,10 +165,10 @@ export default {
             }
             if (this.Telefono.trim() == '') {
                 this.errors.push('El número de telefono es obligatorio ');
-            }else{
-                if (!this.validateNum(this.Telefono) || String(this.Telefono).length != 11){
+            } else {
+                if (!this.validateNum(this.Telefono) || String(this.Telefono).length != 11) {
                     this.errors.push('Numero de teléfono invalido ');
-            }
+                }
             }
             if (this.repetir_Contra.trim() == '') {
                 this.errors.push('Repetir contraseña es obligatorio ');
@@ -170,13 +177,13 @@ export default {
                 this.errors.push('Las contraseñas no coinciden ');
             }
 
-            if(this.correoExiste){
+            if (this.correoExiste) {
                 this.errors.push('Este correo ya esta registrado')
-            }            
+            }
 
-            if(this.rutExiste){
+            if (this.rutExiste) {
                 this.errors.push('Este rut ya esta registrado')
-            }       
+            }
 
 
             /*
@@ -187,7 +194,7 @@ export default {
                 this.errors.push('El telefono tiene que ser un número ');
             }*/
             e.preventDefault();
-            console.log("Errores: "+ this.errors)
+            console.log("Errores: " + this.errors)
             return false;
 
         }
@@ -201,7 +208,7 @@ export default {
 
 <style>
 #portada_crear {
-    background-image:url('../assets/Fondo.jpg');
+    background-image: url('../assets/Fondo.jpg');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 100%;
@@ -211,7 +218,7 @@ export default {
     justify-content: center;
     align-items: center;
     display: flex;
-    margin:0px;
+    margin: 0px;
     position: absolute;
 }
 
@@ -247,6 +254,7 @@ export default {
     background-color: white;
     color: rgb(0, 0, 0);
 }
+
 #ingresar_Contraseña {
     border: 1px solid #000000;
     border-radius: 0%;
@@ -256,7 +264,8 @@ export default {
     background-color: white;
     color: rgb(0, 0, 0);
 }
-#nombre_Completo{
+
+#nombre_Completo {
     border: 1px solid #000000;
     border-radius: 0%;
     -moz-border-radius: 7px;
@@ -265,7 +274,8 @@ export default {
     background-color: white;
     color: rgb(0, 0, 0);
 }
-#ingresar_Rut{
+
+#ingresar_Rut {
     border: 1px solid #000000;
     border-radius: 0%;
     -moz-border-radius: 7px;
@@ -273,9 +283,10 @@ export default {
     width: 35%;
     background-color: white;
     color: rgb(0, 0, 0);
-    
+
 }
-#numero_Telefono{
+
+#numero_Telefono {
     border: 1px solid #000000;
     border-radius: 0%;
     -moz-border-radius: 7px;
@@ -295,6 +306,7 @@ export default {
     align-items: center;
     column-gap: 2%;
 }
+
 #formulario_Medio {
     width: 100%;
     max-width: 100% auto;
@@ -303,6 +315,7 @@ export default {
     justify-content: center;
     column-gap: 2%;
 }
+
 #formulario_Abajo {
     width: 100%;
     max-width: 100% auto;
@@ -340,15 +353,16 @@ export default {
     text-decoration: underline black;
 }
 
-#regreso_Boton_Gente{
-  width: 9%;
-  height: 5%;
-  background-color: transparent;
-  border: 1px solid #ffffff;
-  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.6)
+#regreso_Boton_Gente {
+    width: 9%;
+    height: 5%;
+    background-color: transparent;
+    border: 1px solid #ffffff;
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.6)
 }
-#imagen_regreso_Boton_Gente{
-  width: 100%;
-  height: 100%;
+
+#imagen_regreso_Boton_Gente {
+    width: 100%;
+    height: 100%;
 }
 </style>

@@ -50,7 +50,7 @@ export default {
             });
         },
         retroceder() {
-            window.history.back();
+            location.href = "/menu_Usuario"
         },
         async buscarReservas() {
             this.reservas = [];
@@ -80,47 +80,21 @@ export default {
                 <button id="regreso_Boton" @click="retroceder()">
                     <img id="imagen_regreso_Boton" src="../icons/atras.jpg" />
                 </button>
-                <img
-                    src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg"
-                    height="50"
-                    alt="hotel logo"
-                    loading="lazy"
-                    style="margin-top: -1px"
-            /></a>
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasNavbar"
-                aria-controls="offcanvasNavbar"
-                aria-label="Toggle navigation"
-            >
+                <img src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg" height="50" alt="hotel logo"
+                    loading="lazy" style="margin-top: -1px" /></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div
-                class="offcanvas offcanvas-end"
-                tabindex="-1"
-                id="offcanvasNavbar"
-                aria-labelledby="offcanvasNavbarLabel"
-            >
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="offcanvas"
-                        aria-label="Close"
-                    ></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                         <li class="nav-item dropdown">
-                            <a
-                                class="nav-link dropdown-toggle"
-                                href="#"
-                                role="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                            >
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
                                 Menú
                             </a>
                             <ul class="dropdown-menu">
@@ -128,18 +102,10 @@ export default {
                                     <a class="dropdown-item" href="/">Inicio</a>
                                 </li>
                                 <li>
-                                    <a
-                                        class="dropdown-item"
-                                        href="./menu_Usuario"
-                                        >Perfil</a
-                                    >
+                                    <a class="dropdown-item" href="./menu_Usuario">Perfil</a>
                                 </li>
                                 <li>
-                                    <a
-                                        class="dropdown-item"
-                                        href="/Iniciar_sesion"
-                                        >Cerrar sesión</a
-                                    >
+                                    <a class="dropdown-item" href="/Iniciar_sesion">Cerrar sesión</a>
                                 </li>
                             </ul>
                         </li>
@@ -166,20 +132,12 @@ export default {
         <div class="col-lg-4">
             <div class="card mb-4">
                 <div class="card-body text-center">
-                    <img
-                        src="https://imgur.com/XXR2XfJ.jpg"
-                        alt="avatar"
-                        class="rounded-circle img-fluid"
-                        style="width: 150px"
-                    />
+                    <img src="https://imgur.com/XXR2XfJ.jpg" alt="avatar" class="rounded-circle img-fluid"
+                        style="width: 150px" />
                     <h5 class="my-3">{{ this.nombre }}</h5>
                     <div class="d-flex justify-content-center mb-2">
-                        <button
-                            type="button"
-                            class="btn btn-outline-primary ms-1"
-                            data-bs-toggle="modal"
-                            data-bs-target="#MenuAyuda"
-                        >
+                        <button type="button" class="btn btn-outline-primary ms-1" data-bs-toggle="modal"
+                            data-bs-target="#MenuAyuda">
                             Ayuda
                         </button>
                     </div>
@@ -234,20 +192,13 @@ export default {
                         <div>
                             <h2 style="text-align: center">Reservas</h2>
                             <ul class="list-goup mt-4">
-                                <li
-                                    class="list-group-item mt-3"
-                                    v-for="reserva in reservas"
-                                    :key="reserva"
-                                    style="align-items: center"
-                                >
+                                <li class="list-group-item mt-3" v-for="reserva in reservas" :key="reserva"
+                                    style="align-items: center">
                                     <DropDown :reserva="reserva" />
                                 </li>
                             </ul>
                         </div>
-                        <div
-                            class="card-footer p-4 pt-0 border-top-0 bg-transparent"
-                            style="text-align: center"
-                        ></div>
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent" style="text-align: center"></div>
                     </div>
                 </div>
             </div>
@@ -259,25 +210,14 @@ export default {
 
     <!--pop up-->
 
-    <div
-        class="modal fade"
-        id="MenuAyuda"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-    >
+    <div class="modal fade" id="MenuAyuda" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-4" id="exampleModalLabel">
                         Ayuda
                     </h1>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                    ></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <ul class="list-group">
@@ -299,11 +239,7 @@ export default {
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        data-bs-dismiss="modal"
-                    >
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
                         Cerrar
                     </button>
                 </div>
