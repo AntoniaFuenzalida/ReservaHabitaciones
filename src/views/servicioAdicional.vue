@@ -13,56 +13,27 @@
                     style="margin-top: -1px"
             /></a>
 
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasNavbar"
-                aria-controls="offcanvasNavbar"
-                aria-label="Toggle navigation"
-            >
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div
-                class="offcanvas offcanvas-end"
-                tabindex="-1"
-                id="offcanvasNavbar"
-                aria-labelledby="offcanvasNavbarLabel"
-            >
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="offcanvas"
-                        aria-label="Close"
-                    ></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                         <li class="nav-item dropdown">
-                            <a
-                                class="nav-link dropdown-toggle"
-                                href="#"
-                                role="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                            >
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
                                 Menú
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a
-                                        class="dropdown-item"
-                                        href="./menu_Usuario"
-                                        >Perfil</a
-                                    >
+                                    <a class="dropdown-item" href="./menu_Usuario">Perfil</a>
                                 </li>
                                 <li>
-                                    <a
-                                        class="dropdown-item"
-                                        href="/Iniciar_sesion"
-                                        >Cerrar sesión</a
-                                    >
+                                    <a class="dropdown-item" href="/Iniciar_sesion">Cerrar sesión</a>
                                 </li>
                             </ul>
                         </li>
@@ -96,11 +67,9 @@
                             <div class="col">
                                 <div class="card h-100">
                                     <!-- Product details-->
-                                    <img
-                                        class="card-img-top"
+                                    <img class="card-img-top"
                                         src="https://blogdelhotel.files.wordpress.com/2015/07/562-gal-servicios-habitaciones-gt-1.jpg"
-                                        alt="..."
-                                    />
+                                        alt="..." />
                                     <div class="card-body p-4">
                                         <div class="text-center">
                                             <!-- Product name-->
@@ -115,17 +84,10 @@
                                     </div>
                                     <!-- Product actions-->
 
-                                    <div
-                                        class="card-footer p-4 pt-0 border-top-0 bg-transparent"
-                                    >
+                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                         <div>
-                                            <button
-                                                type="button"
-                                                class="btn btn-primary"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#MenuComida"
-                                                style="margin: 5px"
-                                            >
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#MenuComida" style="margin: 5px">
                                                 Pedir
                                             </button>
                                         </div>
@@ -137,12 +99,9 @@
                             <div class="col">
                                 <!-- Product details-->
                                 <div class="card h-100">
-                                    <img
-                                        class="card-img-top"
+                                    <img class="card-img-top"
                                         src="https://blog.ciberdescans.com/wp-content/uploads/2014/12/s%C3%A1banas.jpg"
-                                        alt="..."
-                                        style="height: 80%"
-                                    />
+                                        alt="..." style="height: 80%" />
                                     <div class="card-body p-4">
                                         <div class="text-center">
                                             <!-- Product name-->
@@ -155,16 +114,9 @@
                                     </div>
                                     <!-- Product actions-->
 
-                                    <div
-                                        class="card-footer p-4 pt-0 border-top-0 bg-transparent"
-                                    >
-                                        <button
-                                            type="button"
-                                            class="btn btn-primary"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#limpieza"
-                                            style="margin: 5px"
-                                        >
+                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#limpieza" style="margin: 5px">
                                             Pedir
                                         </button>
                                     </div>
@@ -174,13 +126,8 @@
                     </div>
                     <div class="CONTINUAR" style="margin-top: 3%">
                         <div class="text-center">
-                            <a
-                                class="btn btn-outline-dark mt-auto"
-                                data-bs-toggle="modal"
-                                data-bs-target="#Pago"
-                                @click="LeerDatos"
-                                >Continuar</a
-                            >
+                            <a class="btn btn-outline-dark mt-auto" data-bs-toggle="modal" data-bs-target="#Pago"
+                                @click="LeerDatos">Continuar</a>
                         </div>
                     </div>
                 </form>
@@ -191,25 +138,14 @@
     <!-- Pop ups -->
 
     <!-- labanderia-->
-    <div
-        class="modal fade"
-        id="limpieza"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-    >
+    <div class="modal fade" id="limpieza" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-4" id="exampleModalLabel">
                         Servicio de limpieza
                     </h1>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                    ></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <ul class="list-group">
@@ -221,16 +157,8 @@
 
                         <li class="list-group-item">
                             <div class="input-group mb-3">
-                                <label
-                                    class="input-group-text"
-                                    for="inputGroupSelect01"
-                                    >cambio de sabanas</label
-                                >
-                                <select
-                                    class="form-select"
-                                    id="inputGroupSelect01"
-                                    v-model="cambioSabanas"
-                                >
+                                <label class="input-group-text" for="inputGroupSelect01">cambio de sabanas</label>
+                                <select class="form-select" id="inputGroupSelect01" v-model="cambioSabanas">
                                     <option value="1">Diario</option>
                                     <option value="2">Dia por medio</option>
                                     <option value="3">Cada 3 dias</option>
@@ -244,16 +172,8 @@
 
                         <li class="list-group-item">
                             <div class="input-group mb-3">
-                                <label
-                                    class="input-group-text"
-                                    for="inputGroupSelect01"
-                                    >Limpieza en la habitacion</label
-                                >
-                                <select
-                                    class="form-select"
-                                    id="inputGroupSelect01"
-                                    v-model="limpiezaHabitacion"
-                                >
+                                <label class="input-group-text" for="inputGroupSelect01">Limpieza en la habitacion</label>
+                                <select class="form-select" id="inputGroupSelect01" v-model="limpiezaHabitacion">
                                     <option value="1">Diario</option>
                                     <option value="2">Dia por medio</option>
                                     <option value="3">Cada 3 dias</option>
@@ -267,11 +187,7 @@
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        data-bs-dismiss="modal"
-                    >
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
                         Aceptar
                     </button>
                 </div>
@@ -280,13 +196,7 @@
     </div>
 
     <!-- Comida -->
-    <div
-        class="modal fade"
-        id="MenuComida"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-    >
+    <div class="modal fade" id="MenuComida" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- header -->
@@ -295,12 +205,7 @@
                         Comida
                     </h1>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                    ></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <!-- body -->
@@ -310,9 +215,7 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col-5">
-                                        <label
-                                            >Selecciona Comidas deseadas</label
-                                        >
+                                        <label>Selecciona Comidas deseadas</label>
                                     </div>
 
                                     <div class="col-1"></div>
@@ -329,17 +232,9 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-5">
-                                            <input
-                                                class="form-check-input"
-                                                type="checkbox"
-                                                id="desayunoInput"
-                                                v-model="checkDesayuno"
-                                            />
-                                            <label
-                                                class="form-check-label"
-                                                for="desayunoInput"
-                                                >Desayuno</label
-                                            >
+                                            <input class="form-check-input" type="checkbox" id="desayunoInput"
+                                                v-model="checkDesayuno" />
+                                            <label class="form-check-label" for="desayunoInput">Desayuno</label>
                                         </div>
                                         <div class="col-7">
                                             <p>
@@ -357,17 +252,9 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-5">
-                                            <input
-                                                class="form-check-input"
-                                                type="checkbox"
-                                                id="almuerzoInput"
-                                                v-model="checkAlmuerzo"
-                                            />
-                                            <label
-                                                class="form-check-label"
-                                                for="almuerzoInput"
-                                                >Almuerzo</label
-                                            >
+                                            <input class="form-check-input" type="checkbox" id="almuerzoInput"
+                                                v-model="checkAlmuerzo" />
+                                            <label class="form-check-label" for="almuerzoInput">Almuerzo</label>
                                         </div>
                                         <div class="col-7">
                                             <p>
@@ -385,17 +272,9 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-5">
-                                            <input
-                                                class="form-check-input"
-                                                type="checkbox"
-                                                id="cenaInput"
-                                                v-model="checkCena"
-                                            />
-                                            <label
-                                                class="form-check-label"
-                                                for="cenaInput"
-                                                >Cena</label
-                                            >
+                                            <input class="form-check-input" type="checkbox" id="cenaInput"
+                                                v-model="checkCena" />
+                                            <label class="form-check-label" for="cenaInput">Cena</label>
                                         </div>
                                         <div class="col-7">
                                             <p>
@@ -411,11 +290,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        data-bs-dismiss="modal"
-                    >
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
                         Aceptar
                     </button>
                 </div>
@@ -424,75 +299,66 @@
     </div>
 
     <!-- simular pago de apis -->
-    <div
-        class="modal fade"
-        id="Pago"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-    >
+    <div class="modal fade" id="Pago" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-4" id="exampleModalLabel">
                         Pago
                     </h1>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                    ></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body">
                     <div>
                         <h5>
-                            se solicita el abono del 50% de la habitacion para
+                            se solicita el abono del 50% o el 100% de la habitacion para
                             reservar
                         </h5>
+                    </div>
+
+                    <br>
+
+                    <div>
+                        <div class="form-check form-switch">
+                            <div class="container">
+                                <div class="row">
+                                    <div>
+                                        <input class="form-check-input" type="checkbox" id="porcentajePago"
+                                            v-model="PagarTodo" @click="modificaPago()" />
+                                        <label class="form-check-label" for="porcentajePago">Pagar totalidad de la
+                                            reserva?</label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <br />
 
                     <div>
                         <h5>
-                            el valor es: {{ this.valor }}, seleciona medio de
+                            Usted pagara: {{ this.pagado }}, seleciona medio de
                             pago
                         </h5>
                     </div>
 
                     <div class="d-grid gap-2">
-                        <button
-                            type="button"
-                            class="btn btn-primary mt-auto btn-lg"
-                            data-bs-toggle="modal"
-                            data-bs-target="#PagoF"
-                        >
+                        <button type="button" class="btn btn-primary mt-auto btn-lg" data-bs-toggle="modal"
+                            data-bs-target="#PagoF">
                             Transbank
                         </button>
-                        <button
-                            type="button"
-                            class="btn btn-primary mt-auto btn-lg"
-                            data-bs-toggle="modal"
-                            data-bs-target="#PagoF"
-                        >
+                        <button type="button" class="btn btn-primary mt-auto btn-lg" data-bs-toggle="modal"
+                            data-bs-target="#PagoF">
                             Mach
                         </button>
-                        <button
-                            type="button"
-                            class="btn btn-primary mt-auto btn-lg"
-                            data-bs-toggle="modal"
-                            data-bs-target="#PagoF"
-                        >
+                        <button type="button" class="btn btn-primary mt-auto btn-lg" data-bs-toggle="modal"
+                            data-bs-target="#PagoF">
                             Banco Estado
                         </button>
-                        <button
-                            type="button"
-                            class="btn btn-primary mt-auto btn-lg"
-                            data-bs-toggle="modal"
-                            data-bs-target="#PagoF"
-                        >
+                        <button type="button" class="btn btn-primary mt-auto btn-lg" data-bs-toggle="modal"
+                            data-bs-target="#PagoF">
                             One pay
                         </button>
                     </div>
@@ -508,25 +374,14 @@
     </div>
 
     <!-- pago finalizado -->
-    <div
-        class="modal fade"
-        id="PagoF"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-    >
+    <div class="modal fade" id="PagoF" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-4" id="exampleModalLabel">
                         API Cargada Simulando pago ...
                     </h1>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                    ></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body">
@@ -534,12 +389,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        data-bs-dismiss="modal"
-                        @click="Guardar()"
-                    >
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="Guardar()">
                         Aceptar
                     </button>
                 </div>
@@ -581,6 +431,8 @@ export default {
             cambioSabanas: "2",
             codigo: "",
             valor: "---",
+            PagarTodo: "",
+            pagado: "",
             Servicio: {
                 Desayuno: this.checkDesayuno,
                 Almuerzo: this.checkAlmuerzo,
@@ -645,6 +497,7 @@ export default {
             let documentRef = doc(db, "Reservas/" + this.variable);
             updateDoc(documentRef, {
                 valor: this.valor,
+                pagado: this.pagado,
             });
             location.href = "./menu_Usuario";
         },
@@ -668,17 +521,23 @@ export default {
                             let porDia =
                                 Number(doc2.data().precio) + Number(adicional);
                             let cantidadDias = diff / (1000 * 60 * 60 * 24);
-
-                            this.valor =
-                                (porDia *
-                                    cantidadDias *
-                                    (1 - Number(doc1.data().descuento / 100))) /
-                                2;
+                            this.valor = (porDia * cantidadDias * (1 - Number(doc1.data().descuento / 100)));
+                            this.pagado = Number(this.valor) / 2
                         }
                     });
                 }
             });
         },
+
+        async modificaPago() {
+
+            if (!this.PagarTodo) {
+                this.pagado = this.valor
+            }
+            else {
+                this.pagado = Number(this.valor) / 2
+            }
+        }
 
         /*
         const resul = await getDocs(collection(db, "Reservas"));

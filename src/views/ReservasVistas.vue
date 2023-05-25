@@ -77,7 +77,9 @@ export default {
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid px-4 px-lg-5">
             <a class="navbar-brand">
-                <button id="regreso_Boton" @click="retroceder()"> <img id="imagen_regreso_Boton" src="../icons/atras.jpg" /></button>
+                <button id="regreso_Boton" @click="retroceder()">
+                    <img id="imagen_regreso_Boton" src="../icons/atras.jpg" />
+                </button>
                 <img
                     src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg"
                     height="50"
@@ -247,7 +249,7 @@ export default {
                     </div>
                 </div>
             </div>
-            <div v-if="reservas">
+            <div v-if="reservas.length == 0">
                 <p>&emsp;&emsp;&emsp;&emsp;No tienes reservas</p>
             </div>
         </div>

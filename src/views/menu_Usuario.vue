@@ -1,165 +1,277 @@
 <template>
-  <!-- -------------          header               ------------ -->
+    <!-- -------------          header               ------------ -->
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container px-4 px-lg-5">
-      <a class="navbar-brand" >
-        <button id="regreso_Boton"  onclick="window.location.href='./'" > <img id="imagen_regreso_Boton" src="../icons/atras.jpg" /></button>
-        <img src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg" height="50" alt="hotel logo"
-          loading="lazy" style="margin-top: -1px;" /></a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand">
+                <button id="regreso_Boton" @click="retroceder()">
+                    <img id="imagen_regreso_Boton" src="../icons/atras.jpg" />
+                </button>
+                <img
+                    src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg"
+                    height="50"
+                    alt="hotel logo"
+                    loading="lazy"
+                    style="margin-top: -1px"
+            /></a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-        aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-        <div class="offcanvas-header">
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Menú
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="./menu_Usuario">Perfil</a></li>
-                <li><a class="dropdown-item" href="/Iniciar_sesion">Cerrar sesión</a></li>
-
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-  </nav>
-  <!--                   final de template                      -->
-
-
-
-
-  <!-- -------------  carusel  ------------ -->
-  <div class="container">
-    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner" style="height: 300px; margin-top: 100px;">
-        <div class="carousel-item active">
-          <img src="https://i.imgur.com/zHFuSEf.jpg" class="d-block w-100">
-        </div>
-        <div class="carousel-item">
-          <img src="https://i.imgur.com/Igg1mOK.jpg" class="d-block w-100">
-        </div>
-        <div class="carousel-item">
-          <img src="https://i.imgur.com/E1ezhig.jpg" class="d-block w-100">
-        </div>
-        <div class="carousel-item">
-          <img src="https://i.imgur.com/EpdTxpu.jpg" class="d-block w-100">
-        </div>
-        <div class="carousel-item">
-          <img src="https://i.imgur.com/RElaegS.jpg" class="d-block w-100">
-        </div>
-        <div class="carousel-item">
-          <img src="https://i.imgur.com/cAc26bb.jpg" class="d-block w-100">
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-  </div>
-  <!--                   final de template                      -->
-
-
-
-  <!--botones-->
-  <section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
-      <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-        <div class="col mb-3">
-          <div class="card h-60">
-            <!-- Product image-->
-            <img class="card-img-top" style="height: 200px;width: 200px;margin-left: 10%;" src="iconsketchbook.png"
-              alt="..." />
-            <!-- Product details-->
-            <div class="card-body p-4">
-              <div class="text-center">
-                <!-- Product name-->
-                <div class="text-center"><a class="btn btn-dark mt-auto" onclick="location.href='/Reservar_Vista';">Has tu
-                    Reserva</a></div>
-              </div>
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar"
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div
+                class="offcanvas offcanvas-end"
+                tabindex="-1"
+                id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel"
+            >
+                <div class="offcanvas-header">
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="offcanvas"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item dropdown">
+                            <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                role="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                Menú
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a
+                                        class="dropdown-item"
+                                        href="/Iniciar_sesion"
+                                        >Cerrar sesión</a
+                                    >
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
-          </div>
         </div>
-        <div class="col mb-3">
-          <div class="card h-60">
-            <!-- Product image-->
-            <img class="card-img-top" style="height: 200px;width: 200px;margin-left: 10%;" src="icondiscount.png"
-              alt="..." />
-            <!-- Product details-->
-            <div class="card-body p-4">
-              <div class="text-center">
-                <!-- Product name-->
-                <div class="text-center"><a class="btn btn-dark mt-auto" href="./tus_Promociones">Promociones</a></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col mb-3">
-          <div class="card h-60">
-            <!-- Product image-->
-            <img class="card-img-top" style="height: 200px;width: 200px;margin-left: 10%;"
-              src="iconverified-checkbox-symbol.png" alt="..." />
-            <!-- Product details-->
-            <div class="card-body p-4">
-              <div class="text-center">
-                <!-- Product name-->
-                <div class="text-center"><a class="btn btn-dark mt-auto" href="./Consulta_Vistas">Tus Reservas</a></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- Footer-->
-  <footer class="py-5 bg-dark">
+    </nav>
+    <!--                   final de template                      -->
+
+    <!-- -------------  carusel  ------------ -->
     <div class="container">
-      <p class="m-0 text-center text-white">&copy; Hotel Cordillera, 2023</p>
+        <div
+            id="carouselExampleControls"
+            class="carousel slide"
+            data-bs-ride="carousel"
+        >
+            <div
+                class="carousel-inner"
+                style="height: 300px; margin-top: 100px"
+            >
+                <div class="carousel-item active">
+                    <img
+                        src="https://i.imgur.com/zHFuSEf.jpg"
+                        class="d-block w-100"
+                    />
+                </div>
+                <div class="carousel-item">
+                    <img
+                        src="https://i.imgur.com/Igg1mOK.jpg"
+                        class="d-block w-100"
+                    />
+                </div>
+                <div class="carousel-item">
+                    <img
+                        src="https://i.imgur.com/E1ezhig.jpg"
+                        class="d-block w-100"
+                    />
+                </div>
+                <div class="carousel-item">
+                    <img
+                        src="https://i.imgur.com/EpdTxpu.jpg"
+                        class="d-block w-100"
+                    />
+                </div>
+                <div class="carousel-item">
+                    <img
+                        src="https://i.imgur.com/RElaegS.jpg"
+                        class="d-block w-100"
+                    />
+                </div>
+                <div class="carousel-item">
+                    <img
+                        src="https://i.imgur.com/cAc26bb.jpg"
+                        class="d-block w-100"
+                    />
+                </div>
+            </div>
+            <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselExampleControls"
+                data-bs-slide="prev"
+            >
+                <span
+                    class="carousel-control-prev-icon"
+                    aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselExampleControls"
+                data-bs-slide="next"
+            >
+                <span
+                    class="carousel-control-next-icon"
+                    aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
     </div>
-  </footer>
+    <!--                   final de template                      -->
+
+    <!--botones-->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div
+                class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
+            >
+                <div class="col mb-3">
+                    <div class="card h-60">
+                        <!-- Product image-->
+                        <img
+                            class="card-img-top"
+                            style="
+                                height: 200px;
+                                width: 200px;
+                                margin-left: 10%;
+                            "
+                            src="iconsketchbook.png"
+                            alt="..."
+                        />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <div class="text-center">
+                                    <a
+                                        class="btn btn-dark mt-auto"
+                                        onclick="location.href='/Reservar_Vista';"
+                                        >Has tu Reserva</a
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-3">
+                    <div class="card h-60">
+                        <!-- Product image-->
+                        <img
+                            class="card-img-top"
+                            style="
+                                height: 200px;
+                                width: 200px;
+                                margin-left: 10%;
+                            "
+                            src="icondiscount.png"
+                            alt="..."
+                        />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <div class="text-center">
+                                    <a
+                                        class="btn btn-dark mt-auto"
+                                        href="./tus_Promociones"
+                                        >Promociones</a
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-3">
+                    <div class="card h-60">
+                        <!-- Product image-->
+                        <img
+                            class="card-img-top"
+                            style="
+                                height: 200px;
+                                width: 200px;
+                                margin-left: 10%;
+                            "
+                            src="iconverified-checkbox-symbol.png"
+                            alt="..."
+                        />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <div class="text-center">
+                                    <a
+                                        class="btn btn-dark mt-auto"
+                                        href="./Consulta_Vistas"
+                                        >Tus Reservas</a
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">
+                &copy; Hotel Cordillera, 2023
+            </p>
+        </div>
+    </footer>
 </template>
 
 <script setup>
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../main.js";
 
 function getCookie(nombre) {
-  var cookies = document.cookie.split(';');
-  for (var i = 0; i < cookies.length; i++) {
-    var cookie = cookies[i].trim();
-    if (cookie.startsWith(nombre + '=')) {
-      return decodeURIComponent(cookie.substring(nombre.length + 1));
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        if (cookie.startsWith(nombre + "=")) {
+            return decodeURIComponent(cookie.substring(nombre.length + 1));
+        }
     }
-  }
-  return null;
+    return null;
 }
-let nombre = getCookie('usuarioRegistrado')
-
+let nombre = getCookie("usuarioRegistrado");
 </script>
 <script>
 export default {
-  name: 'menu_Usuario',
-  methods: {
-    retroceder() {
-      window.history.back();
+    name: "menu_Usuario",
+    methods: {
+        retroceder() {
+            window.history.back();
+        },
     },
-  }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -168,16 +280,16 @@ export default {
 
 
 h3 {
-  margin: 40px 0 0;
+    margin: 40px 0 0;
 }
 
 ul {
-  list-style-type: none;
-  padding: 0;
+    list-style-type: none;
+    padding: 0;
 }
 
 li {
-  display: inline-block;
-  margin: 0 10px;
+    display: inline-block;
+    margin: 0 10px;
 }
 </style>
