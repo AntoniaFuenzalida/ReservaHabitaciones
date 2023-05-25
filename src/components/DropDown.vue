@@ -21,6 +21,7 @@ export default {
         selecionada: "",
         validarBorrar: false,
         codigo: "",
+        devolucion: "",
     }),
     created() {
         this.CargarCodigo();
@@ -54,6 +55,16 @@ export default {
             location.href = "/Consulta_Vistas";
         },
         mostrarModalBorrar() {
+            // calcular devolucion
+            let fechaInicio = new Date(this.reserva.fechaIngreso).getTime();
+            let fechaHoy = new Date();
+            let diff = fechaHoy - fechaInicio;
+            diff = diff / (1000 * 60 * 60 * 24);
+            if (diff > 7) {
+                this.devolucion = this.reserva.valor / 2;
+            } else {
+                this.devolucion = this.reserva.valor / 2;
+            }
             // Mostrar el modal
             this.$refs.modalBorrar.classList.add("show");
             this.$refs.modalBorrar.style.display = "block";
@@ -72,8 +83,6 @@ export default {
                 collection(db, "Servicios_Adicionales")
             );
             querySnapshot.forEach((doc) => {
-                console.log(doc.data());
-
                 if (doc.data().idReserva == this.reserva.idReserva) {
                     if (doc.data().codigo) {
                         this.codigo = "// codigo: " + doc.data().codigo;
@@ -98,7 +107,7 @@ export default {
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-4" id="exampleModalLabel">
-                        Ayuda
+                        Confirmacion
                     </h1>
                     <button
                         type="button"
@@ -111,6 +120,8 @@ export default {
                     <h5>
                         Estas seguro de que deseas eliminar la reserva
                         {{ this.selecionada }}
+
+                        Recibiras una devolucion de {{ this.devolucion }}
                     </h5>
                 </div>
                 <div class="modal-footer">
@@ -119,7 +130,7 @@ export default {
                         class="btn btn-primary"
                         @click="this.ocultarModalBorrar"
                     >
-                        Cerrar
+                        Cancelar
                     </button>
                     <button
                         type="button"
@@ -157,8 +168,8 @@ export default {
             Desde: {{ reserva.fechaIngreso }} Hasta:
             {{ reserva.fechaSalida }} // habitacion:
             {{ reserva.numeroHabitacion }} // valor:
-            {{}}
-           {{ this.codigo }}
+            {{ reserva.valor }}
+            {{ this.codigo }}
         </div>
     </div>
 
@@ -168,8 +179,8 @@ export default {
             Desde: {{ reserva.fechaIngreso }} Hasta:
             {{ reserva.fechaSalida }} // habitacion:
             {{ reserva.numeroHabitacion }} // valor:
-            {{}}
-           {{ this.codigo }}
+            {{ reserva.valor }}
+            {{ this.codigo }}
             <div
                 class="trash-container"
                 @click="this.selecionada = reserva.idReserva"
@@ -186,8 +197,8 @@ export default {
             Desde: {{ reserva.fechaIngreso }} Hasta:
             {{ reserva.fechaSalida }} // habitacion:
             {{ reserva.numeroHabitacion }} // valor:
-            {{}}
-           {{ this.codigo }}
+            {{ reserva.valor }}
+            {{ this.codigo }}
             <div
                 class="trash-container"
                 @click="this.selecionada = reserva.idReserva"
