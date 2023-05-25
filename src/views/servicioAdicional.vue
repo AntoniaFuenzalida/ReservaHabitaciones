@@ -177,7 +177,7 @@
                                 class="btn btn-outline-dark mt-auto"
                                 data-bs-toggle="modal"
                                 data-bs-target="#Pago"
-                                @click="Guardar()"
+                                @click="LeerDatos"
                                 >Continuar</a
                             >
                         </div>
@@ -537,6 +537,7 @@
                         type="button"
                         class="btn btn-primary"
                         data-bs-dismiss="modal"
+                        @click="Guardar()"
                     >
                         Aceptar
                     </button>
@@ -555,7 +556,6 @@
     </footer>
 </template>
 
-
 <script>
 const PRECIO_DESAYUNO = 2500;
 const PRECIO_ALMUERZO = 5000;
@@ -568,6 +568,7 @@ import {
     getDocs,
     collection,
     getDoc,
+    updateDoc,
 } from "firebase/firestore";
 import { db } from "../main.js";
 export default {
@@ -579,6 +580,15 @@ export default {
             cambioSabanas: "2",
             codigo: "",
             valor: "---",
+            Servicio: {
+                Desayuno: this.checkDesayuno,
+                Almuerzo: this.checkAlmuerzo,
+                Cena: this.checkCena,
+                Limpieza: this.limpiezaHabitacion,
+                Sabanas: this.cambioSabanas,
+                idReserva: this.variable,
+                codigo: NaN,
+            },
         };
     },
 
@@ -586,7 +596,7 @@ export default {
         this.variable = this.$route.query.variable;
     },
     methods: {
-        async Guardar() {
+        async LeerDatos() {
             let adicional = 0;
             const db = getFirestore(app);
             if (isNaN(this.checkDesayuno)) {
@@ -598,39 +608,44 @@ export default {
             if (isNaN(this.checkCena)) {
                 this.checkCena = false;
             }
-            const Servicio = {
-                Desayuno: this.checkDesayuno,
-                Almuerzo: this.checkAlmuerzo,
-                Cena: this.checkCena,
-                Limpieza: this.limpiezaHabitacion,
-                Sabanas: this.cambioSabanas,
-                idReserva: this.variable,
-                codigo: NaN,
-            };
+            this.Servicio.Desayuno = this.checkDesayuno;
+            this.Servicio.Almuerzo = this.checkAlmuerzo;
+            this.Servicio.Cena = this.checkCena;
+            this.Servicio.Limpieza = this.limpiezaHabitacion;
+            this.Servicio.Sabanas = this.cambioSabanas;
+            this.Servicio.idReserva = this.variable;
+            this.Servicio.codigo = NaN;
             if (this.checkDesayuno || this.checkAlmuerzo || this.checkCena) {
-                Servicio.codigo = this.variable.replace("n", "") + "-";
+                this.Servicio.codigo = this.variable.replace("n", "") + "-";
                 if (this.checkDesayuno) {
-                    Servicio.codigo += "1";
+                    this.Servicio.codigo += "1";
                     adicional += PRECIO_DESAYUNO;
                 }
                 if (this.checkAlmuerzo) {
-                    Servicio.codigo += "2";
+                    this.Servicio.codigo += "2";
                     adicional += PRECIO_ALMUERZO;
                 }
                 if (this.checkCena) {
-                    Servicio.codigo += "3";
+                    this.Servicio.codigo += "3";
                     adicional += PRECIO_CENA;
                 }
             }
-
-            // Guardar reserva en Firebase
+            await this.ObtenerValorReserva(adicional);
+        },
+        async Guardar() {
+            await this.LeerDatos();
+            // Guardar servivio en Firebase
             await setDoc(
                 doc(db, "Servicios_Adicionales", this.variable),
-                Servicio
+                this.Servicio
             );
 
-            await this.ObtenerValorReserva(adicional);
-            //location.href = "menu_Usuario";
+            //guardar valor en la reserva
+            let documentRef = doc(db, "Reservas/" + this.variable);
+            updateDoc(documentRef, {
+                valor: this.valor,
+            });
+            location.href = "./menu_Usuario";
         },
 
         async ObtenerValorReserva(adicional) {
@@ -663,6 +678,7 @@ export default {
                 }
             });
         },
+
         /*
         const resul = await getDocs(collection(db, "Reservas"));
         for ( const reservas of resul ) {
