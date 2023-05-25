@@ -1,17 +1,12 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container px-4 px-lg-5">
-            <button onclick="location.href='./';" id="regreso_Boton">
-                Volver
-            </button>
-            <a class="navbar-brand">
-                <img
-                    src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg"
-                    height="50"
-                    alt="hotel logo"
-                    loading="lazy"
-                    style="margin-top: -1px"
-            /></a>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light"> 
+    
+    <div class="container px-4 px-lg-5"> 
+      <button id="regreso_Boton" @click="retroceder()"> <img id="imagen_regreso_Boton" src="../icons/atras.jpg" /></button>
+      <a class="navbar-brand" >
+        
+        <img src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg" height="50" alt="hotel logo"
+          loading="lazy" style="margin-top: -1px" /></a>
 
             <button
                 class="navbar-toggler"
@@ -195,11 +190,15 @@ export default {
     components: {
         Tarjetas,
     },
+    
 
     methods: {
         reiniciar() {
             this.error = false;
         },
+        retroceder() {
+      window.history.back();
+    },
         async reservaFiltradas() {
             //creo variables auxiliares para hacer la verificacion si las fechas son validas(que no sean menor a hoy )
             let auxFechainicio = new Date(this.fecha_inicio);

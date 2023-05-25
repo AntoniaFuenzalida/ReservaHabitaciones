@@ -84,7 +84,7 @@ export default {
                 Rut: this.Rut,
                 Telefono: Number(this.Telefono),
             })
-            location.href = './Iniciar_sesion';
+                location.href = './Iniciar_sesion';
             } else {
                     if(this.correoExiste){
                         console.log('El correo ya esta en uso');
