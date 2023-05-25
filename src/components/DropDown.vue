@@ -61,9 +61,17 @@ export default {
             let diff = fechaHoy - fechaInicio;
             diff = diff / (1000 * 60 * 60 * 24);
             if (diff > 7) {
-                this.devolucion = this.reserva.valor / 2;
+                console.log("mas");
+                this.devolucion = this.reserva.pagado;
             } else {
-                this.devolucion = this.reserva.valor / 2;
+                console.log("menos");
+                if (this.reserva.valor == this.reserva.pagado) {
+                    this.devolucion = Number(this.reserva.pagado) / 2;
+                } else {
+                    this.devolucion =
+                        Number(this.reserva.valor) -
+                        Number(this.reserva.pagado);
+                }
             }
             // Mostrar el modal
             this.$refs.modalBorrar.classList.add("show");
