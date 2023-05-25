@@ -98,35 +98,55 @@ export default {
             }
             this.ocultarModalBorrar();
             location.href = "/MenuAdmin";
-        }
+        },
     },
 };
 </script>
 
 <template>
-    <div class="modal fade" id="Validar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-        ref="modalValidar">
+    <div
+        class="modal fade"
+        id="Validar"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        ref="modalValidar"
+    >
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-4" id="exampleModalLabel">
                         Ayuda
                     </h1>
-                    <button type="button" class="btn-close" @click="this.ocultarModalValidar" aria-label="Close"></button>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        @click="this.ocultarModalValidar"
+                        aria-label="Close"
+                    ></button>
                 </div>
                 <div class="modal-body">
                     <h5>
                         ¿Estas seguro de que deseas Aprobar la reserva?
-                        <br>
+                        <br />
                         Reserva:
                         {{ this.selecionada }}
                     </h5>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" @click="this.ocultarModalValidar">
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        @click="this.ocultarModalValidar"
+                    >
                         Cerrar
                     </button>
-                    <button type="button" class="btn btn-primary" style="cursor: pointer;" @click="this.Validar()">
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        style="cursor: pointer"
+                        @click="this.Validar()"
+                    >
                         Aprobar
                     </button>
                 </div>
@@ -134,29 +154,50 @@ export default {
         </div>
     </div>
 
-    <div class="modal fade" id="Borrar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-        ref="modalBorrar">
+    <div
+        class="modal fade"
+        id="Borrar"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        ref="modalBorrar"
+    >
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-4" id="exampleModalLabel">
                         Ayuda
                     </h1>
-                    <button type="button" class="btn-close" @click="this.ocultarModalBorrar" aria-label="Close"></button>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        @click="this.ocultarModalBorrar"
+                        aria-label="Close"
+                    ></button>
                 </div>
                 <div class="modal-body">
                     <h5>
                         ¿Estas seguro de que deseas eliminar la reserva?
-                        <br>
+                        <br />
                         Reserva:
                         {{ this.selecionada }}
                     </h5>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" style="cursor: pointer;" @click="this.ocultarModalBorrar">
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        style="cursor: pointer"
+                        @click="this.ocultarModalBorrar"
+                    >
                         Cerrar
                     </button>
-                    <button type="button" class="btn btn-primary" style="cursor: pointer;" @click="this.Borrar()">
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        style="cursor: pointer"
+                        @click="this.Borrar()"
+                    >
                         Borrar
                     </button>
                 </div>
@@ -193,15 +234,34 @@ export default {
             <ul class="dropdown-list list-group">
                 <li class="dropdown-list-item list-group-item">
                     <div>
-                        <img src="/verde.ico" class="icon" style="cursor: pointer;"
-                            @click="this.selecionada = reserva.idReserva" @click.stop="mostrarModalValidar()" />
-                        <span> Aprobar Reserva</span>
+                        <img
+                            src="/verde.ico"
+                            class="icon"
+                            style="cursor: pointer"
+                            @click="this.selecionada = reserva.idReserva"
+                            @click.stop="mostrarModalValidar()"
+                        />
+                        <span
+                            @click="this.selecionada = reserva.idReserva"
+                            @click.stop="mostrarModalValidar()"
+                        >
+                            Aprobar Reserva</span
+                        >
                         <p></p>
                     </div>
                     <div>
-                        <img src="/trash.ico" class="trash-icon" style="cursor: pointer;"
-                            @click="this.selecionada = reserva.idReserva" @click.stop="mostrarModalBorrar()" />
-                        <span>Borrar</span>
+                        <img
+                            src="/trash.ico"
+                            class="trash-icon"
+                            style="cursor: pointer"
+                            @click="this.selecionada = reserva.idReserva"
+                            @click.stop="mostrarModalBorrar()"
+                        />
+                        <span
+                            @click="this.selecionada = reserva.idReserva"
+                            @click.stop="mostrarModalValidar()"
+                            >Borrar</span
+                        >
                     </div>
                 </li>
             </ul>
