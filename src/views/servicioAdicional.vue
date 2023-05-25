@@ -1,6 +1,7 @@
 <template>
     <!-- -------------          header               ------------ -->
 
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container px-4 px-lg-5">
             <a class="navbar-brand" href="/">
@@ -383,6 +384,11 @@
                 </div>
 
                 <div class="modal-footer">
+
+                    <button type="button" class="btn btn-primary" @click="Boleta()">
+                        Descargar boleta
+                    </button>
+
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="Guardar()">
                         Aceptar
                     </button>
@@ -401,11 +407,13 @@
     </footer>
 </template>
 
-<script>
+
+<script >
 const PRECIO_DESAYUNO = 2500;
 const PRECIO_ALMUERZO = 5000;
 const PRECIO_CENA = 3500;
 import app from "../main";
+
 import {
     doc,
     getFirestore,
@@ -416,6 +424,8 @@ import {
     updateDoc,
 } from "firebase/firestore";
 import { db } from "../main.js";
+import { jsPDF } from "jspdf"
+
 export default {
     name: "servicioAdicional",
     data() {
@@ -434,8 +444,16 @@ export default {
                 Limpieza: this.limpiezaHabitacion,
                 Sabanas: this.cambioSabanas,
                 idReserva: this.variable,
-                codigo: NaN,
+                codigo: "",
             },
+            InfoReservas: {
+                reserva: "",
+                nombre: "",
+                rutrev: "",
+                numhabi: "",
+                fecin: "",
+                fecsal: "",
+            }
         };
     },
 
@@ -515,8 +533,8 @@ export default {
                             let porDia =
                                 Number(doc2.data().precio) + Number(adicional);
                             let cantidadDias = diff / (1000 * 60 * 60 * 24);
-                            this.valor = (porDia * cantidadDias * (1 - Number(doc1.data().descuento / 100)));
-                            this.pagado = Number(this.valor) / 2
+                            this.valor = Math.round((porDia * cantidadDias * (1 - Number(doc1.data().descuento / 100))));
+                            this.pagado = Math.round(Number(this.valor) / 2)
                         }
                     });
                 }
@@ -529,8 +547,49 @@ export default {
                 this.pagado = this.valor
             }
             else {
-                this.pagado = Number(this.valor) / 2
+                this.pagado = Math.round(Number(this.valor) / 2)
             }
+        },
+
+        async infoBoleta() {
+
+
+            let reserva1 = doc(db, "Reservas/" + this.variable);
+            await getDoc(reserva1).then((doc1) => {
+                if (doc1.exists()) {
+                    console.log("entreee sladkfjasldkj");
+                    this.InfoReservas.reserva = doc1.data().idReserva;
+                    this.InfoReservas.nombre = doc1.data().nombreCliente;
+                    this.InfoReservas.rutrev = doc1.data().rut;
+                    this.InfoReservas.numhabi = doc1.data().numeroHabitacion;
+                    this.InfoReservas.fecin = doc1.data().fechaIngreso;
+                    this.InfoReservas.fecsal = doc1.data().fechaSalida;
+                }
+            })
+            console.log(this.InfoReservas);
+        },
+
+        async Boleta() {
+            let info = await this.infoBoleta()
+            console.log(this.InfoReservas);
+            var doc = new jsPDF();
+            doc.text(7, 7,
+                '\n\n  Hotel Cordillera - comprobante\n\n' +
+                '-------------------------------------------- \n' +
+                'Pagado: $' + this.pagado +
+                ' (iva incluido) \n' +
+                'fecha de emision: ' + new Date().toISOString().slice(0, 10) + '\n' +
+                'N° de reserva:  ' + this.InfoReservas.reserva + ' \n' +
+                'Nombre Cliente: ' + this.InfoReservas.nombre + ' \n' +
+                'Run del cliente: ' + this.InfoReservas.rutrev + '  \n' +
+                'N° habitacion: ' + this.InfoReservas.numhabi + ' \n' +
+                'fecha inicio: ' + this.InfoReservas.fecin + ' \n' +
+                'fecha final: ' + this.InfoReservas.fecsal + ' \n' +
+                'Codigo de boleta: ' + Array.from({ length: 10 }, () => Math.floor(Math.random() * 10)).join('') +
+                '\n-------------------------------------------- \n ')
+
+
+            doc.save('Comprobante.pdf');
         }
 
         /*
@@ -539,11 +598,11 @@ export default {
             console.log(this.variable);
             if (reservas.data().idReserva == this.variable ) {
                     const resul2 = await getDocs(collection(db,"Habitaciones"))
- 
+     
                 }
             }
         )
- 
+     
         */
     },
 
