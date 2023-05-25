@@ -171,13 +171,6 @@ export default {
                     <div class="d-flex justify-content-center mb-2">
                         <button
                             type="button"
-                            onclick="location.href='./menu_Usuario';"
-                            class="btn btn-primary"
-                        >
-                            Regresar
-                        </button>
-                        <button
-                            type="button"
                             class="btn btn-outline-primary ms-1"
                             data-bs-toggle="modal"
                             data-bs-target="#MenuAyuda"

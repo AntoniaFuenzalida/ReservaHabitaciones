@@ -4,7 +4,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
       <a class="navbar-brand" >
-        <button id="regreso_Boton" @click="retroceder()"> <img id="imagen_regreso_Boton" src="../icons/atras.jpg" /></button>
+        <button id="regreso_Boton"  onclick="window.location.href='./'" > <img id="imagen_regreso_Boton" src="../icons/atras.jpg" /></button>
         <img src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg" height="50" alt="hotel logo"
           loading="lazy" style="margin-top: -1px;" /></a>
 
@@ -164,6 +164,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+
+
 h3 {
   margin: 40px 0 0;
 }
