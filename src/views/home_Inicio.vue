@@ -104,11 +104,12 @@ export default {
     <!--Header-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container px-4 px-lg-5">
-        <a class="navbar-brand">
-          <li v-if="correo != null"> <button id="regreso_Boton" @click="retroceder()"> <img id="imagen_regreso_Boton" src="../icons/atras.jpg" /></button></li>
-          <img src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg" height="50" alt="hotel logo"
-            loading="lazy" style="margin-top: -1px;" /></a>
-        {{ this.nombre }}
+        <a  id="navbar">
+           <li style="list-style-type:none" v-if="correo != null"> <button id="regreso_Boton" @click="retroceder()"> <img id="imagen_regreso_Boton" src="../icons/atras.jpg" /></button></li>
+          <img src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg" height="50"
+           id="imagenlogo" /></a>
+           
+        <a id="nombre">{{ this.nombre }}</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
           aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -128,7 +129,7 @@ export default {
                   <li v-if="correo == null"><a class="dropdown-item" href="./Iniciar_sesion">Iniciar sesión</a></li>
                   <!-- <li> </li> -->
                   <li v-else-if="correo != null"><a class="dropdown-item" href="./Reservar_Vista">Reservar ahora</a></li>
-                  <li v-if="correo != null"><a class="dropdown-item" @click="Cerrarsecion">cerrar sesión</a></li>
+                  <li v-if="correo != null"><a class="dropdown-item" @click="Cerrarsecion">Cerrar sesión</a></li>
                 </ul>
               </li>
             </ul>
@@ -338,3 +339,28 @@ export default {
     </footer>
   </body>
 </template>
+
+<style scoped>
+#navbar{
+  display: flex;
+  align-items: stretch;
+}
+#regreso_Boton{
+  width: 15%;
+  height: 100%;
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.6)
+}
+#imagen_regreso_Boton{
+  width: 100%;
+  height: 100%;
+}
+#nombre{
+  align-self:center;
+}
+#imagenlogo{
+  flex: auto;
+  align-self:left;
+}
+</style>

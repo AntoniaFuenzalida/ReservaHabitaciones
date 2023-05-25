@@ -2,9 +2,9 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light"> 
     
     <div class="container px-4 px-lg-5"> 
-      <button id="regreso_Boton" @click="retroceder()"> <img id="imagen_regreso_Boton" src="../icons/atras.jpg" /></button>
+      
       <a class="navbar-brand" >
-        
+        <button id="regreso_Boton" @click="retroceder()"> <img id="imagen_regreso_Boton" src="../icons/atras.jpg" /></button>
         <img src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg" height="50" alt="hotel logo"
           loading="lazy" style="margin-top: -1px" /></a>
 
@@ -438,15 +438,16 @@ a {
     color: black;
 }
 
-#regreso_Boton {
-    position: absolute;
-    float: left;
-    left: 10px;
-    top: 22px;
-    width: 8%;
-    height: 8%;
-    background-color: transparent;
-    border: transparent;
-    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.6);
+#regreso_Boton{
+  width: 15%;
+  height: 15%;
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.6)
 }
+#imagen_regreso_Boton{
+  width: 100%;
+  height: 100%;
+}
+
 </style>

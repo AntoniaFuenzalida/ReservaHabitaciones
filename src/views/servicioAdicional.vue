@@ -3,9 +3,15 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="/">
-                <img src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg" height="50" alt="hotel logo"
-                    loading="lazy" style="margin-top: -1px" /></a>
+            <button id="regreso_Botonservi" @click="retroceder()"> <img float="left" id="imagen_regreso_Botonservi" src="../icons/atras.jpg" /></button>
+            <a class="navbar-brand" >
+                <img
+                    src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg"
+                    height="50"
+                    alt="hotel logo"
+                    loading="lazy"
+                    style="margin-top: -1px"
+            /></a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                 aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -550,10 +556,9 @@ export default {
     auxiliar() {
         this.ObtenerValorReserva();
     },
-
-
-
-
+    retroceder() {
+        window.history.back();
+    },
 };
 </script>
 
@@ -575,5 +580,16 @@ li {
 
 a {
     color: #42b983;
+}
+#regreso_Botonservi{
+  width: 5%;
+  height: 15%;
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.6)
+}
+#imagen_regreso_Botonservi{
+  width: 100%;
+  height: 100%;
 }
 </style>

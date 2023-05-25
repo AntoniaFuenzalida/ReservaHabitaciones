@@ -1,10 +1,8 @@
 
 <template>
     <div class="bg-image" id="portada_crear">
-        <div id="caja_Adentro_Crea">
-            <button onclick="location.href='./';" id="regreso_boton">
-                Volver
-            </button>
+        <div  align="left"  id="caja_Adentro_Crea">
+            <button id="regreso_Boton_Gente" @click="retroceder()"> <img float="left" id="imagen_regreso_Boton_Gente" src="../icons/atras.jpg" /></button>
             <img src="../assets/logohotel.png" id="imagen_Adentro" >
             <h3 id="texto_Crear">Creación de Cuenta</h3>
             <p v-if="errors.length">
@@ -98,6 +96,10 @@ export default {
             }
             
             
+        },
+
+        retroceder() {
+            window.history.back();
         },
 
 
@@ -338,11 +340,15 @@ export default {
     text-decoration: underline black;
 }
 
-#regreso_Boton{
-  width: 15%;
-  height: 15%;
+#regreso_Boton_Gente{
+  width: 9%;
+  height: 5%;
   background-color: transparent;
   border: 1px solid #ffffff;
   box-shadow: 0 0px 0px rgba(0, 0, 0, 0.6)
+}
+#imagen_regreso_Boton_Gente{
+  width: 100%;
+  height: 100%;
 }
 </style>
