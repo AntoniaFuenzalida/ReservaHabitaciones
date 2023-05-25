@@ -91,7 +91,7 @@ export default {
             querySnapshot.forEach((doc) => {
                 if (doc.data().idReserva == this.reserva.idReserva) {
                     if (doc.data().codigo) {
-                        this.codigo = "// codigo: " + doc.data().codigo;
+                        this.codigo = "Codigo comidas: " + doc.data().codigo;
                     }
                 }
             });
@@ -154,10 +154,7 @@ export default {
         <div class="dropdown-header" @click="Desplegar">
             <img src="/verde.ico" class="dropdown-icon" />
             Desde: {{ reserva.fechaIngreso }} Hasta:
-            {{ reserva.fechaSalida }} // habitacion:
-            {{ reserva.numeroHabitacion }} // valor:
-            {{ reserva.valor }}
-            {{ this.codigo }}
+            {{ reserva.fechaSalida }}
             <div
                 class="trash-container"
                 @click="this.selecionada = reserva.idReserva"
@@ -165,6 +162,17 @@ export default {
             >
                 <img src="/trash.ico" class="trash-icon" />
             </div>
+        </div>
+        <div class="dropdown-wraper" v-if="Mostrar">
+            <ul class="dropdown-list list-group">
+                <li class="dropdown-list-item list-group-item">
+                    <p>ID: {{ reserva.idReserva }}</p>
+                    <p>Habitacion {{ reserva.numeroHabitacion }}</p>
+                    <p>{{ this.codigo }}</p>
+                    <p>Valor {{ reserva.valor }}</p>
+                    <p>Pagado: {{ reserva.pagado }}</p>
+                </li>
+            </ul>
         </div>
     </div>
 
@@ -172,10 +180,18 @@ export default {
         <div class="dropdown-header" @click="Desplegar">
             <img src="/rojo.ico" class="dropdown-icon" />
             Desde: {{ reserva.fechaIngreso }} Hasta:
-            {{ reserva.fechaSalida }} // habitacion:
-            {{ reserva.numeroHabitacion }} // valor:
-            {{ reserva.valor }}
-            {{ this.codigo }}
+            {{ reserva.fechaSalida }}
+        </div>
+        <div class="dropdown-wraper" v-if="Mostrar">
+            <ul class="dropdown-list list-group">
+                <li class="dropdown-list-item list-group-item">
+                    <p>ID: {{ reserva.idReserva }}</p>
+                    <p>Habitacion {{ reserva.numeroHabitacion }}</p>
+                    <p>{{ this.codigo }}</p>
+                    <p>Valor {{ reserva.valor }}</p>
+                    <p>Pagado: {{ reserva.pagado }}</p>
+                </li>
+            </ul>
         </div>
     </div>
 
@@ -183,10 +199,7 @@ export default {
         <div class="dropdown-header" @click="Desplegar">
             <img src="/amarillo.ico" class="dropdown-icon" />
             Desde: {{ reserva.fechaIngreso }} Hasta:
-            {{ reserva.fechaSalida }} // habitacion:
-            {{ reserva.numeroHabitacion }} // valor:
-            {{ reserva.valor }}
-            {{ this.codigo }}
+            {{ reserva.fechaSalida }}
             <div
                 class="trash-container"
                 @click="this.selecionada = reserva.idReserva"
@@ -195,16 +208,24 @@ export default {
                 <img src="/trash.ico" class="trash-icon" />
             </div>
         </div>
+        <div class="dropdown-wraper" v-if="Mostrar">
+            <ul class="dropdown-list list-group">
+                <li class="dropdown-list-item list-group-item">
+                    <p>ID: {{ reserva.idReserva }}</p>
+                    <p>Habitacion {{ reserva.numeroHabitacion }}</p>
+                    <p>{{ this.codigo }}</p>
+                    <p>Valor {{ reserva.valor }}</p>
+                    <p>Pagado: {{ reserva.pagado }}</p>
+                </li>
+            </ul>
+        </div>
     </div>
 
     <div class="dropdown" v-else-if="reserva.estadoReserva === 'Utilizada'">
         <div class="dropdown-header" @click="Desplegar">
             <img src="/azul.ico" class="dropdown-icon" />
             Desde: {{ reserva.fechaIngreso }} Hasta:
-            {{ reserva.fechaSalida }} // habitacion:
-            {{ reserva.numeroHabitacion }} // valor:
-            {{ reserva.valor }}
-            {{ this.codigo }}
+            {{ reserva.fechaSalida }}
             <div
                 class="trash-container"
                 @click="this.selecionada = reserva.idReserva"
@@ -212,6 +233,17 @@ export default {
             >
                 <img src="/trash.ico" class="trash-icon" />
             </div>
+        </div>
+        <div class="dropdown-wraper" v-if="Mostrar">
+            <ul class="dropdown-list list-group">
+                <li class="dropdown-list-item list-group-item">
+                    <p>ID: {{ reserva.idReserva }}</p>
+                    <p>Habitacion {{ reserva.numeroHabitacion }}</p>
+                    <p>{{ this.codigo }}</p>
+                    <p>Valor {{ reserva.valor }}</p>
+                    <p>Pagado: {{ reserva.pagado }}</p>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
