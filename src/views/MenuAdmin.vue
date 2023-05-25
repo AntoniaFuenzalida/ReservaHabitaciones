@@ -14,7 +14,7 @@ export default {
             descripcion: '',
             numero: '',
             precio: '',
-            fecha:'',
+            fecha: '',
             reservas: [],
         }
     },
@@ -28,10 +28,9 @@ export default {
     },
 
     methods: {
-        Sdate(){
+        Sdate() {
             console.log(this.fecha)
-            if(this.fecha=='')
-            {
+            if (this.fecha == '') {
                 console.log("seleccione una fecha")
             }
             this.buscarReservas(this.fecha)
@@ -43,9 +42,8 @@ export default {
             let hoy
             hoy = new Date()
             hoy = hoy.toISOString().split("T")[0];
-            if(fechaB!='')
-            {
-                hoy=fechaB
+            if (fechaB != '') {
+                hoy = fechaB
             }
             console.log(hoy)
             this.reservas = [];
@@ -181,10 +179,8 @@ export default {
 
 </script>
 
-
 <script setup>
 import { reactive, ref } from 'vue';
-
 
 const seleccionado = reactive({
     fecha: NaN,
@@ -196,13 +192,8 @@ const masks = ref({
     modelValue: 'YYYY-MM-DD',
 });
 
-
 var ArregloReservas = {}
 var numHabitacion = {}
-
-
-
-
 
 const cargarHabitacion = async () => {
 
@@ -212,9 +203,7 @@ const cargarHabitacion = async () => {
         numHabitacion[doc.data().numero] = {
             numero: doc.data().numero,
         }
-    }
-
-    );
+    });
 }
 
 cargarHabitacion()
@@ -255,22 +244,14 @@ console.log(numHabitacion)
                 </div>
             </div>
         </div>
-
     </nav>
-    <!---->
 
     <!-- Header-->
     <header class="bg-dark py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-white">
-
                 <h1 class="display-4 fw-bolder text-center">Menu Admin</h1>
-
-                <form>
-
-
-                </form>
-
+                <form></form>
             </div>
         </div>
     </header>
@@ -300,11 +281,8 @@ console.log(numHabitacion)
             <div class="row">
                 <div class="col-md-6">
                     <div class="card mb-6" style="margin-left: 12%;">
-
-
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -354,7 +332,6 @@ console.log(numHabitacion)
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
@@ -370,9 +347,7 @@ console.log(numHabitacion)
                     <h1 class="modal-title fs-4" id="exampleModalLabel">Datos Contacto</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-
-                </div>
+                <div class="modal-body"> </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
@@ -388,11 +363,8 @@ console.log(numHabitacion)
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
                     <!--  -->
                     <div class="container">
-
-
                         <div class="row" style="margin-top: 5%;">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -428,12 +400,7 @@ console.log(numHabitacion)
                             <textarea class="form-control" aria-label="With textarea" rows="3" name="descripcion"
                                 v-model="descripcion"></textarea>
                         </div>
-
-
-
                     </div>
-
-
                 </div>
                 <div class="modal-footer">
 
@@ -465,12 +432,7 @@ console.log(numHabitacion)
                                     {{ numero.numero }}
                                 </option>
                             </select>
-
-
-
-
                         </div>
-
 
                         <div class="row" style="margin-top: 2%;">
                             <div class="input-group mb-3">
@@ -496,20 +458,8 @@ console.log(numHabitacion)
                             <textarea class="form-control" aria-label="With textarea" rows="3"
                                 v-model="descripcion"></textarea>
                         </div>
-
-
-
                     </div>
-
                     <!-- botones -->
-                    <div>
-
-
-
-                    </div>
-
-
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
@@ -519,7 +469,5 @@ console.log(numHabitacion)
         </div>
     </div>
 </template>
-
-
 
 <style></style>
