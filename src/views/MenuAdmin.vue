@@ -1,7 +1,7 @@
 <script>
 import { DatePicker } from 'v-calendar'
 import 'v-calendar/dist/style.css'
-
+import DropAdmin from "../components/DropAdmin.vue";
 import app from '../main'
 import { doc, getFirestore, setDoc, getDocs, collection } from "firebase/firestore";
 
@@ -14,11 +14,52 @@ export default {
             descripcion: '',
             numero: '',
             precio: '',
+            fecha: '',
+            reservas: [],
         }
     },
-
+    created() {
+        console.log(this.fecha)
+        this.buscarReservas()
+    },
+    components:
+    {
+        DropAdmin,
+    },
 
     methods: {
+        Sdate() {
+            console.log(this.fecha)
+            if (this.fecha == '') {
+                console.log("seleccione una fecha")
+            }
+            this.buscarReservas(this.fecha)
+
+        },
+        //busca todas las reservas de hoy
+        async buscarReservas(fechaB) {
+            const db = getFirestore(app);
+            let hoy
+            hoy = new Date()
+            hoy = hoy.toISOString().split("T")[0];
+            if (fechaB != '') {
+                hoy = fechaB
+            }
+            console.log(hoy)
+            this.reservas = [];
+            var usuario_reservas = [];
+            const resul = await getDocs(collection(db, "Reservas"));
+            resul.forEach((doc) => {
+                console.log(doc.data)
+                var accountData = doc.data();
+                if (accountData.fechaIngreso == hoy) {
+                    this.reservas.push(accountData);
+                    usuario_reservas.push(accountData);
+                }
+            });
+            //console.log(this.reservas.length)
+            return usuario_reservas;
+        },
         async guardarDatos() {
             console.log("Guardando")
             const db = getFirestore(app);
@@ -111,9 +152,6 @@ export default {
             }
             return null;
         },
-        retroceder() {
-            window.history.back();
-        },
         setCookie(nombre, valor, expiracion) {
             var fechaExpiracion = new Date();
             fechaExpiracion.setTime(
@@ -141,10 +179,8 @@ export default {
 
 </script>
 
-
 <script setup>
 import { reactive, ref } from 'vue';
-
 
 const seleccionado = reactive({
     fecha: NaN,
@@ -153,40 +189,11 @@ const seleccionado = reactive({
 
 });
 const masks = ref({
-    modelValue: 'DD-MM-YYYY',
+    modelValue: 'YYYY-MM-DD',
 });
-
 
 var ArregloReservas = {}
 var numHabitacion = {}
-
-
-const CargarFecha = () => {
-    seleccionado.reserva = NaN
-    console.log("fecha seleccionada: " + seleccionado.fecha)
-}
-const Seleccionar = (reserva) => {
-    seleccionado.reserva = reserva
-}
-
-const cargarLasReservas = async () => {
-    const db = getFirestore(app);
-    const querySnapshot = await getDocs(collection(db, "Reservas"));
-    querySnapshot.forEach((doc) => {
-        ArregloReservas["reserva " + doc.data().idReserva] = {
-            numeroHabitacion: doc.data().numeroHabitacion,
-            cantidadCamas: doc.data().cantidadCamas,
-            cantidadPersonas: doc.data().cantidadPersonas,
-            estadoReserva: doc.data().estadoReserva,
-            fechaIngreso: doc.data().fechaIngreso,
-            fechaSalida: doc.data().fechaSalida,
-            idReserva: doc.data().idReserva,
-            nombreCliente: doc.data().nombreCliente,
-            rut: doc.data().rut
-        }
-    },
-    );
-}
 
 const cargarHabitacion = async () => {
 
@@ -196,12 +203,9 @@ const cargarHabitacion = async () => {
         numHabitacion[doc.data().numero] = {
             numero: doc.data().numero,
         }
-    }
-
-    );
+    });
 }
 
-cargarLasReservas()
 cargarHabitacion()
 console.log(numHabitacion)
 </script>
@@ -210,8 +214,7 @@ console.log(numHabitacion)
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" >
-                <button id="regreso_Boton" @click="retroceder()"> <img id="imagen_regreso_Boton" src="../icons/atras.jpg" /></button>
+            <a class="navbar-brand" href="/">
                 <img src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg" height="50" alt="hotel logo"
                     loading="lazy" style="margin-top: -1px;" /></a>
 
@@ -241,22 +244,14 @@ console.log(numHabitacion)
                 </div>
             </div>
         </div>
-
     </nav>
-    <!---->
 
     <!-- Header-->
     <header class="bg-dark py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-white">
-
                 <h1 class="display-4 fw-bolder text-center">Menu Admin</h1>
-
-                <form>
-
-
-                </form>
-
+                <form></form>
             </div>
         </div>
     </header>
@@ -266,7 +261,7 @@ console.log(numHabitacion)
         <div class="col-lg-4">
             <div class="card mb-4">
                 <div class="card-body text-center">
-                    <DatePicker @click="CargarFecha" v-model.string="seleccionado.fecha" :masks="masks" />
+                    <DatePicker @click="this.Sdate()" v-model.string="this.fecha" :masks="masks" />
                 </div>
             </div>
         </div>
@@ -275,36 +270,9 @@ console.log(numHabitacion)
                 <div class="card-body">
                     <div class="overflow-scroll" style="max-height: 272px;">
                         <ul class="list-goup">
-                            <li class="list-group-item mt-3" v-for="reserva in ArregloReservas"
-                                :key="reserva.fechaIngreso & reserva.numeroHabitacion">
-                                <div class="DropDown"
-                                    v-if="reserva.estadoReserva === 'aprobado' && seleccionado.fecha === reserva.fechaIngreso">
-                                    <div class="dropdown-header" @click="Seleccionar(reserva)">
-                                        <img src="/verde.ico" class="dropdown-icon">
-                                        {{ reserva.fechaIngreso }} // habitacion: {{ reserva.numeroHabitacion }}
-                                    </div>
-                                </div>
-                                <div class="dropdown"
-                                    v-else-if="reserva.estadoReserva === 'rechazo' && seleccionado.fecha === reserva.fechaIngreso">
-                                    <div class="dropdown-header" @click="Seleccionar(reserva)">
-                                        <img src="/rojo.ico" class="dropdown-icon">
-                                        {{ reserva.fechaIngreso }} // habitacion: {{ reserva.numeroHabitacion }}
-                                    </div>
-                                </div>
-                                <div class="dropdown"
-                                    v-else-if="reserva.estadoReserva === 'en espera' && seleccionado.fecha === reserva.fechaIngreso">
-                                    <div class="dropdown-header" @click="Seleccionar(reserva)">
-                                        <img src="/amarillo.ico" class="dropdown-icon">
-                                        {{ reserva.fechaIngreso }} // habitacion: {{ reserva.numeroHabitacion }}
-                                    </div>
-                                </div>
-                                <div class="dropdown"
-                                    v-else-if="reserva.estadoReserva === 'Utilizada' && seleccionado.fecha === reserva.fechaIngreso">
-                                    <div class="dropdown-header" @click="Seleccionar(reserva)">
-                                        <img src="/azul.ico" class="dropdown-icon">
-                                        {{ reserva.fechaIngreso }} // habitacion: {{ reserva.numeroHabitacion }}
-                                    </div>
-                                </div>
+                            <li class="list-group-item mt-3" v-for="reserva in reservas" :key="reserva"
+                                style="align-items: center">
+                                <DropAdmin :reserva="reserva" />
                             </li>
                         </ul>
                     </div>
@@ -313,43 +281,11 @@ console.log(numHabitacion)
             <div class="row">
                 <div class="col-md-6">
                     <div class="card mb-6" style="margin-left: 12%;">
-
-
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-    <div class="row" style="margin-top: 3%;">
-        <div class="card mb-4" v-if="seleccionado.reserva">
-            <ul class="list-goup">
-                <li class="list-group-item mt-2">
-                    Fecha: {{ seleccionado.reserva.fechaIngreso }}
-                </li>
-                <li class="list-group-item mt-2">
-                    habitacion: {{ seleccionado.reserva.numeroHabitacion }}
-                </li>
-                <li class="list-group-item mt-2">
-                    Estado: {{ seleccionado.reserva.estadoReserva }}
-                </li>
-            </ul>
-        </div>
-        <div class="card mb-4" v-if="!seleccionado.reserva">
-            <ul class="list-goup">
-                <li class="list-group-item mt-2">
-                    Fecha: ------
-                </li>
-                <li class="list-group-item mt-2">
-                    habitacion: ------
-                </li>
-                <li class="list-group-item mt-2">
-                    Estado: ------
-                </li>
-            </ul>
-        </div>
-    </div>
-
     <div class="row" style="margin-top: 1%; margin-left: 100px; margin-right: 100px; margin-bottom: 20px;">
         <div class="col">
             <div class="card mt-4" style="margin-left: 20px; margin-right: 20px;">
@@ -396,7 +332,6 @@ console.log(numHabitacion)
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
@@ -412,9 +347,7 @@ console.log(numHabitacion)
                     <h1 class="modal-title fs-4" id="exampleModalLabel">Datos Contacto</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-
-                </div>
+                <div class="modal-body"> </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
@@ -430,11 +363,8 @@ console.log(numHabitacion)
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
                     <!--  -->
                     <div class="container">
-
-
                         <div class="row" style="margin-top: 5%;">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -470,12 +400,7 @@ console.log(numHabitacion)
                             <textarea class="form-control" aria-label="With textarea" rows="3" name="descripcion"
                                 v-model="descripcion"></textarea>
                         </div>
-
-
-
                     </div>
-
-
                 </div>
                 <div class="modal-footer">
 
@@ -507,12 +432,7 @@ console.log(numHabitacion)
                                     {{ numero.numero }}
                                 </option>
                             </select>
-
-
-
-
                         </div>
-
 
                         <div class="row" style="margin-top: 2%;">
                             <div class="input-group mb-3">
@@ -538,20 +458,8 @@ console.log(numHabitacion)
                             <textarea class="form-control" aria-label="With textarea" rows="3"
                                 v-model="descripcion"></textarea>
                         </div>
-
-
-
                     </div>
-
                     <!-- botones -->
-                    <div>
-
-
-
-                    </div>
-
-
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
@@ -561,7 +469,5 @@ console.log(numHabitacion)
         </div>
     </div>
 </template>
-
-
 
 <style></style>
