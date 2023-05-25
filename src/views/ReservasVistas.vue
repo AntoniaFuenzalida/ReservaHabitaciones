@@ -125,6 +125,9 @@ export default {
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
+                                    <a class="dropdown-item" href="/">Inicio</a>
+                                </li>
+                                <li>
                                     <a
                                         class="dropdown-item"
                                         href="./menu_Usuario"
@@ -223,7 +226,6 @@ export default {
                             <p class="text-muted mb-0">{{ this.correo }}</p>
                         </div>
                     </div>
-                    <hr />
                 </div>
             </div>
             <div class="row" v-if="reservas.length > 0">

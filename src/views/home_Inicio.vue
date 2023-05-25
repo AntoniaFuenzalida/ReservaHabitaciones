@@ -92,7 +92,7 @@ export default {
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                <a id="navbar">
+                <a>
                     <img
                         src="https://hotelcordillera.cl/wp-content/uploads/2021/11/logo.jpg"
                         height="50"
@@ -152,6 +152,13 @@ export default {
                                             class="dropdown-item"
                                             href="./Reservar_Vista"
                                             >Reservar ahora</a
+                                        >
+                                    </li>
+                                    <li v-if="correo != null">
+                                        <a
+                                            class="dropdown-item"
+                                            href="./menu_Usuario"
+                                            >Perfil</a
                                         >
                                     </li>
                                     <li v-if="correo != null">
