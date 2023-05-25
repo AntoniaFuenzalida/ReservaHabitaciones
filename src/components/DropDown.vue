@@ -74,11 +74,10 @@ export default {
             querySnapshot.forEach((doc) => {
                 console.log(doc.data());
 
-                if (
-                    doc.data().idReserva == this.reserva.idReserva &&
-                    doc.data().codigo
-                ) {
-                    this.codigo = "// codigo: " + doc.data().codigo;
+                if (doc.data().idReserva == this.reserva.idReserva) {
+                    if (doc.data().codigo) {
+                        this.codigo = "// codigo: " + doc.data().codigo;
+                    }
                 }
             });
         },
@@ -139,7 +138,8 @@ export default {
             <img src="/verde.ico" class="dropdown-icon" />
             Desde: {{ reserva.fechaIngreso }} Hasta:
             {{ reserva.fechaSalida }} // habitacion:
-            {{ reserva.numeroHabitacion }}
+            {{ reserva.numeroHabitacion }} // valor:
+            {{ reserva.valor }}
             {{ this.codigo }}
             <div
                 class="trash-container"
@@ -156,8 +156,9 @@ export default {
             <img src="/rojo.ico" class="dropdown-icon" />
             Desde: {{ reserva.fechaIngreso }} Hasta:
             {{ reserva.fechaSalida }} // habitacion:
-            {{ reserva.numeroHabitacion }}
-            {{ this.codigo }}
+            {{ reserva.numeroHabitacion }} // valor:
+            {{}}
+           {{ this.codigo }}
         </div>
     </div>
 
@@ -166,8 +167,9 @@ export default {
             <img src="/amarillo.ico" class="dropdown-icon" />
             Desde: {{ reserva.fechaIngreso }} Hasta:
             {{ reserva.fechaSalida }} // habitacion:
-            {{ reserva.numeroHabitacion }}
-            {{ this.codigo }}
+            {{ reserva.numeroHabitacion }} // valor:
+            {{}}
+           {{ this.codigo }}
             <div
                 class="trash-container"
                 @click="this.selecionada = reserva.idReserva"
@@ -183,8 +185,9 @@ export default {
             <img src="/azul.ico" class="dropdown-icon" />
             Desde: {{ reserva.fechaIngreso }} Hasta:
             {{ reserva.fechaSalida }} // habitacion:
-            {{ reserva.numeroHabitacion }}
-            {{ this.codigo }}
+            {{ reserva.numeroHabitacion }} // valor:
+            {{}}
+           {{ this.codigo }}
             <div
                 class="trash-container"
                 @click="this.selecionada = reserva.idReserva"
